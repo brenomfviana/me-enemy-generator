@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
-    <RootNamespace>overlord_enemy_generator</RootNamespace>
+    <RootNamespace>OverlordEnemyGenerator</RootNamespace>
   </PropertyGroup>
 
 </Project>
