@@ -46,7 +46,11 @@ namespace OverlordEnemyGenerator
     public enum BehaviorType
     {
         // The enemy does nothing.
-        None
+        Indifferent,
+        // The enemy prefers to be alone.
+        LoneWolf,
+        // The enemy prefers to be in a group of enemies.
+        Swarm
     }
 
     // This struc represents a weapon.
