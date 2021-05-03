@@ -1,3 +1,5 @@
+using System;
+
 namespace OverlordEnemyGenerator
 {
     /// This struct defines search space accordingly to the enemy's attributes.
@@ -45,49 +47,25 @@ namespace OverlordEnemyGenerator
         /// Return the list of all movement types.
         public static MovementType[] AllMovementTypes()
         {
-            return new MovementType[] {
-                MovementType.None,
-                MovementType.Random,
-                MovementType.Follow,
-                MovementType.Flee,
-                MovementType.Random1D,
-                MovementType.Follow1D,
-                MovementType.Flee1D,
-            };
+            return (MovementType[]) Enum.GetValues(typeof(MovementType));
         }
 
         /// Return the list of all behavior types.
         public static BehaviorType[] AllBehaviorTypes()
         {
-            return new BehaviorType[] {
-                BehaviorType.Indifferent,
-                BehaviorType.LoneWolf,
-                BehaviorType.Swarm,
-            };
+            return (BehaviorType[]) Enum.GetValues(typeof(BehaviorType));
         }
 
         /// Return the list of all weapon types.
         public static WeaponType[] AllWeaponTypes()
         {
-            return new WeaponType[] {
-                WeaponType.None,
-                WeaponType.Sword,
-                WeaponType.Shotgun,
-                WeaponType.Cannon,
-                WeaponType.Shield,
-                WeaponType.Cure,
-            };
+            return (WeaponType[]) Enum.GetValues(typeof(WeaponType));
         }
 
         /// Return the list of all projectile types.
         public static ProjectileType[] AllProjectileTypes()
         {
-            return new ProjectileType[] {
-                ProjectileType.None,
-                ProjectileType.Bullet,
-                ProjectileType.Arrow,
-                ProjectileType.Bomb,
-            };
+            return (ProjectileType[]) Enum.GetValues(typeof(ProjectileType));
         }
     }
 }
