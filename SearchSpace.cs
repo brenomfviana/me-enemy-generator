@@ -3,17 +3,44 @@ namespace OverlordEnemyGenerator
     /// This struct defines search space accordingly to the enemy's attributes.
     public struct SearchSpace
     {
-        public (int, int) health;
-        public (int, int) strength;
-        public (float, float) attackSpeed;
-        public MovementType[] movementType;
-        public (float, float) movementSpeed;
-        public BehaviorType[] behavior;
-        public (float, float) activeTime;
-        public (float, float) restTime;
-        public WeaponType[] weaponType;
-        public ProjectileType[] projectileType;
-        public (float, float) projectileSpeed;
+        public (int, int) health { get; }
+        public (int, int) strength { get; }
+        public (float, float) attackSpeed { get; }
+        public MovementType[] movementType { get; }
+        public (float, float) movementSpeed { get; }
+        public BehaviorType[] behavior { get; }
+        public (float, float) activeTime { get; }
+        public (float, float) restTime { get; }
+        public WeaponType[] weaponType { get; }
+        public ProjectileType[] projectileType { get; }
+        public (float, float) projectileSpeed { get; }
+
+        /// Search space constructor.
+        public SearchSpace(
+            (int, int) health,
+            (int, int) strength,
+            (float, float) attackSpeed,
+            MovementType[] movementType,
+            (float, float) movementSpeed,
+            BehaviorType[] behavior,
+            (float, float) activeTime,
+            (float, float) restTime,
+            WeaponType[] weaponType,
+            ProjectileType[] projectileType,
+            (float, float) projectileSpeed)
+        {
+            this.health = health;
+            this.strength = strength;
+            this.attackSpeed = attackSpeed;
+            this.movementType = movementType;
+            this.movementSpeed = movementSpeed;
+            this.behavior = behavior;
+            this.activeTime = activeTime;
+            this.restTime = restTime;
+            this.weaponType = weaponType;
+            this.projectileType = projectileType;
+            this.projectileSpeed = projectileSpeed;
+        }
 
         /// Return the list of all movement types.
         public static MovementType[] AllMovementTypes()
