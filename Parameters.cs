@@ -24,13 +24,13 @@ namespace OverlordEnemyGenerator
     {
         public (int, int) health;
         public (int, int) strength;
-        public MovementType[] movement;
-        public (float, float) movementSpeed;
-        public WeaponType[] weapon;
         public (float, float) attackSpeed;
+        public MovementType[] movementType;
+        public (float, float) movementSpeed;
         public BehaviorType[] behavior;
         public (float, float) activeTime;
         public (float, float) restTime;
+        public WeaponType[] weaponType;
         public ProjectileType[] projectile;
         public (float, float) projectileSpeed;
     }

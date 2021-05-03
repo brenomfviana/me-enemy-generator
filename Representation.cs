@@ -15,11 +15,10 @@ namespace OverlordEnemyGenerator
     {
         public int health;
         public int strength;
-        public int movement;
-        public float movementSpeed;
-        public int weapon;
         public float attackSpeed;
-        public int behavior;
+        public MovementType movementType;
+        public float movementSpeed;
+        public BehaviorType behaviorType;
         public float activeTime;
         public float restTime;
     }
