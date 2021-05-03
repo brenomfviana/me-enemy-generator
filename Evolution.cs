@@ -11,7 +11,19 @@ namespace OverlordEnemyGenerator
             // Generate initial population
             for (int i = 0; i < p.rIndividuals; i++)
             {
-                //
+                Individual ind = Individual.GetRandomIndividual(rand, p.space);
+                Console.WriteLine(ind.enemy.health);
+                Console.WriteLine(ind.enemy.strength);
+                Console.WriteLine(ind.enemy.attackSpeed);
+                Console.WriteLine(ind.enemy.movementType);
+                Console.WriteLine(ind.enemy.movementSpeed);
+                Console.WriteLine(ind.enemy.behaviorType);
+                Console.WriteLine(ind.enemy.activeTime);
+                Console.WriteLine(ind.enemy.restTime);
+                Console.WriteLine(ind.weapon.weaponType);
+                Console.WriteLine(ind.weapon.projectileType);
+                Console.WriteLine(ind.weapon.projectileSpeed);
+                Console.WriteLine();
             }
             // Run the generations
             for (int i = 0; i < p.generations; i++)

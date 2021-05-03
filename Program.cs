@@ -22,33 +22,14 @@ namespace OverlordEnemyGenerator
             p.space.movementSpeed = (0.8f, 3.2f);
             p.space.activeTime = (1.5f, 10f);
             p.space.restTime = (0.3f, 1.5f);
-            p.space.projectileSpeed = (1, 4);
-            p.space.movementType = new MovementType[] {
-                MovementType.None,
-                MovementType.Random,
-                MovementType.Follow,
-                MovementType.Flee,
-                MovementType.Random1D,
-                MovementType.Follow1D,
-                MovementType.Flee1D,
-            };
-            p.space.behavior = new BehaviorType[] {
-                BehaviorType.None,
-            };
-            p.space.weaponType = new WeaponType[] {
-                WeaponType.None,
-                WeaponType.Sword,
-                WeaponType.Shotgun,
-                WeaponType.Cannon,
-                WeaponType.Shield,
-                WeaponType.Cure,
-            };
-            p.space.projectile = new ProjectileType[] {
-                ProjectileType.None,
-                ProjectileType.Bullet,
-                ProjectileType.Arrow,
-                ProjectileType.Bomb,
-            };
+            p.space.projectileSpeed = (1f, 4f);
+            p.space.movementType = SearchSpace.AllMovementTypes();
+            p.space.behavior = SearchSpace.AllBehaviorTypes();
+            p.space.weaponType = SearchSpace.AllWeaponTypes();
+            p.space.projectileType = SearchSpace.AllProjectileTypes();
+
+            // Generate enemies
+            Evolution.Evolve(p);
         }
     }
 }

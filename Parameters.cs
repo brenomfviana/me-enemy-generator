@@ -1,3 +1,5 @@
+using System;
+
 namespace OverlordEnemyGenerator
 {
     /// This struct defines the parameters of the evolutionary enemy generator.
@@ -16,22 +18,6 @@ namespace OverlordEnemyGenerator
         // The chance of crossover.
         public int crossover;
         // The delimitations of the search space.
-        public SpaceSearch space;
-    }
-
-    /// This struct defines search space accordingly to the enemy's attributes.
-    public struct SpaceSearch
-    {
-        public (int, int) health;
-        public (int, int) strength;
-        public (float, float) attackSpeed;
-        public MovementType[] movementType;
-        public (float, float) movementSpeed;
-        public BehaviorType[] behavior;
-        public (float, float) activeTime;
-        public (float, float) restTime;
-        public WeaponType[] weaponType;
-        public ProjectileType[] projectile;
-        public (float, float) projectileSpeed;
+        public SearchSpace space;
     }
 }
