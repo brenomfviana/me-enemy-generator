@@ -2,6 +2,7 @@ using System;
 
 namespace OverlordEnemyGenerator
 {
+    /// This class holds only utility functions.
     public class Util
     {
         /// Return a random integer number from the given range and the given 
@@ -23,9 +24,9 @@ namespace OverlordEnemyGenerator
             return (float) (n * (range.max - range.min) + range.min);
         }
 
-        /// Return a random enumerate value from the given list and the given 
-        /// random number generator.
-        public static T RandomEnum<T>(
+        /// Return a random element from the given list and the given random 
+        /// number generator.
+        public static T RandomList<T>(
             T[] range,
             Random rand
         ) {

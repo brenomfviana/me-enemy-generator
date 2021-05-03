@@ -2,19 +2,24 @@ using System;
 
 namespace OverlordEnemyGenerator
 {
-    /// This struct represents an individual.
+    /// This class represents an individual.
     ///
     /// Individuals are composed of an enemy, a weapon, and a fitness value.
-    public struct Individual
+    ///
+    /// Why individuals are represented as a class?
+    /// - When using MAP-Elites, some slots may be empty, then the `null` 
+    ///   option makes easier to manage the MAP-Elites population.
+    public class Individual
     {
         public Enemy enemy;
         public Weapon weapon;
         public float fitness;
 
-        /// Get a random individual.
-        public static Individual GetRandomIndividual(Random rand,
-            SearchSpace ss)
-        {
+        /// Return a random individual.
+        public static Individual GetRandom(
+            Random rand,
+            SearchSpace ss
+        ) {
             // Create a random enemy
             Enemy e = new Enemy();
             e.health = Util.RandomInt(ss.health, rand);
@@ -23,15 +28,15 @@ namespace OverlordEnemyGenerator
             e.movementSpeed = Util.RandomFloat(ss.movementSpeed, rand);
             e.activeTime = Util.RandomFloat(ss.activeTime, rand);
             e.restTime = Util.RandomFloat(ss.restTime, rand);
-            e.movementType = Util.RandomEnum(
+            e.movementType = Util.RandomList(
                 SearchSpace.AllMovementTypes(), rand);
-            e.behaviorType = Util.RandomEnum(
+            e.behaviorType = Util.RandomList(
                 SearchSpace.AllBehaviorTypes(), rand);
             // Create a random weapon
             Weapon w = new Weapon();
-            w.weaponType = Util.RandomEnum(
+            w.weaponType = Util.RandomList(
                 SearchSpace.AllWeaponTypes(), rand);
-            w.projectileType = Util.RandomEnum(
+            w.projectileType = Util.RandomList(
                 SearchSpace.AllProjectileTypes(), rand);
             w.projectileSpeed = Util.RandomFloat(ss.projectileSpeed, rand);
             // Create individual
@@ -56,36 +61,6 @@ namespace OverlordEnemyGenerator
         public float restTime;
     }
 
-    // This enum defines the movement types of enemies.
-    public enum MovementType
-    {
-        // The enemy stays still.
-        None,
-        // The enemy performs random 2D movements.
-        Random,
-        // The enemy follows the player.
-        Follow,
-        // The enemy flees from the player.
-        Flee,
-        // The enemy performs random horizontal or vertical movements.
-        Random1D,
-        // The enemy follows the player horizontally or vertically.
-        Follow1D,
-        // The enemy flees from the player horizontally or vertically.
-        Flee1D,
-    }
-
-    // This enum defines the behavior types of enemies.
-    public enum BehaviorType
-    {
-        // The enemy does nothing.
-        Indifferent,
-        // The enemy prefers to be alone.
-        LoneWolf,
-        // The enemy prefers to be in a group of enemies.
-        Swarm,
-    }
-
     // This struc represents a weapon.
     public struct Weapon
     {
@@ -94,33 +69,43 @@ namespace OverlordEnemyGenerator
         public float projectileSpeed;
     }
 
+    // This enum defines the movement types of enemies.
+    public enum MovementType
+    {
+        None,     // The enemy stays still.
+        Random,   // The enemy performs random 2D movements.
+        Follow,   // The enemy follows the player.
+        Flee,     // The enemy flees from the player.
+        Random1D, // The enemy performs random horizontal or vertical movements.
+        Follow1D, // The enemy follows the player horizontally or vertically.
+        Flee1D,   // The enemy flees from the player horizontally or vertically.
+    }
+
+    // This enum defines the behavior types of enemies.
+    public enum BehaviorType
+    {
+        Indifferent, // The enemy does nothing.
+        LoneWolf,    // The enemy prefers to be alone.
+        Swarm,       // The enemy prefers to be in a group of enemies.
+    }
+
     /// This enum defines the types of weapons an enemy may have.
     public enum WeaponType
     {
-        // The enemy attacks the player with barehands (Melee).
-        None,
-        // The enemy uses a short sword to damage the player (Melee).
-        Sword,
-        // The enemy shots projectiles towards the player (Range).
-        Shotgun,
-        // The enemy shots bombs towards the player (Range).
-        Cannon,
-        // The enemy uses shields to defend themselves (Defense).
-        Shield,
-        // The enemy uses magic to cure themselves (Defense).
-        Cure,
+        None,    // The enemy attacks the player with barehands (Melee).
+        Sword,   // The enemy uses a short sword to damage the player (Melee).
+        Shotgun, // The enemy shots projectiles towards the player (Range).
+        Cannon,  // The enemy shots bombs towards the player (Range).
+        Shield,  // The enemy uses shields to defend themselves (Defense).
+        Cure,    // The enemy uses magic to cure themselves (Defense).
     }
 
     // This enum defines the projectile types of weapons.
     public enum ProjectileType
     {
-        // The weapon is not a projectile weapon.
-        None,
-        // The weapon shots bullets.
-        Bullet,
-        // The weapon shots arrows.
-        Arrow,
-        // The weapon shots bombs.
-        Bomb,
+        None,   // The weapon is not a projectile weapon.
+        Bullet, // The weapon shots bullets.
+        Arrow,  // The weapon shots arrows.
+        Bomb,   // The weapon shots bombs.
     }
 }
