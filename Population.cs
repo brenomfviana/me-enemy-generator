@@ -1,7 +1,10 @@
 using System;
+using System.Collections.Generic;
 
 namespace OverlordEnemyGenerator
 {
+    using Coordinate = System.ValueTuple<int, int>;
+
     /// This struct represents a population of a MAP-Elites search approach.
     ///
     /// The MAP-Elites population is an N-dimensional array of individuals, 
@@ -43,6 +46,22 @@ namespace OverlordEnemyGenerator
             if (map[b, w] is null || individual.fitness > map[b, w].fitness) {
                 map[b, w] = individual;
             }
+        }
+
+        /// Return a list corresponding to the Elites coordinates.
+        public List<Coordinate> GetElitesCoordinates()
+        {
+            List<Coordinate> coordinates = new List<Coordinate>();
+            for (int b = 0; b < dimension.behavior; b++)
+            {
+                for (int w = 0; w < dimension.weapon; w++)
+                {
+                    if (!(map[b, w] is null)) {
+                        coordinates.Add((b, w));
+                    }
+                }
+            }
+            return coordinates;
         }
 
         /// Print the individuals of the MAP-Elites population.

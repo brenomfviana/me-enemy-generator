@@ -26,13 +26,14 @@ namespace OverlordEnemyGenerator
                 // Place the new individual in the MAP-Elites
                 population.PlaceIndividual(individual);
             }
-            population.Debug();
+            // population.Debug();
             // Run the generations
             for (int i = 0; i < p.generations; i++)
             {
                 // Apply the evolutionary operators
                 if (p.crossover > rand.Next(100))
                 {
+                    Individual[] o = Operators.Selection(2, population, rand);
                     // TODO: Crossover
                     if (p.mutation > rand.Next(100))
                     {
