@@ -15,6 +15,25 @@ namespace OverlordEnemyGenerator
         public Weapon weapon;
         public float fitness;
 
+        /// Individual contructor.
+        public Individual(
+            Enemy enemy,
+            Weapon weapon
+        ) {
+            this.enemy = enemy;
+            this.weapon = weapon;
+        }
+
+        /// Return a clone of the individual.
+        ///
+        /// We create a new individual by passing `enemy` and `weapon` by value 
+        /// in the Individual constructor because both are structs, therefore, 
+        /// we are able to copy them by value.
+        public Individual Clone()
+        {
+            return new Individual(this.enemy, this.weapon);
+        }
+
         /// Return a random individual.
         public static Individual GetRandom(
             Random rand,
@@ -36,9 +55,7 @@ namespace OverlordEnemyGenerator
             w.projectileType = Util.RandomList(ss.rProjectileType, rand);
             w.projectileSpeed = Util.RandomFloat(ss.rProjectileSpeed, rand);
             // Create individual
-            Individual individual = new Individual();
-            individual.enemy = e;
-            individual.weapon = w;
+            Individual individual = new Individual(e, w);
             // Return the created individual
             return individual;
         }
