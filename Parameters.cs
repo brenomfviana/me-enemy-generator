@@ -9,8 +9,8 @@ namespace OverlordEnemyGenerator
         public int seed { get; }
         // The maximun number of generations of the evolutionary process.
         public int generations { get; }
-        // The number of random initial individuals.
-        public int rIndividuals { get; }
+        // The number of random initial (precedent) individuals.
+        public int precedent { get; }
         // The number of new individuals to be created each generation.
         public int offspring { get; }
         // The chance of mutation.
@@ -24,7 +24,7 @@ namespace OverlordEnemyGenerator
         public Parameters(
             int seed,
             int generations,
-            int rIndividuals,
+            int precedent,
             int offspring,
             int mutation,
             int crossover,
@@ -32,7 +32,7 @@ namespace OverlordEnemyGenerator
         ) {
             this.seed = seed;
             this.generations = generations;
-            this.rIndividuals = rIndividuals;
+            this.precedent = precedent;
             this.offspring = offspring;
             this.mutation = mutation;
             this.crossover = crossover;
