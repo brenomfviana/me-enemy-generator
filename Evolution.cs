@@ -22,7 +22,7 @@ namespace OverlordEnemyGenerator
                 // Generate a new random individual
                 Individual individual = Individual.GetRandom(rand, p.space);
                 // Calculates the individual fitness
-                individual.fitness = Operators.Fitness(individual);
+                individual.fitness = Fitness.Calculate(individual);
                 // Place the new individual in the MAP-Elites
                 population.PlaceIndividual(individual);
             }
