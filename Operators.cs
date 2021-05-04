@@ -56,10 +56,11 @@ namespace OverlordEnemyGenerator
         ) {
             // List of available competitors
             List<Coordinate> acds = new List<Coordinate>(cs);
-            // Initialize `amount` competitors for the tournament
+            // Initialize the list of competitors
             Individual[] competitors = new Individual[amount];
             // Initialize competitors' coordinates
             Coordinate[] coordinates = new Coordinate[amount];
+            // Select competitors
             for (int i = 0; i < amount; i++)
             {
                 // Get a random coordinate
@@ -151,7 +152,7 @@ namespace OverlordEnemyGenerator
         }
 
 
-        /// Reproduce two new individuals by appling BLX-alpha crossover.
+        /// Reproduce two new individuals by appling a custom crossover.
         public static Individual[] Crossover(
             Individual parent1,
             Individual parent2,

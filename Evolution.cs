@@ -12,19 +12,18 @@ namespace OverlordEnemyGenerator
         ) {
             // Initialize the random generator
             Random rand = new Random(p.seed);
-            // Initialize the MAP-Elites population
+            // Initialize the MAP-Elites matrix
             Population pop = new Population(
                 SearchSpace.AllBehaviorTypes().Length,
                 SearchSpace.AllWeaponTypes().Length
             );
-            // Generate initial population (the precedent individuals)
-            for (int i = 0; i < p.precedent; i++)
+            // Generate the initial population
+            for (int i = 0; i < p.initial; i++)
             {
-                // Generate a new random individual
+                // Generate a new random individual and calculate its fitness
                 Individual individual = Individual.GetRandom(rand, p.space);
-                // Calculates the individual fitness
                 individual.fitness = Fitness.Calculate(individual);
-                // Place the new individual in the MAP-Elites
+                // Place the individual in the MAP-Elites
                 pop.PlaceIndividual(individual);
             }
             // Run the generations
@@ -40,7 +39,7 @@ namespace OverlordEnemyGenerator
                     {
                         // Select two different parents
                         Individual[] parents = Operators.Select(2, pop, rand);
-                        // Apply crossover
+                        // Apply crossover and get the resulting children
                         Individual[] children = Operators.Crossover(
                             parents[0],
                             parents[1],
@@ -66,9 +65,8 @@ namespace OverlordEnemyGenerator
                     }
                     else
                     {
-                        // Select a different parent
+                        // Select and mutate a parent
                         Individual parent = Operators.Select(1, pop, rand)[0];
-                        // Mutate the parent
                         offspring.Add(Operators.Mutate(parent, p.space, rand));
                     }
                 }

@@ -25,7 +25,7 @@ namespace OverlordEnemyGenerator
             Parameters p = new Parameters(
                 0,    // Random seed
                 100,  // Number of generations
-                20,   // Number of individuals of initial population
+                20,   // Number of individuals of the initial population
                 5,    // Number of individuals of offspring
                 10,   // Mutation chance
                 90,   // Crossover chance
