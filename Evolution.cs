@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace OverlordEnemyGenerator
 {
@@ -12,7 +13,7 @@ namespace OverlordEnemyGenerator
             // Initialize the random generator
             Random rand = new Random(p.seed);
             // Initialize the MAP-Elites population
-            Population population = new Population(
+            Population pop = new Population(
                 SearchSpace.AllBehaviorTypes().Length,
                 SearchSpace.AllWeaponTypes().Length
             );
@@ -24,30 +25,61 @@ namespace OverlordEnemyGenerator
                 // Calculates the individual fitness
                 individual.fitness = Fitness.Calculate(individual);
                 // Place the new individual in the MAP-Elites
-                population.PlaceIndividual(individual);
+                pop.PlaceIndividual(individual);
             }
-            // population.Debug();
             // Run the generations
-            for (int i = 0; i < p.generations; i++)
+            for (int g = 0; g < p.generations; g++)
             {
-                // Apply the evolutionary operators
-                if (p.crossover > rand.Next(100))
+                // Initialize the offspring list
+                List<Individual> offspring = new List<Individual>();
+                // Generate offspring
+                while (offspring.Count < p.offspring)
                 {
-                    Individual[] o = Operators.Selection(2, population, rand);
-                    // TODO: Crossover
-                    if (p.mutation > rand.Next(100))
+                    // Apply the evolutionary operators
+                    if (p.crossover > rand.Next(100))
                     {
-                        // TODO: Mutation
+                        // Select two different parents
+                        Individual[] parents = Operators.Select(2, pop, rand);
+                        // Apply crossover
+                        Individual[] children = Operators.Crossover(
+                            parents[0],
+                            parents[1],
+                            rand
+                        );
+                        // Check if the new individuals will suffer mutation
+                        if (p.mutation > rand.Next(100))
+                        {
+                            for (int i = 0; i < children.Length; i++)
+                            {
+                                children[i] = Operators.Mutate(
+                                    children[i],
+                                    p.space,
+                                    rand
+                                );
+                            }
+                        }
+                        // Add the new individuals in the offspring list
+                        foreach (Individual individual in children)
+                        {
+                            offspring.Add(individual);
+                        }
+                    }
+                    else
+                    {
+                        // Select a different parent
+                        Individual parent = Operators.Select(1, pop, rand)[0];
+                        // Mutate the parent
+                        offspring.Add(Operators.Mutate(parent, p.space, rand));
                     }
                 }
-                else
+                // Place the offspring in MAP-Elites
+                foreach (Individual individual in offspring)
                 {
-                    // TODO: Mutation
+                    pop.PlaceIndividual(individual);
                 }
-                // TODO: Place in MAP-Elites
             }
             // Return the MAP-Elites population
-            return population;
+            return pop;
         }
     }
 }

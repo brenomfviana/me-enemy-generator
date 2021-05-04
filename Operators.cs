@@ -1,5 +1,4 @@
 using System;
-using System.Reflection;
 using System.Collections.Generic;
 
 namespace OverlordEnemyGenerator
@@ -17,7 +16,7 @@ namespace OverlordEnemyGenerator
         /// Instead of selecting directly an individual, we select its 
         /// coordinate from the auxiliary list and remove it then it is not 
         /// available for the next selection.
-        public static Individual[] Selection(
+        public static Individual[] Select(
             int amount,
             Population pop,
             Random rand
@@ -52,22 +51,22 @@ namespace OverlordEnemyGenerator
         static (Coordinate, Individual) Tournament(
             int amount,
             Population pop,
-            List<Coordinate> coordinates,
+            List<Coordinate> cs,
             Random rand
         ) {
             // List of available competitors
-            List<Coordinate> acds = new List<Coordinate>(coordinates);
-            // Select `amount` competitors for the tournament
+            List<Coordinate> acds = new List<Coordinate>(cs);
+            // Initialize `amount` competitors for the tournament
             Individual[] competitors = new Individual[amount];
-            // Competitors' coordinates
-            Coordinate[] cpcds = new Coordinate[amount];
+            // Initialize competitors' coordinates
+            Coordinate[] coordinates = new Coordinate[amount];
             for (int i = 0; i < amount; i++)
             {
                 // Get a random coordinate
                 (int x, int y) rc = Util.RandomFromList(acds, rand);
                 // Get the corresponding competitor
                 competitors[i] = pop.map[rc.x, rc.y];
-                cpcds[i] = rc;
+                coordinates[i] = rc;
                 // Remove competitors from available competitors
                 acds.Remove(rc);
             }
@@ -79,7 +78,7 @@ namespace OverlordEnemyGenerator
                 if (winner is null || competitors[i].fitness > winner.fitness)
                 {
                     winner = competitors[i];
-                    coordinate = cpcds[i];
+                    coordinate = coordinates[i];
                 }
             }
             // Return the tournament winner and its coordinate
@@ -89,76 +88,124 @@ namespace OverlordEnemyGenerator
 
         /// Reproduce a new individual by mutating a parent individual.
         public static Individual Mutate(
-            Individual individual,
+            Individual parent,
             SearchSpace ss,
             Random rand
         ) {
             // New individual
-            Individual mutant = individual.Clone();
+            Individual individual = parent.Clone();
             // Apply mutation
             switch (rand.Next(11))
             {
                 // Enemy attributes
                 case 0:
-                    mutant.enemy.health
+                    individual.enemy.health
                         = Util.RandomInt(ss.rHealth, rand);
                     break;
                 case 1:
-                    mutant.enemy.strength
+                    individual.enemy.strength
                         = Util.RandomInt(ss.rStrength, rand);
                     break;
                 case 2:
-                    mutant.enemy.attackSpeed
+                    individual.enemy.attackSpeed
                         = Util.RandomFloat(ss.rAttackSpeed, rand);
                     break;
                 case 3:
-                    mutant.enemy.movementType
+                    individual.enemy.movementType
                         = Util.RandomFromArray(ss.rMovementType, rand);
                     break;
                 case 4:
-                    mutant.enemy.movementSpeed
+                    individual.enemy.movementSpeed
                         = Util.RandomFloat(ss.rMovementSpeed, rand);
                     break;
                 case 5:
-                    mutant.enemy.behaviorType
+                    individual.enemy.behaviorType
                         = Util.RandomFromArray(ss.rBehaviorType, rand);
                     break;
                 case 6:
-                    mutant.enemy.activeTime
+                    individual.enemy.activeTime
                         = Util.RandomFloat(ss.rActiveTime, rand);
                     break;
                 case 7:
-                    mutant.enemy.restTime
+                    individual.enemy.restTime
                         = Util.RandomFloat(ss.rRestTime, rand);
                     break;
                 // Weapon attributes
                 case 8:
-                    mutant.weapon.weaponType
+                    individual.weapon.weaponType
                         = Util.RandomFromArray(ss.rWeaponType, rand);
                     break;
                 case 9:
-                    mutant.weapon.projectileType
+                    individual.weapon.projectileType
                         = Util.RandomFromArray(ss.rProjectileType, rand);
                     break;
                 case 10:
-                    mutant.weapon.projectileSpeed
+                    individual.weapon.projectileSpeed
                         = Util.RandomFloat(ss.rProjectileSpeed, rand);
                     break;
             }
             // Calculate new individual fitness
-            mutant.fitness = Fitness.Calculate(mutant);
+            individual.fitness = Fitness.Calculate(individual);
             // Return the new mutated individual
-            return mutant;
+            return individual;
         }
 
 
         /// Reproduce two new individuals by appling BLX-alpha crossover.
         public static Individual[] Crossover(
-            Individual individual1,
-            Individual individual2,
+            Individual parent1,
+            Individual parent2,
             Random rand
         ) {
-            return null;
+            return new Individual[1] {
+                MeanRandomCrossover(parent1, parent2, rand)
+            };
+        }
+
+        /// Perform a custom crossover composed of two stages.
+        ///
+        /// The first stage calculates the means of the numerical attributes. 
+        /// The second stage randomly selects two options of crossover: or the 
+        /// enemy nominal attributes from the first parent and the weapon 
+        /// nominal attributtes from the second parent or the inverse are set 
+        /// to the new individual.
+        static Individual MeanRandomCrossover(
+            Individual parent1,
+            Individual parent2,
+            Random rand
+        ) {
+            // Get from parents
+            Enemy p1e = parent1.enemy;
+            Weapon p1w = parent1.weapon;
+            Enemy p2e = parent2.enemy;
+            Weapon p2w = parent2.weapon;
+            // New individual
+            Enemy e = new Enemy();
+            Weapon w = new Weapon();
+            // Apply mean crossover
+            e.health = (p1e.health + p2e.health) / 2;
+            e.strength = (p1e.strength + p2e.strength) / 2;
+            e.attackSpeed = (p1e.attackSpeed + p2e.attackSpeed) / 2;
+            e.movementSpeed = (p1e.movementSpeed + p2e.movementSpeed) / 2;
+            e.activeTime = (p1e.activeTime + p2e.activeTime) / 2;
+            e.restTime = (p1e.restTime + p2e.restTime) / 2;
+            w.projectileSpeed = (p1w.projectileSpeed + p2w.projectileSpeed) / 2;
+            // Apply random crossover
+            if (rand.Next(2) == 1) {
+                e.movementType = p1e.movementType;
+                e.behaviorType = p1e.behaviorType;
+                w.weaponType = p2w.weaponType;
+                w.projectileType = p2w.projectileType;
+            } else {
+                e.movementType = p2e.movementType;
+                e.behaviorType = p2e.behaviorType;
+                w.weaponType = p1w.weaponType;
+                w.projectileType = p1w.projectileType;
+            }
+            // Return the new individual
+            Individual individual = new Individual(e, w);
+            individual.fitness = Fitness.Calculate(individual);
+            return individual;
         }
     }
 }
