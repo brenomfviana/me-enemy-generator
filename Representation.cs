@@ -34,6 +34,24 @@ namespace OverlordEnemyGenerator
             return new Individual(this.enemy, this.weapon);
         }
 
+        /// Print the individual attributes.
+        public void Debug()
+        {
+            Console.WriteLine("   " + this.fitness);
+            Console.WriteLine("   " + this.enemy.health);
+            Console.WriteLine("   " + this.enemy.strength);
+            Console.WriteLine("   " + this.enemy.attackSpeed);
+            Console.WriteLine("   " + this.enemy.movementType);
+            Console.WriteLine("   " + this.enemy.movementSpeed);
+            Console.WriteLine("   " + this.enemy.behaviorType);
+            Console.WriteLine("   " + this.enemy.activeTime);
+            Console.WriteLine("   " + this.enemy.restTime);
+            Console.WriteLine("   " + this.weapon.weaponType);
+            Console.WriteLine("   " + this.weapon.projectileType);
+            Console.WriteLine("   " + this.weapon.projectileSpeed);
+            Console.WriteLine();
+        }
+
         /// Return a random individual.
         public static Individual GetRandom(
             Random rand,
