@@ -22,23 +22,19 @@ namespace OverlordEnemyGenerator
         ) {
             // Create a random enemy
             Enemy e = new Enemy();
-            e.health = Util.RandomInt(ss.health, rand);
-            e.strength = Util.RandomInt(ss.strength, rand);
-            e.attackSpeed = Util.RandomFloat(ss.attackSpeed, rand);
-            e.movementSpeed = Util.RandomFloat(ss.movementSpeed, rand);
-            e.activeTime = Util.RandomFloat(ss.activeTime, rand);
-            e.restTime = Util.RandomFloat(ss.restTime, rand);
-            e.movementType = Util.RandomList(
-                SearchSpace.AllMovementTypes(), rand);
-            e.behaviorType = Util.RandomList(
-                SearchSpace.AllBehaviorTypes(), rand);
+            e.health = Util.RandomInt(ss.rHealth, rand);
+            e.strength = Util.RandomInt(ss.rStrength, rand);
+            e.attackSpeed = Util.RandomFloat(ss.rAttackSpeed, rand);
+            e.movementType = Util.RandomList(ss.rMovementType, rand);
+            e.movementSpeed = Util.RandomFloat(ss.rMovementSpeed, rand);
+            e.behaviorType = Util.RandomList(ss.rBehaviorType, rand);
+            e.activeTime = Util.RandomFloat(ss.rActiveTime, rand);
+            e.restTime = Util.RandomFloat(ss.rRestTime, rand);
             // Create a random weapon
             Weapon w = new Weapon();
-            w.weaponType = Util.RandomList(
-                SearchSpace.AllWeaponTypes(), rand);
-            w.projectileType = Util.RandomList(
-                SearchSpace.AllProjectileTypes(), rand);
-            w.projectileSpeed = Util.RandomFloat(ss.projectileSpeed, rand);
+            w.weaponType = Util.RandomList(ss.rWeaponType, rand);
+            w.projectileType = Util.RandomList(ss.rProjectileType, rand);
+            w.projectileSpeed = Util.RandomFloat(ss.rProjectileSpeed, rand);
             // Create individual
             Individual individual = new Individual();
             individual.enemy = e;

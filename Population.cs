@@ -62,6 +62,7 @@ namespace OverlordEnemyGenerator
                     else
                     {
                         Individual i = map[b, w];
+                        Console.WriteLine("   " + i.fitness);
                         Console.WriteLine("   " + i.enemy.health);
                         Console.WriteLine("   " + i.enemy.strength);
                         Console.WriteLine("   " + i.enemy.attackSpeed);

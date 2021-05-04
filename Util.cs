@@ -5,8 +5,8 @@ namespace OverlordEnemyGenerator
     /// This class holds only utility functions.
     public class Util
     {
-        /// Return a random integer number from the given range and the given 
-        /// random number generator.
+        /// Return a random integer number from the given inclusive range and 
+        /// the given random number generator.
         public static int RandomInt(
             (int min, int max) range,
             Random rand
@@ -14,8 +14,8 @@ namespace OverlordEnemyGenerator
             return rand.Next(range.min, range.max + 1);
         }
 
-        /// Return a random float number from the given range and the given 
-        /// random number generator.
+        /// Return a random float number from the given inclusive range and the 
+        /// given random number generator.
         public static float RandomFloat(
             (float min, float max) range,
             Random rand
