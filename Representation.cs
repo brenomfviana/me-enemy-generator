@@ -44,15 +44,15 @@ namespace OverlordEnemyGenerator
             e.health = Util.RandomInt(ss.rHealth, rand);
             e.strength = Util.RandomInt(ss.rStrength, rand);
             e.attackSpeed = Util.RandomFloat(ss.rAttackSpeed, rand);
-            e.movementType = Util.RandomList(ss.rMovementType, rand);
+            e.movementType = Util.RandomFromArray(ss.rMovementType, rand);
             e.movementSpeed = Util.RandomFloat(ss.rMovementSpeed, rand);
-            e.behaviorType = Util.RandomList(ss.rBehaviorType, rand);
+            e.behaviorType = Util.RandomFromArray(ss.rBehaviorType, rand);
             e.activeTime = Util.RandomFloat(ss.rActiveTime, rand);
             e.restTime = Util.RandomFloat(ss.rRestTime, rand);
             // Create a random weapon
             Weapon w = new Weapon();
-            w.weaponType = Util.RandomList(ss.rWeaponType, rand);
-            w.projectileType = Util.RandomList(ss.rProjectileType, rand);
+            w.weaponType = Util.RandomFromArray(ss.rWeaponType, rand);
+            w.projectileType = Util.RandomFromArray(ss.rProjectileType, rand);
             w.projectileSpeed = Util.RandomFloat(ss.rProjectileSpeed, rand);
             // Create individual
             Individual individual = new Individual(e, w);

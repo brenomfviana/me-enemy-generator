@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace OverlordEnemyGenerator
 {
@@ -26,11 +27,20 @@ namespace OverlordEnemyGenerator
 
         /// Return a random element from the given list and the given random 
         /// number generator.
-        public static T RandomList<T>(
+        public static T RandomFromArray<T>(
             T[] range,
             Random rand
         ) {
             return range[rand.Next(0, range.Length)];
+        }
+
+        /// Return a random element from the given list and the given random 
+        /// number generator.
+        public static T RandomFromList<T>(
+            List<T> range,
+            Random rand
+        ) {
+            return range[rand.Next(0, range.Count)];
         }
     }
 }
