@@ -43,7 +43,8 @@ namespace OverlordEnemyGenerator
             int b = (int) individual.enemy.behaviorType;
             int w = (int) individual.weapon.weaponType;
             // Check if the new individual deserves to survive
-            if (map[b, w] is null || individual.fitness > map[b, w].fitness) {
+            if (map[b, w] is null || individual.fitness > map[b, w].fitness)
+            {
                 map[b, w] = individual;
             }
         }
@@ -56,7 +57,8 @@ namespace OverlordEnemyGenerator
             {
                 for (int w = 0; w < dimension.weapon; w++)
                 {
-                    if (!(map[b, w] is null)) {
+                    if (!(map[b, w] is null))
+                    {
                         coordinates.Add((b, w));
                     }
                 }

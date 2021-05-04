@@ -28,8 +28,7 @@ namespace OverlordEnemyGenerator
         /// behavior, weapon, or projectile.
         static float Multiplier<T>(
             T value
-        )
-        {
+        ) {
             // If the value is a MovementType
             if (value is MovementType) {
                 switch (value)
@@ -51,7 +50,8 @@ namespace OverlordEnemyGenerator
                 }
             }
             // If the value is a BehaviorType
-            else if (value is BehaviorType) {
+            else if (value is BehaviorType)
+            {
                 switch (value)
                 {
                     case BehaviorType.Indifferent:
@@ -63,7 +63,8 @@ namespace OverlordEnemyGenerator
                 }
             }
             // If the value is a WeaponType
-            else if (value is WeaponType) {
+            else if (value is WeaponType)
+            {
                 switch (value)
                 {
                     case WeaponType.None:
@@ -81,7 +82,8 @@ namespace OverlordEnemyGenerator
                 }
             }
             // If the value is a ProjectileType
-            else if (value is ProjectileType) {
+            else if (value is ProjectileType)
+            {
                 switch (value)
                 {
                     case ProjectileType.None:

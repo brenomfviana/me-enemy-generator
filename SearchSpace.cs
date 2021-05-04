@@ -32,8 +32,8 @@ namespace OverlordEnemyGenerator
             (float, float) rRestTime,
             WeaponType[] rWeaponType,
             ProjectileType[] rProjectileType,
-            (float, float) rProjectileSpeed)
-        {
+            (float, float) rProjectileSpeed
+        ) {
             this.rHealth = rHealth;
             this.rStrength = rStrength;
             this.rAttackSpeed = rAttackSpeed;
