@@ -19,7 +19,7 @@ namespace OverlordEnemyGenerator
                 SearchSpace.AllWeaponTypes().Length
             );
             // Generate the initial population
-            for (int i = 0; i < p.initial; i++)
+            while (pop.Count() < p.initial)
             {
                 // Generate a new random individual and calculate its fitness
                 Individual individual = Individual.GetRandom(rand, p.space);

@@ -30,6 +30,23 @@ namespace OverlordEnemyGenerator
             this.map = new Individual[dimension.behavior, dimension.weapon];
         }
 
+        /// Return the number of Elites of the population.
+        public int Count()
+        {
+            int count = 0;
+            for (int b = 0; b < dimension.behavior; b++)
+            {
+                for (int w = 0; w < dimension.weapon; w++)
+                {
+                    if (!(map[b, w] is null))
+                    {
+                        count++;
+                    }
+                }
+            }
+            return count;
+        }
+
         /// Add an individual in the MAP-Elites population.
         ///
         /// First, we identify which Elite the individual is classified in. 
