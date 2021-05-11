@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace OverlordEnemyGenerator
+﻿namespace OverlordEnemyGenerator
 {
     class Program
     {

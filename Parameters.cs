@@ -1,5 +1,3 @@
-using System;
-
 namespace OverlordEnemyGenerator
 {
     /// This struct defines the parameters of the evolutionary enemy generator.
