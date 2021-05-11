@@ -1,31 +1,28 @@
 using System.IO;
-using System.Collections.Generic;
 using System.Text.Json;
 
 namespace OverlordEnemyGenerator
 {
-    /// .
+    /// This class holds functions to write the evolutionary process' outputs.
     public static class Output
     {
-        /// .
-        public static void WriteMAPElites(
-            Population solution,
+        /// Write the collected data from the evolutionary process.
+        public static void WriteData(
+            Data data,
             string[] args
         ) {
-            // Get individuals
-            List<Individual> data = solution.ToList();
             // Convert list to formmated JSON string
             var options = new JsonSerializerOptions(){ WriteIndented = true };
             string json = JsonSerializer.Serialize(data, options);
             // Calculate the JSON filename
             string filename = "";
-            for (int i = 1; i < args.Length; i++)
-            {
-                filename += args[i] + '-';
-            }
+            filename += args[2] + '-';
+            filename += args[3] + '-';
+            filename += args[4] + '-';
+            filename += args[1] + '-';
             filename += args[0];
             // Write JSON file
-            File.WriteAllText("results" + filename + ".json", json);
+            File.WriteAllText("results/" + filename + ".json", json);
         }
     }
 }

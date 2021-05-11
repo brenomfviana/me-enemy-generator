@@ -8,7 +8,8 @@ namespace OverlordEnemyGenerator
     {
         /// Generate and return a set of enemies.
         public static Population Evolve(
-            Parameters p
+            Parameters p,
+            ref Data data
         ) {
             // Initialize the random generator
             Random rand = new Random(p.seed);
@@ -26,6 +27,8 @@ namespace OverlordEnemyGenerator
                 // Place the individual in the MAP-Elites
                 pop.PlaceIndividual(individual);
             }
+            // Get the initial population
+            data.initial = new List<Individual>(pop.ToList());
             // Run the generations
             for (int g = 0; g < p.generations; g++)
             {
@@ -73,9 +76,17 @@ namespace OverlordEnemyGenerator
                 // Place the offspring in MAP-Elites
                 foreach (Individual individual in offspring)
                 {
+                    individual.generation = g;
                     pop.PlaceIndividual(individual);
                 }
+                // Get the intermediary population
+                if (g == (int) p.generations / 2 )
+                {
+                    data.intermediary = new List<Individual>(pop.ToList());
+                }
             }
+            // Get the final population (solution)
+            data.solution = new List<Individual>(pop.ToList());
             // Return the MAP-Elites population
             return pop;
         }
