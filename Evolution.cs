@@ -79,10 +79,10 @@ namespace OverlordEnemyGenerator
                     individual.generation = g;
                     pop.PlaceIndividual(individual);
                 }
-                // Get the intermediary population
+                // Get the intermediate population
                 if (g == (int) p.generations / 2 )
                 {
-                    data.intermediary = new List<Individual>(pop.ToList());
+                    data.intermediate = new List<Individual>(pop.ToList());
                 }
             }
             // Get the final population (solution)

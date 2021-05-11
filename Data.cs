@@ -13,7 +13,7 @@ namespace OverlordEnemyGenerator
         [JsonInclude]
         public List<Individual> initial { get; set; }
         [JsonInclude]
-        public List<Individual> intermediary { get; set; }
+        public List<Individual> intermediate { get; set; }
         [JsonInclude]
         public List<Individual> solution { get; set; }
     }
