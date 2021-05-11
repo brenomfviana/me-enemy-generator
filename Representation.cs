@@ -5,7 +5,8 @@ namespace OverlordEnemyGenerator
 {
     /// This class represents an individual.
     ///
-    /// Individuals are composed of an enemy, a weapon, and a fitness value.
+    /// Individuals are composed of an enemy, a weapon, its fitness value, and
+    /// the generation when it was created.
     ///
     /// Why individuals are represented by a class? When using MAP-Elites, some 
     /// slots may be empty, then the `null` option makes easier to manage the 
@@ -19,6 +20,8 @@ namespace OverlordEnemyGenerator
         public Weapon weapon;
         [JsonInclude]
         public float fitness;
+        [JsonInclude]
+        public int generation;
 
         /// Individual contructor.
         public Individual(
@@ -79,6 +82,7 @@ namespace OverlordEnemyGenerator
             w.projectileSpeed = Util.RandomFloat(ss.rProjectileSpeed, rand);
             // Create individual
             Individual individual = new Individual(e, w);
+            individual.generation = -1;
             // Return the created individual
             return individual;
         }
