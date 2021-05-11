@@ -66,6 +66,20 @@ namespace OverlordEnemyGenerator
             return coordinates;
         }
 
+        /// Return a list with the individuals.
+        public List<Individual> ToList()
+        {
+            List<Individual> list = new List<Individual>();
+            for (int b = 0; b < dimension.behavior; b++)
+            {
+                for (int w = 0; w < dimension.weapon; w++)
+                {
+                    list.Add(map[b, w]);
+                }
+            }
+            return list;
+        }
+
         /// Print the individuals of the MAP-Elites population.
         public void Debug()
         {
