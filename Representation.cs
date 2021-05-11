@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json.Serialization;
 
 namespace OverlordEnemyGenerator
 {
@@ -6,13 +7,17 @@ namespace OverlordEnemyGenerator
     ///
     /// Individuals are composed of an enemy, a weapon, and a fitness value.
     ///
-    /// Why individuals are represented as a class?
-    /// - When using MAP-Elites, some slots may be empty, then the `null` 
-    ///   option makes easier to manage the MAP-Elites population.
+    /// Why individuals are represented by a class? When using MAP-Elites, some 
+    /// slots may be empty, then the `null` option makes easier to manage the 
+    /// MAP-Elites population.
+    [Serializable]
     public class Individual
     {
+        [JsonInclude]
         public Enemy enemy;
+        [JsonInclude]
         public Weapon weapon;
+        [JsonInclude]
         public float fitness;
 
         /// Individual contructor.
@@ -80,27 +85,41 @@ namespace OverlordEnemyGenerator
     }
 
     /// This struct represents an enemy.
+    [Serializable]
     public struct Enemy
-    {
+    {   
+        [JsonInclude]
         public int health;
+        [JsonInclude]
         public int strength;
+        [JsonInclude]
         public float attackSpeed;
+        [JsonInclude]
         public MovementType movementType;
+        [JsonInclude]
         public float movementSpeed;
+        [JsonInclude]
         public BehaviorType behaviorType;
+        [JsonInclude]
         public float activeTime;
+        [JsonInclude]
         public float restTime;
     }
 
     // This struc represents a weapon.
+    [Serializable]
     public struct Weapon
     {
+        [JsonInclude]
         public WeaponType weaponType;
+        [JsonInclude]
         public ProjectileType projectileType;
+        [JsonInclude]
         public float projectileSpeed;
     }
 
     // This enum defines the movement types of enemies.
+    [Serializable]
     public enum MovementType
     {
         None,     // The enemy stays still.
@@ -113,6 +132,7 @@ namespace OverlordEnemyGenerator
     }
 
     // This enum defines the behavior types of enemies.
+    [Serializable]
     public enum BehaviorType
     {
         Indifferent, // The enemy does nothing.
@@ -121,6 +141,7 @@ namespace OverlordEnemyGenerator
     }
 
     /// This enum defines the types of weapons an enemy may have.
+    [Serializable()]
     public enum WeaponType
     {
         None,    // The enemy attacks the player with barehands (Melee).
@@ -132,6 +153,7 @@ namespace OverlordEnemyGenerator
     }
 
     // This enum defines the projectile types of weapons.
+    [Serializable]
     public enum ProjectileType
     {
         None,   // The weapon is not a projectile weapon.
