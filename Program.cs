@@ -4,9 +4,14 @@ namespace OverlordEnemyGenerator
 {
     class Program
     {
-       private const int ERROR_BAD_ARGUMENTS = 0xA0;
+        private const int ERROR_BAD_ARGUMENTS = 0xA0;
 
         /// The program get five parameters.
+        ///
+        /// arg1 - Random seed.
+        /// arg2 - Number of generations.
+        /// arg3 - Number of individuals of the initial population.
+        /// arg4 - Number of individuals of offspring.
         static void Main(string[] args)
         {
             // Check if the number of parameters are valid
@@ -54,13 +59,21 @@ namespace OverlordEnemyGenerator
             DateTime start = DateTime.Now;
 
             // Generate a set of enemies
-            Population population = Evolution.Evolve(p, ref data);
+            Evolution.Evolve(p, ref data);
 
             // Get ending time
             DateTime end = DateTime.Now;
 
             // Get the duration time
             data.duration = (end - start).TotalSeconds;
+            // Get random seed
+            data.seed = arg1;
+            // Get number of generations
+            data.generations = arg2;
+            // Get number of individuals of the initial population
+            data.initialPopSize = arg3;
+            // Get number of individuals of offspring
+            data.offspringSize = arg4;
 
             // Write the collected data
             Output.WriteData(data, args);

@@ -9,6 +9,14 @@ namespace OverlordEnemyGenerator
     public struct Data
     {
         [JsonInclude]
+        public int seed { get; set; }
+        [JsonInclude]
+        public int generations { get; set; }
+        [JsonInclude]
+        public int initialPopSize { get; set; }
+        [JsonInclude]
+        public int offspringSize { get; set; }
+        [JsonInclude]
         public double duration { get; set; }
         [JsonInclude]
         public List<Individual> initial { get; set; }

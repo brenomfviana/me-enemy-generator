@@ -16,10 +16,15 @@ namespace OverlordEnemyGenerator
             string json = JsonSerializer.Serialize(data, options);
             // Calculate the JSON filename
             string filename = "";
+            // Number of generations
             filename += args[2] + '-';
+            // Number of individuals of the initial population
             filename += args[3] + '-';
+            // Number of individuals of offspring
             filename += args[4] + '-';
+            // Random seed
             filename += args[1] + '-';
+            // Number of the execution
             filename += args[0];
             // Write JSON file
             File.WriteAllText("results/" + filename + ".json", json);
