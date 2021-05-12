@@ -1,6 +1,8 @@
 ### Research ###
 ## Ignore the temporary results folder
 [Rr]esults/
+# Ignore the virtual environment
+auto/
 
 
 
