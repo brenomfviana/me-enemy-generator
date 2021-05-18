@@ -21,6 +21,8 @@ namespace OverlordEnemyGenerator
         [JsonInclude]
         public float fitness;
         [JsonInclude]
+        public float difficulty;
+        [JsonInclude]
         public int generation;
 
         /// Individual contructor.

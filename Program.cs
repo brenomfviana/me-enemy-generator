@@ -6,51 +6,34 @@ namespace OverlordEnemyGenerator
     {
         private const int ERROR_BAD_ARGUMENTS = 0xA0;
 
-        /// The program can run without arguments or get six arguments.
+        /// This program gets six arguments.
         ///
-        /// arg0 - Random seed.
-        /// arg1 - Number of generations.
-        /// arg2 - Initial population size.
-        /// arg3 - Offspring size.
-        /// arg4 - Desired difficulty.
+        /// `0` - Random seed.
+        /// `1` - Number of generations.
+        /// `2` - Initial population size.
+        /// `3` - Offspring size.
+        /// `4` - Desired difficulty.
         static void Main(string[] args)
         {
+            // Check if the number of parameters are valid
+            if (args.Length != 5) {
+                Console.WriteLine("ERROR: Invalid number of parameters!");
+                System.Environment.Exit(ERROR_BAD_ARGUMENTS);
+            }
+
             // Initialize the struct data to hold the generation process data
             Data data = new Data();
 
-            // Define evolutionary parameters
-            if (args.Length == 0)
-            {
-                // Get random seed
-                data.seed = new Random().Next();
-                // Get number of generations
-                data.generations = 100;
-                // Get initial population size
-                data.initialPopSize = 15;
-                // Get offspring size
-                data.offspringSize = 1;
-                // Get desired difficulty
-                data.goal = 25;
-            }
-            else
-            {
-                // Check if the number of parameters are valid
-                if (args.Length != 5) {
-                    Console.WriteLine("ERROR: Invalid number of parameters!");
-                    System.Environment.Exit(ERROR_BAD_ARGUMENTS);
-                }
-
-                // Get random seed
-                data.seed = int.Parse(args[0]);
-                // Get number of generations
-                data.generations = int.Parse(args[1]);
-                // Get initial population size
-                data.initialPopSize = int.Parse(args[2]);
-                // Get offspring size
-                data.offspringSize = int.Parse(args[3]);
-                // Get desired difficulty
-                data.goal = float.Parse(args[4]);
-            }
+            // Get random seed
+            data.seed = int.Parse(args[0]);
+            // Get number of generations
+            data.generations = int.Parse(args[1]);
+            // Get initial population size
+            data.initialPopSize = int.Parse(args[2]);
+            // Get offspring size
+            data.offspringSize = int.Parse(args[3]);
+            // Get desired difficulty
+            data.goal = float.Parse(args[4]);
 
             // Define the chances of the recombination operators
             int mutation = 20;
