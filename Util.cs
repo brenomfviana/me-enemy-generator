@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace OverlordEnemyGenerator
 {
     /// This class holds only utility functions.
-    public class Util
+    public static class Util
     {
         /// Return a random integer number from the given inclusive range and 
         /// the given random number generator.

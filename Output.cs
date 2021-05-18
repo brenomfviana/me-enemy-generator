@@ -11,6 +11,12 @@ namespace OverlordEnemyGenerator
             Data data,
             string[] args
         ) {
+            // Create folder 'results'
+            string folder = @"results";
+            if (!Directory.Exists(folder))
+            {
+                System.IO.Directory.CreateDirectory(folder);
+            }
             // Convert list to formmated JSON string
             var options = new JsonSerializerOptions(){ WriteIndented = true };
             string json = JsonSerializer.Serialize(data, options);
@@ -22,8 +28,6 @@ namespace OverlordEnemyGenerator
             filename += args[3] + '-';
             // Number of individuals of offspring
             filename += args[4] + '-';
-            // Random seed
-            filename += args[1] + '-';
             // Number of the execution
             filename += args[0];
             // Write JSON file
