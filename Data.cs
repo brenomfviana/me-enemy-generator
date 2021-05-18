@@ -17,6 +17,8 @@ namespace OverlordEnemyGenerator
         [JsonInclude]
         public int offspringSize { get; set; }
         [JsonInclude]
+        public float goal { get; set; }
+        [JsonInclude]
         public double duration { get; set; }
         [JsonInclude]
         public List<Individual> initial { get; set; }

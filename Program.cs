@@ -6,14 +6,56 @@ namespace OverlordEnemyGenerator
     {
         private const int ERROR_BAD_ARGUMENTS = 0xA0;
 
-        /// The program get five parameters.
+        /// The program can run without arguments or get six arguments.
         ///
-        /// arg1 - Random seed.
-        /// arg2 - Number of generations.
-        /// arg3 - Number of individuals of the initial population.
-        /// arg4 - Number of individuals of offspring.
+        /// arg0 - Random seed.
+        /// arg1 - Number of generations.
+        /// arg2 - Initial population size.
+        /// arg3 - Offspring size.
+        /// arg4 - Desired difficulty.
         static void Main(string[] args)
         {
+            // Initialize the struct data to hold the generation process data
+            Data data = new Data();
+
+            // Define evolutionary parameters
+            if (args.Length == 0)
+            {
+                // Get random seed
+                data.seed = new Random().Next();
+                // Get number of generations
+                data.generations = 100;
+                // Get initial population size
+                data.initialPopSize = 15;
+                // Get offspring size
+                data.offspringSize = 1;
+                // Get desired difficulty
+                data.goal = 25;
+            }
+            else
+            {
+                // Check if the number of parameters are valid
+                if (args.Length != 5) {
+                    Console.WriteLine("ERROR: Invalid number of parameters!");
+                    System.Environment.Exit(ERROR_BAD_ARGUMENTS);
+                }
+
+                // Get random seed
+                data.seed = int.Parse(args[0]);
+                // Get number of generations
+                data.generations = int.Parse(args[1]);
+                // Get initial population size
+                data.initialPopSize = int.Parse(args[2]);
+                // Get offspring size
+                data.offspringSize = int.Parse(args[3]);
+                // Get desired difficulty
+                data.goal = float.Parse(args[4]);
+            }
+
+            // Define the chances of the recombination operators
+            int mutation = 20;
+            int crossover = 80;
+
             // Define the search space
             SearchSpace space = new SearchSpace(
                 (1, 5),                           // Health
@@ -28,53 +70,17 @@ namespace OverlordEnemyGenerator
                 (1f, 4f)                          // Projectile Speed
             );
 
-            // Initialize the struct data to hold the generation process data
-            Data data = new Data();
-
             // Define evolutionary parameters
-            Parameters p;
-            if (args.Length == 0)
-            {
-                p = new Parameters(
-                    0,    // Random seed
-                    200,  // Number of generations
-                    10,   // Initial population soze
-                    1,    // Offspring size
-                    30,   // Mutation chance
-                    70,   // Crossover chance
-                    25,   // Desired difficulty
-                    space // The problem search space
-                );
-            }
-            else
-            {
-                // Check if the number of parameters are valid
-                if (args.Length != 5) {
-                    Console.WriteLine("ERROR: Invalid number of parameters!");
-                    System.Environment.Exit(ERROR_BAD_ARGUMENTS);
-                }
-
-                // Get random seed
-                data.seed = int.Parse(args[1]);
-                // Get number of generations
-                data.generations = int.Parse(args[2]);
-                // Get number of individuals of the initial population
-                data.initialPopSize = int.Parse(args[3]);
-                // Get number of individuals of offspring
-                data.offspringSize = int.Parse(args[4]);
-
-                // Define evolutionary parameters
-                p = new Parameters(
-                    data.seed,           // Random seed
-                    data.generations,    // Number of generations
-                    data.initialPopSize, // Initial population soze
-                    data.offspringSize,  // Offspring size
-                    30,                  // Mutation chance
-                    70,                  // Crossover chance
-                    25,                  // Desired difficulty
-                    space                // The problem search space
-                );
-            }
+            Parameters p = new Parameters(
+                data.seed,           // Random seed
+                data.generations,    // Number of generations
+                data.initialPopSize, // Initial population size
+                data.offspringSize,  // Offspring size
+                mutation,            // Mutation chance
+                crossover,           // Crossover chance
+                data.goal,           // Desired difficulty
+                space                // The problem search space
+            );
 
             // Get starting time
             DateTime start = DateTime.Now;
@@ -89,7 +95,7 @@ namespace OverlordEnemyGenerator
             data.duration = (end - start).TotalSeconds;
 
             // Write the collected data
-            Output.WriteData(data, args);
+            Output.WriteData(data);
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Text.Json;
 
@@ -8,8 +9,7 @@ namespace OverlordEnemyGenerator
     {
         /// Write the collected data from the evolutionary process.
         public static void WriteData(
-            Data data,
-            string[] args
+            Data data
         ) {
             // Create folder 'results'
             string folder = @"results";
@@ -23,13 +23,13 @@ namespace OverlordEnemyGenerator
             // Calculate the JSON filename
             string filename = "";
             // Number of generations
-            filename += args[2] + '-';
-            // Number of individuals of the initial population
-            filename += args[3] + '-';
-            // Number of individuals of offspring
-            filename += args[4] + '-';
-            // Number of the execution
-            filename += args[0];
+            filename += "" + data.generations + '-';
+            // Initial population size
+            filename += "" + data.initialPopSize + '-';
+            // Offspring size
+            filename += "" + data.offspringSize + '-';
+            // Desired difficulty
+            filename += "" + data.goal;
             // Write JSON file
             File.WriteAllText("results/" + filename + ".json", json);
         }

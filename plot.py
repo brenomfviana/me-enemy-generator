@@ -45,10 +45,10 @@ def plot_heatmap(map, filename, pop, max):
 
 # Calculate the filename
 filename = 'results/'
-filename += sys.argv[3] + '-' # Number of generations
-filename += sys.argv[4] + '-' # Number of individuals of the initial population
-filename += sys.argv[5] + '-' # Number of individuals of offspring
-filename += sys.argv[1] + '.json'
+filename += sys.argv[2] + '-'     # Number of generations
+filename += sys.argv[3] + '-'     # Initial population size
+filename += sys.argv[4] + '-'     # Offspring size
+filename += sys.argv[5] + '.json' # Desired fitness
 
 # Read JSON file
 with open(filename, 'r') as json_file:
@@ -62,9 +62,9 @@ fit_map_initial = to_map(obj['initial'], 'fitness')
 fit_map_intermediate = to_map(obj['intermediate'], 'fitness')
 fit_map_final = to_map(obj['solution'], 'fitness')
 
-plot_heatmap(fit_map_initial, filename, 'fitness_initial', 35)
-plot_heatmap(fit_map_intermediate, filename, 'fitness_intermediate', 35)
-plot_heatmap(fit_map_final, filename, 'fitness_final', 35)
+plot_heatmap(fit_map_initial, filename, 'fitness_initial', 18)
+plot_heatmap(fit_map_intermediate, filename, 'fitness_intermediate', 18)
+plot_heatmap(fit_map_final, filename, 'fitness_final', 18)
 
 # Generation heatmap of the populations
 gen_map_initial = to_map(obj['initial'], 'generation')

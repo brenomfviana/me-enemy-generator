@@ -15,24 +15,27 @@ executions = range(1)
 
 # --- Define the set of parameters
 
-# Set the numbers of generations
+# Number of generations
 generations = [100]
 
-# Set the numbers of individuals of the initial populations
-populations = [10]
+# Initial population size
+populations = [18]
 
-# Set the numbers of individuals of offspring
+# Offspring size
 offsprings = [1]
+
+# Set the list of desired difficulty
+difficulties = [25]
 
 
 # --- Perform experiment
 
-def run(g, p, o, e):
+def run(g, p, o, d):
   # Generate a random seed
   rs = random.randint(0, np.iinfo(np.int32).max - 1)
   # Build the parameters
   parameters = ""
-  for i in [e, rs, g, p, o]:
+  for i in [rs, g, p, o, d]:
     parameters += str(i) + ' '
   # Print parameters
   print(parameters)
@@ -55,9 +58,10 @@ i = 1
 for g in generations:
   for p in populations:
     for o in offsprings:
-      for e in executions:
-        # Run execuble
-        run(g, p, o, e)
-        # Print progress
-        print("%.2f" % ((i / total) * 100))
-        i += 1
+      for d in difficulties:
+        for _ in executions:
+          # Run execuble
+          run(g, p, o, d)
+          # Print progress
+          print("%.2f" % ((i / total) * 100))
+          i += 1
