@@ -26,7 +26,7 @@ namespace OverlordEnemyGenerator
             individual.fitness = Math.Abs(goal - individual.difficulty);
         }
 
-        /// Return the multiplier factor for the given type of movement, 
+        /// Return the multiplier factor for the given type of movement,
         /// behavior, weapon, or projectile.
         static float Multiplier<T>(
             T value

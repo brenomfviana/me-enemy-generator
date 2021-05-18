@@ -8,8 +8,8 @@ namespace OverlordEnemyGenerator
     /// Individuals are composed of an enemy, a weapon, its fitness value, and
     /// the generation when it was created.
     ///
-    /// Why individuals are represented by a class? When using MAP-Elites, some 
-    /// slots may be empty, then the `null` option makes easier to manage the 
+    /// Why individuals are represented by a class? When using MAP-Elites, some
+    /// slots may be empty, then the `null` option makes easier to manage the
     /// MAP-Elites population.
     [Serializable]
     public class Individual
@@ -19,9 +19,9 @@ namespace OverlordEnemyGenerator
         [JsonInclude]
         public Weapon weapon;
         [JsonInclude]
-        public float fitness;
-        [JsonInclude]
         public float difficulty;
+        [JsonInclude]
+        public float fitness;
         [JsonInclude]
         public int generation;
 
@@ -36,8 +36,8 @@ namespace OverlordEnemyGenerator
 
         /// Return a clone of the individual.
         ///
-        /// We create a new individual by passing `enemy` and `weapon` by value 
-        /// in the Individual constructor because both are structs, therefore, 
+        /// We create a new individual by passing `enemy` and `weapon` by value
+        /// in the Individual constructor because both are structs, therefore,
         /// we are able to copy them by value.
         public Individual Clone()
         {
@@ -47,7 +47,9 @@ namespace OverlordEnemyGenerator
         /// Print the individual attributes.
         public void Debug()
         {
+            Console.WriteLine("   " + this.generation);
             Console.WriteLine("   " + this.fitness);
+            Console.WriteLine("   " + this.difficulty);
             Console.WriteLine("   " + this.enemy.health);
             Console.WriteLine("   " + this.enemy.strength);
             Console.WriteLine("   " + this.enemy.attackSpeed);

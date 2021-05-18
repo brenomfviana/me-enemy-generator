@@ -7,15 +7,15 @@ namespace OverlordEnemyGenerator
 
     /// This struct represents a population of a MAP-Elites search approach.
     ///
-    /// The MAP-Elites population is an N-dimensional array of individuals, 
+    /// The MAP-Elites population is an N-dimensional array of individuals,
     /// where each matrix's ax corresponds to a different feature.
     ///
     /// This particular population is mapped into enemy's movement and weapons.
-    /// Each Elite (or matrix cell) corresponds to a combination of different 
+    /// Each Elite (or matrix cell) corresponds to a combination of different
     /// types of movements and weapons.
     public struct Population
     {
-        // The MAP-Elites dimension. The dimension is defined by the number of 
+        // The MAP-Elites dimension. The dimension is defined by the number of
         // movement types multiplied by the number of weapon Types.
         public (int movement, int weapon) dimension { get; }
         // The MAP-Elites map (a matrix of individuals).
@@ -49,9 +49,9 @@ namespace OverlordEnemyGenerator
 
         /// Add an individual in the MAP-Elites population.
         ///
-        /// First, we identify which Elite the individual is classified in. 
-        /// Then, if the corresponding Elite is empty, the individual is placed 
-        /// there. Otherwise, we compare the both old and new individuals, and 
+        /// First, we identify which Elite the individual is classified in.
+        /// Then, if the corresponding Elite is empty, the individual is placed
+        /// there. Otherwise, we compare the both old and new individuals, and
         /// the best individual is placed in the corresponding Elite.
         public void PlaceIndividual(
             Individual individual

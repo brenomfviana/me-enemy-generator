@@ -10,11 +10,11 @@ namespace OverlordEnemyGenerator
     {
         /// Select individuals from the MAP-Elites population.
         ///
-        /// We ensure that the same individual will not be selected for the 
-        /// same selection process. To do so, we use an auxiliary list composed 
-        /// of the individuals' coordinates in the MAP-Elites population. 
-        /// Instead of selecting directly an individual, we select its 
-        /// coordinate from the auxiliary list and remove it then it is not 
+        /// We ensure that the same individual will not be selected for the
+        /// same selection process. To do so, we use an auxiliary list composed
+        /// of the individuals' coordinates in the MAP-Elites population.
+        /// Instead of selecting directly an individual, we select its
+        /// coordinate from the auxiliary list and remove it then it is not
         /// available for the next selection.
         public static Individual[] Select(
             int amount,
@@ -45,8 +45,8 @@ namespace OverlordEnemyGenerator
 
         /// Perform tournament selection of a single individual.
         ///
-        /// We ensure that the same individual will not be selected for the 
-        /// same tournament selection process. To do so, we apply the same 
+        /// We ensure that the same individual will not be selected for the
+        /// same tournament selection process. To do so, we apply the same
         /// process explained in `Selection` function.
         static (Coordinate, Individual) Tournament(
             int amount,
@@ -164,8 +164,8 @@ namespace OverlordEnemyGenerator
 
         /// Perform a custom BLX-Alpha crossover composed of two stages.
         ///
-        /// The first stage applies a fixed-point crossover dividing the genes 
-        /// enemy and weapon. The second stage calculates the usual BLX-alpha 
+        /// The first stage applies a fixed-point crossover dividing the genes
+        /// enemy and weapon. The second stage calculates the usual BLX-alpha
         /// of the numerical attributes.
         static Individual[] BLXAlphaCrossover(
             Individual parent1,
