@@ -30,8 +30,17 @@ namespace OverlordEnemyGenerator
             filename += "" + data.offspringSize + '-';
             // Desired difficulty
             filename += "" + data.goal;
+            // Create folder `filename`
+            folder = "results/" + filename;
+            if (!Directory.Exists(folder))
+            {
+                System.IO.Directory.CreateDirectory(folder);
+            }
+            int count = Directory.GetFiles(folder, "*.json").Length;
+            // Update filename
+            filename += "-" + count + ".json";
             // Write JSON file
-            File.WriteAllText("results/" + filename + ".json", json);
+            File.WriteAllText(folder + "/" + filename, json);
         }
     }
 }
