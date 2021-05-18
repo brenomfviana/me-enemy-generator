@@ -91,59 +91,67 @@ namespace OverlordEnemyGenerator
         public static Individual Mutate(
             Individual parent,
             SearchSpace ss,
-            Random rand
+            Random rand,
+            int chance
         ) {
             // New individual
             Individual individual = parent.Clone();
-            // Apply mutation
-            switch (rand.Next(11))
+            // Apply mutation on enemy attributes
+            if (chance > rand.Next(100))
             {
-                // Enemy attributes
-                case 0:
-                    individual.enemy.health
-                        = Util.RandomInt(ss.rHealth, rand);
-                    break;
-                case 1:
-                    individual.enemy.strength
-                        = Util.RandomInt(ss.rStrength, rand);
-                    break;
-                case 2:
-                    individual.enemy.attackSpeed
-                        = Util.RandomFloat(ss.rAttackSpeed, rand);
-                    break;
-                case 3:
-                    individual.enemy.movementType
-                        = Util.RandomFromArray(ss.rMovementType, rand);
-                    break;
-                case 4:
-                    individual.enemy.movementSpeed
-                        = Util.RandomFloat(ss.rMovementSpeed, rand);
-                    break;
-                case 5:
-                    individual.enemy.behaviorType
-                        = Util.RandomFromArray(ss.rBehaviorType, rand);
-                    break;
-                case 6:
-                    individual.enemy.activeTime
-                        = Util.RandomFloat(ss.rActiveTime, rand);
-                    break;
-                case 7:
-                    individual.enemy.restTime
-                        = Util.RandomFloat(ss.rRestTime, rand);
-                    break;
-                // Weapon attributes
-                case 8:
-                    individual.weapon.weaponType
-                        = Util.RandomFromArray(ss.rWeaponType, rand);
-                    break;
-                case 9:
-                    individual.weapon.projectileType
-                        = Util.RandomFromArray(ss.rProjectileType, rand);
-                    break;
-                case 10:
-                    individual.weapon.projectileSpeed
-                        = Util.RandomFloat(ss.rProjectileSpeed, rand);
-                    break;
+                individual.enemy.health
+                    = Util.RandomInt(ss.rHealth, rand);
+            }
+            if (chance > rand.Next(100))
+            {
+                individual.enemy.strength
+                    = Util.RandomInt(ss.rStrength, rand);
+            }
+            if (chance > rand.Next(100))
+            {
+                individual.enemy.attackSpeed
+                    = Util.RandomFloat(ss.rAttackSpeed, rand);
+            }
+            if (chance > rand.Next(100))
+            {
+                individual.enemy.movementType
+                    = Util.RandomFromArray(ss.rMovementType, rand);
+            }
+            if (chance > rand.Next(100))
+            {
+                individual.enemy.movementSpeed
+                    = Util.RandomFloat(ss.rMovementSpeed, rand);
+            }
+            if (chance > rand.Next(100))
+            {
+                individual.enemy.behaviorType
+                    = Util.RandomFromArray(ss.rBehaviorType, rand);
+            }
+            if (chance > rand.Next(100))
+            {
+                individual.enemy.activeTime
+                    = Util.RandomFloat(ss.rActiveTime, rand);
+            }
+            if (chance > rand.Next(100))
+            {
+                individual.enemy.restTime
+                    = Util.RandomFloat(ss.rRestTime, rand);
+            }
+            // Apply mutation on weapon attributes
+            if (chance > rand.Next(100))
+            {
+                individual.weapon.weaponType
+                    = Util.RandomFromArray(ss.rWeaponType, rand);
+            }
+            if (chance > rand.Next(100))
+            {
+                individual.weapon.projectileType
+                    = Util.RandomFromArray(ss.rProjectileType, rand);
+            }
+            if (chance > rand.Next(100))
+            {
+                individual.weapon.projectileSpeed
+                    = Util.RandomFloat(ss.rProjectileSpeed, rand);
             }
             // Calculate new individual fitness
             individual.fitness = Fitness.Calculate(individual);

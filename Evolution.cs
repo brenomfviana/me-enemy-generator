@@ -56,7 +56,8 @@ namespace OverlordEnemyGenerator
                                 children[i] = Operators.Mutate(
                                     children[i],
                                     p.space,
-                                    rand
+                                    rand,
+                                    p.mutation
                                 );
                             }
                         }
@@ -70,7 +71,7 @@ namespace OverlordEnemyGenerator
                     {
                         // Select and mutate a parent
                         Individual parent = Operators.Select(1, pop, rand)[0];
-                        offspring.Add(Operators.Mutate(parent, p.space, rand));
+                        offspring.Add(Operators.Mutate(parent, p.space, rand, p.mutation));
                     }
                 }
                 // Place the offspring in MAP-Elites
