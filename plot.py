@@ -1,3 +1,4 @@
+import os
 import sys
 import json
 import numpy as np 
@@ -8,7 +9,8 @@ import matplotlib.pyplot as plt
 CHART_FOLDER = 'charts'
 
 # Check if the folder exists and create it if it does not exist
-# TODO
+if not os.path.isdir(CHART_FOLDER):
+  os.mkdir(CHART_FOLDER)
 
 # List of indexes
 behavior = ['Indifferent', 'Lone Wolf', 'Swarm']
@@ -16,28 +18,28 @@ behavior = ['Indifferent', 'Lone Wolf', 'Swarm']
 weapons = ['None', 'Sword', 'Shotgun', 'Cannon', 'Shield', 'Cure']
 
 def to_map(array, attribute):
-    shape = (len(behavior), (len(weapons)))
-    map = np.zeros(shape)
-    i = 0
-    for b in range(len(behavior)):
-        for w in range(len(weapons)):
-            if array[i] is None:
-                map[b, w] = 0
-            else:
-                map[b, w] = array[i][attribute]
-            i += 1
-    return map
+  shape = (len(behavior), (len(weapons)))
+  map = np.zeros(shape)
+  i = 0
+  for b in range(len(behavior)):
+    for w in range(len(weapons)):
+      if array[i] is None:
+        map[b, w] = 0
+      else:
+        map[b, w] = array[i][attribute]
+      i += 1
+  return map
 
 
 def plot_heatmap(map, filename, pop, max):
-    df = DataFrame(map, index=behavior, columns=weapons)
-    color = sb.color_palette("viridis", as_cmap=True)
-    sb.heatmap(df, vmin=-1, vmax=max, annot=True, cmap=color)
-    figname = filename.replace('results', CHART_FOLDER)
-    figname = figname.replace('.json', '-' + pop + '.png')
-    plt.title(figname)
-    plt.savefig(figname)
-    plt.close()
+  df = DataFrame(map, index=behavior, columns=weapons)
+  color = sb.color_palette("viridis", as_cmap=True)
+  sb.heatmap(df, vmin=-1, vmax=max, annot=True, cmap=color)
+  figname = filename.replace('results', CHART_FOLDER)
+  figname = figname.replace('.json', '-' + pop + '.png')
+  plt.title(figname)
+  plt.savefig(figname)
+  plt.close()
 
 
 # Calculate the filename
@@ -45,12 +47,11 @@ filename = 'results/'
 filename += sys.argv[3] + '-' # Number of generations
 filename += sys.argv[4] + '-' # Number of individuals of the initial population
 filename += sys.argv[5] + '-' # Number of individuals of offspring
-filename += sys.argv[2] + '-' # Random seed
 filename += sys.argv[1] + '.json'
 
 # Read JSON file
 with open(filename, 'r') as json_file:
-    data = json_file.read()
+  data = json_file.read()
 
 # Parse file
 obj = json.loads(data)
@@ -106,4 +107,4 @@ filename = filename.replace('.json', '-measure.json')
 
 # Writing to sample.json
 with open(filename, "w") as outfile:
-    outfile.write(json_object)
+  outfile.write(json_object)
