@@ -166,55 +166,113 @@ namespace OverlordEnemyGenerator
             Individual parent2,
             Random rand
         ) {
-            return new Individual[1] {
-                MeanRandomCrossover(parent1, parent2, rand)
-            };
+            return BLXAlphaCrossover(parent1, parent2, rand);
         }
 
-        /// Perform a custom crossover composed of two stages.
+        /// Perform a custom BLX-Alpha crossover composed of two stages.
         ///
-        /// The first stage calculates the means of the numerical attributes. 
-        /// The second stage randomly selects two options of crossover: or the 
-        /// enemy nominal attributes from the first parent and the weapon 
-        /// nominal attributtes from the second parent or the inverse are set 
-        /// to the new individual.
-        static Individual MeanRandomCrossover(
+        /// The first stage applies a fixed-point crossover dividing the genes 
+        /// enemy and weapon. The second stage calculates the usual BLX-alpha 
+        /// of the numerical attributes.
+        static Individual[] BLXAlphaCrossover(
             Individual parent1,
             Individual parent2,
             Random rand
         ) {
-            // Get from parents
+            // Alpha value
+            float alpha = 0.5f;
+            // Alias for the parents' attributes
             Enemy p1e = parent1.enemy;
             Weapon p1w = parent1.weapon;
             Enemy p2e = parent2.enemy;
             Weapon p2w = parent2.weapon;
-            // New individual
-            Enemy e = new Enemy();
-            Weapon w = new Weapon();
-            // Apply mean crossover
-            e.health = (p1e.health + p2e.health) / 2;
-            e.strength = (p1e.strength + p2e.strength) / 2;
-            e.attackSpeed = (p1e.attackSpeed + p2e.attackSpeed) / 2;
-            e.movementSpeed = (p1e.movementSpeed + p2e.movementSpeed) / 2;
-            e.activeTime = (p1e.activeTime + p2e.activeTime) / 2;
-            e.restTime = (p1e.restTime + p2e.restTime) / 2;
-            w.projectileSpeed = (p1w.projectileSpeed + p2w.projectileSpeed) / 2;
-            // Apply random crossover
-            if (rand.Next(2) == 1) {
-                e.movementType = p1e.movementType;
-                e.behaviorType = p1e.behaviorType;
-                w.weaponType = p2w.weaponType;
-                w.projectileType = p2w.projectileType;
-            } else {
-                e.movementType = p2e.movementType;
-                e.behaviorType = p2e.behaviorType;
-                w.weaponType = p1w.weaponType;
-                w.projectileType = p1w.projectileType;
-            }
-            // Return the new individual
-            Individual individual = new Individual(e, w);
-            individual.fitness = Fitness.Calculate(individual);
-            return individual;
+            // Initialize the new individuals
+            Individual[] id = new Individual[2];
+            id[0] = new Individual(p1e, p2w);
+            id[1] = new Individual(p2e, p1w);
+            // Apply BLX alpha on enemy attributes
+            (id[0].enemy.health, id[1].enemy.health)
+                = BLXAlphaInt(
+                    id[0].enemy.health,
+                    id[1].enemy.health,
+                    alpha,
+                    rand
+                );
+            (id[0].enemy.strength, id[1].enemy.strength)
+                = BLXAlphaInt(
+                    id[0].enemy.strength,
+                    id[1].enemy.strength,
+                    alpha,
+                    rand
+                );
+            (id[0].enemy.attackSpeed, id[1].enemy.attackSpeed)
+                = BLXAlphaFloat(
+                    id[0].enemy.attackSpeed,
+                    id[1].enemy.attackSpeed,
+                    alpha,
+                    rand
+                );
+            (id[0].enemy.movementSpeed, id[1].enemy.movementSpeed)
+                = BLXAlphaFloat(
+                    id[0].enemy.movementSpeed,
+                    id[1].enemy.movementSpeed,
+                    alpha,
+                    rand
+                );
+            (id[0].enemy.activeTime, id[1].enemy.activeTime)
+                = BLXAlphaFloat(
+                    id[0].enemy.activeTime,
+                    id[1].enemy.activeTime,
+                    alpha,
+                    rand
+                );
+            (id[0].enemy.restTime, id[1].enemy.restTime)
+                = BLXAlphaFloat(
+                    id[0].enemy.restTime,
+                    id[1].enemy.restTime,
+                    alpha,
+                    rand
+                );
+            // Apply BLX alpha on weapon attributes
+            (id[0].weapon.projectileSpeed, id[1].weapon.projectileSpeed)
+                = BLXAlphaFloat(
+                    id[0].weapon.projectileSpeed,
+                    id[1].weapon.projectileSpeed,
+                    alpha,
+                    rand
+                );
+            // Return the new individuals
+            return id;
+        }
+
+        /// Return the BLX alpha for the given values.
+        static (int, int) BLXAlphaInt(
+            float v1,
+            float v2,
+            float alpha,
+            Random rand
+        ) {
+            float max = Math.Max(v1, v2);
+            float min = Math.Min(v1, v2);
+            float range = (max + alpha) - (min - alpha);
+            int a = (int) (rand.NextDouble() * range + (min - alpha));
+            int b = (int) (rand.NextDouble() * range + (min - alpha));
+            return (a, b);
+        }
+
+        /// Return the BLX alpha for the given values.
+        static (float, float) BLXAlphaFloat(
+            float v1,
+            float v2,
+            float alpha,
+            Random rand
+        ) {
+            float max = Math.Max(v1, v2);
+            float min = Math.Min(v1, v2);
+            float range = (max + alpha) - (min - alpha);
+            float a = (float) (rand.NextDouble() * range + (min - alpha));
+            float b = (float) (rand.NextDouble() * range + (min - alpha));
+            return (a, b);
         }
     }
 }
