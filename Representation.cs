@@ -91,7 +91,7 @@ namespace OverlordEnemyGenerator
     /// This struct represents an enemy.
     [Serializable]
     public struct Enemy
-    {   
+    {
         [JsonInclude]
         public int health;
         [JsonInclude]
