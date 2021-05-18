@@ -153,8 +153,6 @@ namespace OverlordEnemyGenerator
                 individual.weapon.projectileSpeed
                     = Util.RandomFloat(ss.rProjectileSpeed, rand);
             }
-            // Calculate new individual fitness
-            individual.fitness = Fitness.Calculate(individual);
             // Return the new mutated individual
             return individual;
         }

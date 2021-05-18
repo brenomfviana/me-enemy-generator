@@ -1,3 +1,5 @@
+using System;
+
 namespace OverlordEnemyGenerator
 {
     /// This class holds all the fitness-related functions.
@@ -5,7 +7,8 @@ namespace OverlordEnemyGenerator
     {
         /// Calculate the fitness value an individual.
         public static float Calculate(
-            Individual individual
+            Individual individual,
+            float goal
         ) {
             // Get enemy and weapon components
             Enemy e = individual.enemy;
@@ -19,7 +22,7 @@ namespace OverlordEnemyGenerator
             float fP = e.attackSpeed + w.projectileSpeed;
             fP *= Multiplier(w.projectileType);
             // Sum all difficulty factors
-            return fH + fA + fR + fM + fD + fP;
+            return Math.Abs(goal - (fH + fA + fR + fM + fD + fP));
         }
 
         /// Return the multiplier factor for the given type of movement, 

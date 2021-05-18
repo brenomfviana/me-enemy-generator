@@ -60,7 +60,7 @@ namespace OverlordEnemyGenerator
             int b = (int) individual.enemy.behaviorType;
             int w = (int) individual.weapon.weaponType;
             // Check if the new individual deserves to survive
-            if (map[b, w] is null || individual.fitness > map[b, w].fitness)
+            if (map[b, w] is null || individual.fitness < map[b, w].fitness)
             {
                 map[b, w] = individual;
             }

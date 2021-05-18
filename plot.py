@@ -1,7 +1,7 @@
 import os
 import sys
 import json
-import numpy as np 
+import numpy as np
 import seaborn as sb
 from pandas import DataFrame
 import matplotlib.pyplot as plt
@@ -24,7 +24,7 @@ def to_map(array, attribute):
   for b in range(len(behavior)):
     for w in range(len(weapons)):
       if array[i] is None:
-        map[b, w] = 0
+        map[b, w] = np.nan
       else:
         map[b, w] = array[i][attribute]
       i += 1
@@ -33,11 +33,10 @@ def to_map(array, attribute):
 
 def plot_heatmap(map, filename, pop, max):
   df = DataFrame(map, index=behavior, columns=weapons)
-  color = sb.color_palette("viridis", as_cmap=True)
+  color = sb.color_palette('viridis_r', as_cmap=True)
   sb.heatmap(df, vmin=-1, vmax=max, annot=True, cmap=color)
   figname = filename.replace('results', CHART_FOLDER)
   figname = figname.replace('.json', '-' + pop + '.png')
-  plt.title(figname)
   plt.savefig(figname)
   plt.close()
 
@@ -98,7 +97,7 @@ measure['std_fit_map_initial'] = np.std(fit_map_initial)
 measure['std_fit_map_intermediate'] = np.std(fit_map_intermediate)
 measure['std_fit_map_final'] = np.std(fit_map_final)
 
-# Serializing json 
+# Serializing json
 json_object = json.dumps(measure, indent = 4)
 
 # Write JSON file

@@ -15,6 +15,8 @@ namespace OverlordEnemyGenerator
         public int mutation { get; }
         // The chance of crossover.
         public int crossover { get; }
+        // The fitness goal.
+        public float goal { get; }
         // The delimitations of the search space.
         public SearchSpace space { get; }
 
@@ -26,6 +28,7 @@ namespace OverlordEnemyGenerator
             int offspring,
             int mutation,
             int crossover,
+            float goal,
             SearchSpace space
         ) {
             this.seed = seed;
@@ -34,6 +37,7 @@ namespace OverlordEnemyGenerator
             this.offspring = offspring;
             this.mutation = mutation;
             this.crossover = crossover;
+            this.goal = goal;
             this.space = space;
         }
     }

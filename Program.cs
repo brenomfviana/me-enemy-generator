@@ -43,6 +43,7 @@ namespace OverlordEnemyGenerator
                     1,    // Offspring size
                     30,   // Mutation chance
                     70,   // Crossover chance
+                    25,   // Desired difficulty
                     space // The problem search space
                 );
             }
@@ -71,6 +72,7 @@ namespace OverlordEnemyGenerator
                     data.offspringSize,  // Offspring size
                     30,                  // Mutation chance
                     70,                  // Crossover chance
+                    25,                  // Desired difficulty
                     space                // The problem search space
                 );
             }

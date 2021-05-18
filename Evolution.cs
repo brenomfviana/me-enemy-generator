@@ -23,7 +23,7 @@ namespace OverlordEnemyGenerator
             {
                 // Generate a new random individual and calculate its fitness
                 Individual individual = Individual.GetRandom(rand, p.space);
-                individual.fitness = Fitness.Calculate(individual);
+                individual.fitness = Fitness.Calculate(individual, p.goal);
                 // Place the individual in the MAP-Elites
                 pop.PlaceIndividual(individual);
             }
@@ -71,7 +71,10 @@ namespace OverlordEnemyGenerator
                     {
                         // Select and mutate a parent
                         Individual parent = Operators.Select(1, pop, rand)[0];
-                        offspring.Add(Operators.Mutate(parent, p.space, rand, p.mutation));
+                        Individual individual = Operators.Mutate(parent, p.space, rand, p.mutation);
+                        // Calculate new individual fitness
+                        individual.fitness = Fitness.Calculate(individual, p.goal);
+                        offspring.Add(individual);
                     }
                 }
                 // Place the offspring in MAP-Elites
