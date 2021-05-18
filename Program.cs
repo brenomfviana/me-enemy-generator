@@ -21,7 +21,6 @@ namespace OverlordEnemyGenerator
                 (0.75f, 4f),                      // Attack Speed
                 SearchSpace.AllMovementTypes(),   // Movement Types
                 (0.8f, 3.2f),                     // Movement Speed
-                SearchSpace.AllBehaviorTypes(),   // Behavior Types
                 (1.5f, 10f),                      // Active Time
                 (0.3f, 1.5f),                     // Rest Time
                 SearchSpace.AllWeaponTypes(),     // Weapon Types

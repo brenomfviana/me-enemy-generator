@@ -15,7 +15,7 @@ namespace OverlordEnemyGenerator
             Random rand = new Random(p.seed);
             // Initialize the MAP-Elites matrix
             Population pop = new Population(
-                SearchSpace.AllBehaviorTypes().Length,
+                SearchSpace.AllMovementTypes().Length,
                 SearchSpace.AllWeaponTypes().Length
             );
             // Generate the initial population

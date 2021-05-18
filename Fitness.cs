@@ -50,19 +50,6 @@ namespace OverlordEnemyGenerator
                         return 1.12f;
                 }
             }
-            // If the value is a BehaviorType
-            else if (value is BehaviorType)
-            {
-                switch (value)
-                {
-                    case BehaviorType.Indifferent:
-                        return 1f;
-                    case BehaviorType.LoneWolf:
-                        return 1f;
-                    case BehaviorType.Swarm:
-                        return 1f;
-                }
-            }
             // If the value is a WeaponType
             else if (value is WeaponType)
             {
@@ -78,8 +65,6 @@ namespace OverlordEnemyGenerator
                         return 1f;           // Change it later
                     case WeaponType.Shield:
                         return 1.6f;
-                    case WeaponType.Cure:
-                        return 1f;           // Change it later
                 }
             }
             // If the value is a ProjectileType
@@ -90,8 +75,6 @@ namespace OverlordEnemyGenerator
                     case ProjectileType.None:
                         return 1f;
                     case ProjectileType.Bullet:
-                        return 0.3f;            // Change it later?
-                    case ProjectileType.Arrow:
                         return 0.3f;            // Change it later?
                     case ProjectileType.Bomb:
                         return 0.3f;            // Change it later?

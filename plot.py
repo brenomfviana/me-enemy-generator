@@ -13,15 +13,17 @@ if not os.path.isdir(CHART_FOLDER):
   os.mkdir(CHART_FOLDER)
 
 # List of indexes
-behavior = ['Indifferent', 'Lone Wolf', 'Swarm']
+movements = [
+  'None', 'Random', 'Follow', 'Flee', 'Random1D', 'Follow1D', 'Flee1D'
+]
 # List of columns
-weapons = ['None', 'Sword', 'Shotgun', 'Cannon', 'Shield', 'Cure']
+weapons = ['None', 'Sword', 'Shotgun', 'Cannon', 'Shield']
 
 def to_map(array, attribute):
-  shape = (len(behavior), (len(weapons)))
+  shape = (len(movements), (len(weapons)))
   map = np.zeros(shape)
   i = 0
-  for b in range(len(behavior)):
+  for b in range(len(movements)):
     for w in range(len(weapons)):
       if array[i] is None:
         map[b, w] = np.nan
@@ -32,7 +34,7 @@ def to_map(array, attribute):
 
 
 def plot_heatmap(map, filename, pop, max):
-  df = DataFrame(map, index=behavior, columns=weapons)
+  df = DataFrame(map, index=movements, columns=weapons)
   color = sb.color_palette('viridis_r', as_cmap=True)
   sb.heatmap(df, vmin=-1, vmax=max, annot=True, cmap=color)
   figname = filename.replace('results', CHART_FOLDER)

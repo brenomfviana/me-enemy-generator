@@ -10,31 +10,31 @@ namespace OverlordEnemyGenerator
     /// The MAP-Elites population is an N-dimensional array of individuals, 
     /// where each matrix's ax corresponds to a different feature.
     ///
-    /// This particular population is mapped into enemy's behavior and weapons.
+    /// This particular population is mapped into enemy's movement and weapons.
     /// Each Elite (or matrix cell) corresponds to a combination of different 
-    /// types of behaviors and weapons.
+    /// types of movements and weapons.
     public struct Population
     {
         // The MAP-Elites dimension. The dimension is defined by the number of 
-        // behavior types multiplied by the number of weapon Types.
-        public (int behavior, int weapon) dimension { get; }
+        // movement types multiplied by the number of weapon Types.
+        public (int movement, int weapon) dimension { get; }
         // The MAP-Elites map (a matrix of individuals).
         public Individual[,] map { get; }
 
         /// Population constructor.
         public Population(
-            int numberOfBehaviorTypes,
+            int numberOfMovementTypes,
             int numbefOfWeaponTypes
         ) {
-            this.dimension = (numberOfBehaviorTypes, numbefOfWeaponTypes);
-            this.map = new Individual[dimension.behavior, dimension.weapon];
+            this.dimension = (numberOfMovementTypes, numbefOfWeaponTypes);
+            this.map = new Individual[dimension.movement, dimension.weapon];
         }
 
         /// Return the number of Elites of the population.
         public int Count()
         {
             int count = 0;
-            for (int b = 0; b < dimension.behavior; b++)
+            for (int b = 0; b < dimension.movement; b++)
             {
                 for (int w = 0; w < dimension.weapon; w++)
                 {
@@ -57,7 +57,7 @@ namespace OverlordEnemyGenerator
             Individual individual
         ) {
             // Calculate the individual slot (Elite)
-            int b = (int) individual.enemy.behaviorType;
+            int b = (int) individual.enemy.movementType;
             int w = (int) individual.weapon.weaponType;
             // Check if the new individual deserves to survive
             if (map[b, w] is null || individual.fitness < map[b, w].fitness)
@@ -70,7 +70,7 @@ namespace OverlordEnemyGenerator
         public List<Coordinate> GetElitesCoordinates()
         {
             List<Coordinate> coordinates = new List<Coordinate>();
-            for (int b = 0; b < dimension.behavior; b++)
+            for (int b = 0; b < dimension.movement; b++)
             {
                 for (int w = 0; w < dimension.weapon; w++)
                 {
@@ -87,7 +87,7 @@ namespace OverlordEnemyGenerator
         public List<Individual> ToList()
         {
             List<Individual> list = new List<Individual>();
-            for (int b = 0; b < dimension.behavior; b++)
+            for (int b = 0; b < dimension.movement; b++)
             {
                 for (int w = 0; w < dimension.weapon; w++)
                 {
@@ -100,12 +100,12 @@ namespace OverlordEnemyGenerator
         /// Print the individuals of the MAP-Elites population.
         public void Debug()
         {
-            for (int b = 0; b < dimension.behavior; b++)
+            for (int b = 0; b < dimension.movement; b++)
             {
                 for (int w = 0; w < dimension.weapon; w++)
                 {
                     Console.WriteLine(
-                        "Elite " + ((BehaviorType) b) + "-" + ((WeaponType) w)
+                        "Elite " + ((MovementType) b) + "-" + ((WeaponType) w)
                     );
                     if (map[b, w] is null)
                     {
@@ -120,7 +120,6 @@ namespace OverlordEnemyGenerator
                         Console.WriteLine("   " + i.enemy.attackSpeed);
                         Console.WriteLine("   " + i.enemy.movementType);
                         Console.WriteLine("   " + i.enemy.movementSpeed);
-                        Console.WriteLine("   " + i.enemy.behaviorType);
                         Console.WriteLine("   " + i.enemy.activeTime);
                         Console.WriteLine("   " + i.enemy.restTime);
                         Console.WriteLine("   " + i.weapon.weaponType);

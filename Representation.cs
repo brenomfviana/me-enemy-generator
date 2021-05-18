@@ -51,7 +51,6 @@ namespace OverlordEnemyGenerator
             Console.WriteLine("   " + this.enemy.attackSpeed);
             Console.WriteLine("   " + this.enemy.movementType);
             Console.WriteLine("   " + this.enemy.movementSpeed);
-            Console.WriteLine("   " + this.enemy.behaviorType);
             Console.WriteLine("   " + this.enemy.activeTime);
             Console.WriteLine("   " + this.enemy.restTime);
             Console.WriteLine("   " + this.weapon.weaponType);
@@ -72,7 +71,6 @@ namespace OverlordEnemyGenerator
             e.attackSpeed = Util.RandomFloat(ss.rAttackSpeed, rand);
             e.movementType = Util.RandomFromArray(ss.rMovementType, rand);
             e.movementSpeed = Util.RandomFloat(ss.rMovementSpeed, rand);
-            e.behaviorType = Util.RandomFromArray(ss.rBehaviorType, rand);
             e.activeTime = Util.RandomFloat(ss.rActiveTime, rand);
             e.restTime = Util.RandomFloat(ss.rRestTime, rand);
             // Create a random weapon
@@ -102,8 +100,6 @@ namespace OverlordEnemyGenerator
         public MovementType movementType;
         [JsonInclude]
         public float movementSpeed;
-        [JsonInclude]
-        public BehaviorType behaviorType;
         [JsonInclude]
         public float activeTime;
         [JsonInclude]
@@ -135,15 +131,6 @@ namespace OverlordEnemyGenerator
         Flee1D,   // The enemy flees from the player horizontally or vertically.
     }
 
-    // This enum defines the behavior types of enemies.
-    [Serializable]
-    public enum BehaviorType
-    {
-        Indifferent, // The enemy does nothing.
-        LoneWolf,    // The enemy prefers to be alone.
-        Swarm,       // The enemy prefers to be in a group of enemies.
-    }
-
     /// This enum defines the types of weapons an enemy may have.
     [Serializable()]
     public enum WeaponType
@@ -153,7 +140,6 @@ namespace OverlordEnemyGenerator
         Shotgun, // The enemy shots projectiles towards the player (Range).
         Cannon,  // The enemy shots bombs towards the player (Range).
         Shield,  // The enemy uses shields to defend themselves (Defense).
-        Cure,    // The enemy uses magic to cure themselves (Defense).
     }
 
     // This enum defines the projectile types of weapons.
@@ -162,7 +148,6 @@ namespace OverlordEnemyGenerator
     {
         None,   // The weapon is not a projectile weapon.
         Bullet, // The weapon shots bullets.
-        Arrow,  // The weapon shots arrows.
         Bomb,   // The weapon shots bombs.
     }
 }

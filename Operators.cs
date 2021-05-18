@@ -124,11 +124,6 @@ namespace OverlordEnemyGenerator
             }
             if (chance > rand.Next(100))
             {
-                individual.enemy.behaviorType
-                    = Util.RandomFromArray(ss.rBehaviorType, rand);
-            }
-            if (chance > rand.Next(100))
-            {
                 individual.enemy.activeTime
                     = Util.RandomFloat(ss.rActiveTime, rand);
             }
