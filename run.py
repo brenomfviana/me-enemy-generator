@@ -3,49 +3,61 @@ import sys
 import random
 import numpy as np
 
-# --- Remember
-
-# The MAP-Elites matrix is composed of 18 Elites
-
 
 # --- Initialization
 
 # Initialize the random seed
 random.seed(0)
 
-# Define the number of executions by set of parameters
-executions = 10
+# Define the number of executions of each set of parameters
+executions = range(1)
 
 
 # --- Define the set of parameters
 
-# Set of numbers of generations
-generations = [50, 100, 200]
-# Set of numbers of individuals of the initial populations
-initial_pops = [5, 10, 15]
-# Set of numbers of individuals of offspring
-offspring = [1, 2, 5, 10]
+# Set the numbers of generations
+generations = [100]
 
-# generations = [50]
-# initial_pops = [5]
-# offspring = [1]
+# Set the numbers of individuals of the initial populations
+populations = [10]
+
+# Set the numbers of individuals of offspring
+offsprings = [1]
+
 
 # --- Perform experiment
 
-# Compile code
+def run(g, p, o, e):
+  # Generate a random seed
+  rs = random.randint(0, np.iinfo(np.int32).max - 1)
+  # Build the parameters
+  parameters = ""
+  for i in [e, rs, g, p, o]:
+    parameters += str(i) + ' '
+  # Print parameters
+  print(parameters)
+  # Run algoritm for the current set of parameters
+  os.system(executable + parameters)
+  # Plot the charts for the current set of parameters
+  os.system('python plot.py ' + parameters)
+
+# Compile the code
 os.system('dotnet publish')
 
-# Location of the executable
+# Executable location
 executable = './bin/Debug/net5.0/publish/OverlordEnemyGenerator '
 
-# Run algorithm for all combination of sets of parameters
-for gs in generations:
-    for ip in initial_pops:
-        for of in offspring:
-            for ex in range(executions):
-                random_seed = random.randint(0, np.iinfo(np.int32).max - 1)
-                parameters = str(ex) + ' ' + str(random_seed) + ' ' \
-                    + str(gs) + ' ' + str(ip) + ' ' + str(of)
-                print(parameters)
-                os.system(executable + parameters)
-                os.system('python plot.py ' + parameters)
+# Variables for progress
+total = len(generations) * len(populations) * len(offsprings) * len(executions)
+i = 1
+
+# Run the algorithm for all sets of parameters
+for g in generations:
+  for p in populations:
+    for o in offsprings:
+      for e in executions:
+        # Run execuble
+        run(g, p, o, e)
+        # Print progress
+        print("%.2f" % ((i / total) * 100))
+        i += 1
