@@ -65,26 +65,30 @@ namespace OverlordEnemyGenerator
 
         /// Return a random individual.
         public static Individual GetRandom(
-            Random rand,
-            SearchSpace ss
+            SearchSpace ss,
+            ref Random rand
         ) {
             // Create a random enemy
-            Enemy e = new Enemy();
-            e.health = Util.RandomInt(ss.rHealth, rand);
-            e.strength = Util.RandomInt(ss.rStrength, rand);
-            e.attackSpeed = Util.RandomFloat(ss.rAttackSpeed, rand);
-            e.movementType = Util.RandomFromArray(ss.rMovementType, rand);
-            e.movementSpeed = Util.RandomFloat(ss.rMovementSpeed, rand);
-            e.activeTime = Util.RandomFloat(ss.rActiveTime, rand);
-            e.restTime = Util.RandomFloat(ss.rRestTime, rand);
+            Enemy e = new Enemy(
+                Util.RandomInt(ss.rHealth, ref rand),
+                Util.RandomInt(ss.rStrength, ref rand),
+                Util.RandomFloat(ss.rAttackSpeed, ref rand),
+                Util.RandomFromArray(ss.rMovementType, ref rand),
+                Util.RandomFloat(ss.rMovementSpeed, ref rand),
+                Util.RandomFloat(ss.rActiveTime, ref rand),
+                Util.RandomFloat(ss.rRestTime, ref rand)
+            );
             // Create a random weapon
-            Weapon w = new Weapon();
-            w.weaponType = Util.RandomFromArray(ss.rWeaponType, rand);
-            w.projectileType = Util.RandomFromArray(ss.rProjectileType, rand);
-            w.projectileSpeed = Util.RandomFloat(ss.rProjectileSpeed, rand);
-            // Create individual
+            Weapon w = new Weapon(
+                Util.RandomFromArray(ss.rWeaponType, ref rand),
+                Util.RandomFromArray(ss.rProjectileType, ref rand),
+                Util.RandomFloat(ss.rProjectileSpeed, ref rand)
+            );
+            // Combinie the enemy and the weapon to create a new individual
             Individual individual = new Individual(e, w);
             individual.generation = -1;
+            individual.difficulty = -1.0f;
+            individual.fitness = -1.0f;
             // Return the created individual
             return individual;
         }
@@ -108,6 +112,25 @@ namespace OverlordEnemyGenerator
         public float activeTime;
         [JsonInclude]
         public float restTime;
+
+        /// Enemy contructor.
+        public Enemy(
+            int health,
+            int strength,
+            float attackSpeed,
+            MovementType movementType,
+            float movementSpeed,
+            float activeTime,
+            float restTime
+        ) {
+            this.health = health;
+            this.strength = strength;
+            this.attackSpeed = attackSpeed;
+            this.movementType = movementType;
+            this.movementSpeed = movementSpeed;
+            this.activeTime = activeTime;
+            this.restTime = restTime;
+        }
     }
 
     // This struc represents a weapon.
@@ -120,6 +143,17 @@ namespace OverlordEnemyGenerator
         public ProjectileType projectileType;
         [JsonInclude]
         public float projectileSpeed;
+
+        // Weapon constructor.
+        public Weapon(
+            WeaponType weaponType,
+            ProjectileType projectileType,
+            float projectileSpeed
+        ) {
+            this.weaponType = weaponType;
+            this.projectileType = projectileType;
+            this.projectileSpeed = projectileSpeed;
+        }
     }
 
     // This enum defines the movement types of enemies.

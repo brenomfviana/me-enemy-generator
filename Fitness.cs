@@ -13,7 +13,7 @@ namespace OverlordEnemyGenerator
             // Get enemy and weapon components
             Enemy e = individual.enemy;
             Weapon w = individual.weapon;
-            // Calculate fitness
+            // Calculate the individual fitness
             float fH = e.health;
             float fA = e.activeTime;
             float fR = 1 / e.restTime;

@@ -29,12 +29,13 @@ namespace OverlordEnemyGenerator
             filename += "" + data.offspringSize + '-';
             // Desired difficulty
             filename += "" + data.goal;
-            // Create folder `filename`
+            // Create folder `filename` if it does not exist
             folder = "results/" + filename;
             if (!Directory.Exists(folder))
             {
                 System.IO.Directory.CreateDirectory(folder);
             }
+            // Calculate the number of files in the folder
             int count = Directory.GetFiles(folder, "*.json").Length;
             // Update filename
             filename += "-" + count + ".json";

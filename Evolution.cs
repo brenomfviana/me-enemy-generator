@@ -22,7 +22,7 @@ namespace OverlordEnemyGenerator
             while (pop.Count() < p.initial)
             {
                 // Generate a new random individual and calculate its fitness
-                Individual individual = Individual.GetRandom(rand, p.space);
+                Individual individual = Individual.GetRandom(p.space, ref rand);
                 Fitness.Calculate(ref individual, p.goal);
                 // Place the individual in the MAP-Elites
                 pop.PlaceIndividual(individual);
@@ -38,29 +38,18 @@ namespace OverlordEnemyGenerator
                 while (offspring.Count < p.offspring)
                 {
                     // Apply the evolutionary operators
-                    if (p.crossover > rand.Next(100))
+                    if (p.crossover > Util.RandomPercent(ref rand))
                     {
                         // Select two different parents
-                        Individual[] parents = Operators.Select(2, pop, rand);
+                        Individual[] parents = Operators.Select(
+                            2, pop, ref rand
+                        );
                         // Apply crossover and get the resulting children
                         Individual[] children = Operators.Crossover(
                             parents[0],
                             parents[1],
-                            rand
+                            ref rand
                         );
-                        // Check if the new individuals will suffer mutation
-                        if (p.mutation > rand.Next(100))
-                        {
-                            for (int i = 0; i < children.Length; i++)
-                            {
-                                children[i] = Operators.Mutate(
-                                    children[i],
-                                    p.space,
-                                    rand,
-                                    p.mutation
-                                );
-                            }
-                        }
                         // Add the new individuals in the offspring list
                         foreach (Individual individual in children)
                         {
@@ -70,8 +59,12 @@ namespace OverlordEnemyGenerator
                     else
                     {
                         // Select and mutate a parent
-                        Individual parent = Operators.Select(1, pop, rand)[0];
-                        Individual individual = Operators.Mutate(parent, p.space, rand, p.mutation);
+                        Individual parent = Operators.Select(
+                            1, pop, ref rand
+                        )[0];
+                        Individual individual = Operators.Mutate(
+                            parent, p.space, p.mutation, ref rand
+                        );
                         // Calculate new individual fitness
                         Fitness.Calculate(ref individual, p.goal);
                         offspring.Add(individual);
@@ -84,7 +77,7 @@ namespace OverlordEnemyGenerator
                     pop.PlaceIndividual(individual);
                 }
                 // Get the intermediate population
-                if (g == (int) p.generations / 2 )
+                if (g == (int) p.generations / 2)
                 {
                     data.intermediate = new List<Individual>(pop.ToList());
                 }

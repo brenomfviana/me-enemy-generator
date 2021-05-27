@@ -5,11 +5,11 @@ namespace OverlordEnemyGenerator
     {
         // The seed that initializes the random generator.
         public int seed { get; }
-        // The maximun number of generations of the evolutionary process.
+        // The maximun number of generations.
         public int generations { get; }
-        // The number of random initial individuals.
+        // The initial population size.
         public int initial { get; }
-        // The number of new individuals to be created each generation.
+        // The offspring size.
         public int offspring { get; }
         // The chance of mutation.
         public int mutation { get; }
@@ -17,7 +17,7 @@ namespace OverlordEnemyGenerator
         public int crossover { get; }
         // The fitness goal.
         public float goal { get; }
-        // The delimitations of the search space.
+        // The search space.
         public SearchSpace space { get; }
 
         /// Parameters constructor.

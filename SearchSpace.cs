@@ -2,7 +2,7 @@ using System;
 
 namespace OverlordEnemyGenerator
 {
-    /// This struct defines search space accordingly to the enemy's attributes.
+    /// This struct defines search space of the enemy's attributes.
     ///
     /// The prefix `r` in the attributes' names stands for `range of`, e.g.,
     /// rHealth means range of health.
