@@ -5,7 +5,7 @@ namespace OverlordEnemyGenerator
 {
     using Coordinate = System.ValueTuple<int, int>;
 
-    /// This struct represents a population of a MAP-Elites search approach.
+    /// This struct represents a MAP-Elites population.
     ///
     /// The MAP-Elites population is an N-dimensional array of individuals,
     /// where each matrix's ax corresponds to a different feature.
@@ -104,17 +104,23 @@ namespace OverlordEnemyGenerator
             {
                 for (int w = 0; w < dimension.weapon; w++)
                 {
-                    Console.WriteLine(
-                        "Elite " + ((MovementType) b) + "-" + ((WeaponType) w)
-                    );
+                    // Print the Elite's features
+                    string log = "Elite ";
+                    log += ((MovementType) b) + "-";
+                    log += ((WeaponType) w);
+                    Console.WriteLine(log);
+                    // Print empty if the Elite is null
                     if (map[b, w] is null)
                     {
                         Console.WriteLine("   Empty");
                     }
+                    // Print the Elite's attributes
                     else
                     {
                         Individual i = map[b, w];
+                        Console.WriteLine("   " + i.generation);
                         Console.WriteLine("   " + i.fitness);
+                        Console.WriteLine("   " + i.difficulty);
                         Console.WriteLine("   " + i.enemy.health);
                         Console.WriteLine("   " + i.enemy.strength);
                         Console.WriteLine("   " + i.enemy.attackSpeed);

@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 
 namespace OverlordEnemyGenerator
@@ -23,6 +24,11 @@ namespace OverlordEnemyGenerator
         ) {
             // List of Elites' coordinates
             List<Coordinate> cs = pop.GetElitesCoordinates();
+            // Ensure the population size is enough
+            Debug.Assert(
+                cs.Count - amount > 3,
+                "There are very few individuals in the population."
+            );
             // Select `amount` individuals
             Individual[] individuals = new Individual[amount];
             for (int i = 0; i < amount; i++)

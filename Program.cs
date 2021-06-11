@@ -6,7 +6,7 @@ namespace OverlordEnemyGenerator
     {
         private const int ERROR_BAD_ARGUMENTS = 0xA0;
 
-        /// This program gets six arguments.
+        /// This program gets five arguments.
         ///
         /// `0` - Random seed.
         /// `1` - Number of generations.
@@ -35,7 +35,7 @@ namespace OverlordEnemyGenerator
             // Get desired difficulty
             data.goal = float.Parse(args[4]);
 
-            // Define the chances of the recombination operators
+            // Define the chances of each recombination operator
             int mutation = 20;
             int crossover = 80;
 
