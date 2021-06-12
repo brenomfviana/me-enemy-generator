@@ -10,35 +10,35 @@ namespace OverlordEnemyGenerator
     /// The MAP-Elites population is an N-dimensional array of individuals,
     /// where each matrix's ax corresponds to a different feature.
     ///
-    /// This particular population is mapped into enemy's movement and weapons.
-    /// Each Elite (or matrix cell) corresponds to a combination of different
-    /// types of movements and weapons.
+    /// This particular population is mapped into enemy's weapons and its
+    /// difficulty factor. Each Elite (or matrix cell) corresponds to a
+    /// combination of different types of weapons and difficulty factors.
     public struct Population
     {
         // The MAP-Elites dimension. The dimension is defined by the number of
-        // movement types multiplied by the number of weapon Types.
-        public (int movement, int weapon) dimension { get; }
+        // difficulty factors multiplied by the number of weapon Types.
+        public (int difficulty, int weapon) dimension { get; }
         // The MAP-Elites map (a matrix of individuals).
         public Individual[,] map { get; }
 
         /// Population constructor.
         public Population(
-            int numberOfMovementTypes,
+            int numberOfDifficultyFactors,
             int numbefOfWeaponTypes
         ) {
-            this.dimension = (numberOfMovementTypes, numbefOfWeaponTypes);
-            this.map = new Individual[dimension.movement, dimension.weapon];
+            this.dimension = (numberOfDifficultyFactors, numbefOfWeaponTypes);
+            this.map = new Individual[dimension.difficulty, dimension.weapon];
         }
 
         /// Return the number of Elites of the population.
         public int Count()
         {
             int count = 0;
-            for (int b = 0; b < dimension.movement; b++)
+            for (int d = 0; d < dimension.difficulty; d++)
             {
                 for (int w = 0; w < dimension.weapon; w++)
                 {
-                    if (!(map[b, w] is null))
+                    if (!(map[d, w] is null))
                     {
                         count++;
                     }
@@ -57,12 +57,16 @@ namespace OverlordEnemyGenerator
             Individual individual
         ) {
             // Calculate the individual slot (Elite)
-            int b = (int) individual.enemy.movementType;
+            int d = SearchSpace.GetDifficultyIndex(individual.difficulty);
             int w = (int) individual.weapon.weaponType;
-            // Check if the new individual deserves to survive
-            if (map[b, w] is null || individual.fitness < map[b, w].fitness)
-            {
-                map[b, w] = individual;
+            // Place individual in the MAP-Elites population if...
+            if (
+                // The new individual's difficulty is valid
+                d != -1 &&
+                // The new individual deserves to survive
+                (map[d, w] is null || individual.fitness < map[d, w].fitness)
+            ) {
+                map[d, w] = individual;
             }
         }
 
@@ -70,13 +74,13 @@ namespace OverlordEnemyGenerator
         public List<Coordinate> GetElitesCoordinates()
         {
             List<Coordinate> coordinates = new List<Coordinate>();
-            for (int b = 0; b < dimension.movement; b++)
+            for (int d = 0; d < dimension.difficulty; d++)
             {
                 for (int w = 0; w < dimension.weapon; w++)
                 {
-                    if (!(map[b, w] is null))
+                    if (!(map[d, w] is null))
                     {
-                        coordinates.Add((b, w));
+                        coordinates.Add((d, w));
                     }
                 }
             }
@@ -87,11 +91,11 @@ namespace OverlordEnemyGenerator
         public List<Individual> ToList()
         {
             List<Individual> list = new List<Individual>();
-            for (int b = 0; b < dimension.movement; b++)
+            for (int d = 0; d < dimension.difficulty; d++)
             {
                 for (int w = 0; w < dimension.weapon; w++)
                 {
-                    list.Add(map[b, w]);
+                    list.Add(map[d, w]);
                 }
             }
             return list;
@@ -100,24 +104,24 @@ namespace OverlordEnemyGenerator
         /// Print the individuals of the MAP-Elites population.
         public void Debug()
         {
-            for (int b = 0; b < dimension.movement; b++)
+            for (int d = 0; d < dimension.difficulty; d++)
             {
                 for (int w = 0; w < dimension.weapon; w++)
                 {
                     // Print the Elite's features
                     string log = "Elite ";
-                    log += ((MovementType) b) + "-";
+                    log += SearchSpace.AllDifficulties()[d] + "-";
                     log += ((WeaponType) w);
                     Console.WriteLine(log);
                     // Print empty if the Elite is null
-                    if (map[b, w] is null)
+                    if (map[d, w] is null)
                     {
                         Console.WriteLine("   Empty");
                     }
                     // Print the Elite's attributes
                     else
                     {
-                        Individual i = map[b, w];
+                        Individual i = map[d, w];
                         Console.WriteLine("   " + i.generation);
                         Console.WriteLine("   " + i.fitness);
                         Console.WriteLine("   " + i.difficulty);

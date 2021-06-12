@@ -15,7 +15,7 @@ namespace OverlordEnemyGenerator
             Random rand = new Random(p.seed);
             // Initialize the MAP-Elites matrix
             Population pop = new Population(
-                SearchSpace.AllMovementTypes().Length,
+                SearchSpace.AllDifficulties().Length,
                 SearchSpace.AllWeaponTypes().Length
             );
             // Generate the initial population
@@ -51,9 +51,12 @@ namespace OverlordEnemyGenerator
                             ref rand
                         );
                         // Add the new individuals in the offspring list
-                        foreach (Individual individual in children)
+                        for (int i = 0; i < children.Length; i++)
                         {
-                            offspring.Add(individual);
+                            // Calculate new individual fitness
+                            Fitness.Calculate(ref children[i], p.goal);
+                            // Add the new individual in the offspring
+                            offspring.Add(children[i]);
                         }
                     }
                     else
@@ -67,6 +70,7 @@ namespace OverlordEnemyGenerator
                         );
                         // Calculate new individual fitness
                         Fitness.Calculate(ref individual, p.goal);
+                        // Add the new individual in the offspring
                         offspring.Add(individual);
                     }
                 }
