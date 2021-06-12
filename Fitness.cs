@@ -7,8 +7,7 @@ namespace OverlordEnemyGenerator
     {
         /// Calculate the fitness value an individual.
         public static void Calculate(
-            ref Individual individual,
-            float goal
+            ref Individual individual
         ) {
             // Get enemy and weapon components
             Enemy e = individual.enemy;
@@ -23,7 +22,16 @@ namespace OverlordEnemyGenerator
             fP *= Multiplier(w.projectileType);
             // Sum all difficulty factors
             individual.difficulty = fH + fA + fR + fM + fD + fP;
-            individual.fitness = Math.Abs(goal - individual.difficulty);
+            // Get the index of the corresponding difficulty range
+            int d = SearchSpace.GetDifficultyIndex(individual.difficulty);
+            if (d != -1)
+            {
+                // Calculate the mean of the difficulty range
+                (float min, float max) df = SearchSpace.AllDifficulties()[d];
+                float goal = (df.min + df.max) / 2;
+                // Calculate the individual fitness
+                individual.fitness = Math.Abs(goal - individual.difficulty);
+            }
         }
 
         /// Return the multiplier factor for the given type of movement,
