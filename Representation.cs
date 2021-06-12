@@ -41,7 +41,11 @@ namespace OverlordEnemyGenerator
         /// value instead of doing a deep copy.
         public Individual Clone()
         {
-            return new Individual(this.enemy, this.weapon);
+            Individual individual = new Individual(this.enemy, this.weapon);
+            individual.difficulty = this.difficulty;
+            individual.fitness = this.fitness;
+            individual.generation = this.generation;
+            return individual;
         }
 
         /// Print the individual attributes.
