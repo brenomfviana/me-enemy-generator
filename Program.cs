@@ -6,17 +6,16 @@ namespace OverlordEnemyGenerator
     {
         private const int ERROR_BAD_ARGUMENTS = 0xA0;
 
-        /// This program gets five arguments.
+        /// This program gets four arguments.
         ///
         /// `0` - Random seed.
         /// `1` - Number of generations.
         /// `2` - Initial population size.
         /// `3` - Offspring size.
-        /// `4` - Desired difficulty.
         static void Main(string[] args)
         {
             // Check if the number of parameters are valid
-            if (args.Length != 5) {
+            if (args.Length != 4) {
                 Console.WriteLine("ERROR: Invalid number of parameters!");
                 System.Environment.Exit(ERROR_BAD_ARGUMENTS);
             }
@@ -32,8 +31,6 @@ namespace OverlordEnemyGenerator
             data.initialPopSize = int.Parse(args[2]);
             // Get offspring size
             data.offspringSize = int.Parse(args[3]);
-            // Get desired difficulty
-            data.goal = float.Parse(args[4]);
 
             // Define the chances of each recombination operator
             int mutation = 20;
@@ -61,7 +58,6 @@ namespace OverlordEnemyGenerator
                 data.offspringSize,  // Offspring size
                 mutation,            // Mutation chance
                 crossover,           // Crossover chance
-                data.goal,           // Desired difficulty
                 space                // The problem search space
             );
 
