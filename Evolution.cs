@@ -75,6 +75,10 @@ namespace OverlordEnemyGenerator
                         offspring.Add(individual);
                     }
                 }
+                // Remove leftover individuals from the offspring list
+                if (offspring.Count > p.offspring) {
+                    offspring.RemoveRange(p.offspring - 1, offspring.Count - 1);
+                }
                 // Place the offspring in MAP-Elites
                 foreach (Individual individual in offspring)
                 {
