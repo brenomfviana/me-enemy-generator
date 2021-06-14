@@ -243,13 +243,17 @@ namespace OverlordEnemyGenerator
                     ref rand
                 );
             // Apply BLX alpha on weapon attributes
-            (id[0].weapon.projectileSpeed, id[1].weapon.projectileSpeed)
-                = BLXAlphaFloat(
-                    id[0].weapon.projectileSpeed,
-                    id[1].weapon.projectileSpeed,
-                    alpha,
-                    ref rand
-                );
+            // If both weapons are of the same type
+            if (p1w.weaponType == p2w.weaponType)
+            {
+                (id[0].weapon.projectileSpeed, id[1].weapon.projectileSpeed)
+                    = BLXAlphaFloat(
+                        id[0].weapon.projectileSpeed,
+                        id[1].weapon.projectileSpeed,
+                        alpha,
+                        ref rand
+                    );
+            }
             // Return the new individuals
             return id;
         }
