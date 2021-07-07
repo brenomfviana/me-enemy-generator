@@ -23,6 +23,8 @@ namespace OverlordEnemyGenerator
             {
                 // Create a new random individual
                 Individual individual = Individual.GetRandom(p.space, ref rand);
+                // Calculate the individual's difficulty
+                individual.CalculateDifficulty();
                 // Calculate the individual fitness
                 Fitness.Calculate(ref individual);
                 // Place the individual in the MAP-Elites
@@ -54,6 +56,8 @@ namespace OverlordEnemyGenerator
                         // Add the new individuals in the offspring list
                         for (int i = 0; i < children.Length; i++)
                         {
+                            // Calculate the individual's difficulty
+                            children[i].CalculateDifficulty();
                             // Calculate the new individual fitness
                             Fitness.Calculate(ref children[i]);
                             // Add the new individual in the offspring
@@ -63,12 +67,12 @@ namespace OverlordEnemyGenerator
                     else
                     {
                         // Select and mutate a parent
-                        Individual parent = Operators.Select(
-                            1, pop, ref rand
-                        )[0];
+                        var parent = Operators.Select(1, pop, ref rand)[0];
                         Individual individual = Operators.Mutate(
                             parent, p.space, p.mutation, ref rand
                         );
+                        // Calculate the individual's difficulty
+                        individual.CalculateDifficulty();
                         // Calculate the new individual fitness
                         Fitness.Calculate(ref individual);
                         // Add the new individual in the offspring
@@ -76,7 +80,8 @@ namespace OverlordEnemyGenerator
                     }
                 }
                 // Remove leftover individuals from the offspring list
-                if (offspring.Count > p.offspring) {
+                if (offspring.Count > p.offspring)
+                {
                     offspring.RemoveRange(p.offspring - 1, offspring.Count - 1);
                 }
                 // Place the offspring in MAP-Elites

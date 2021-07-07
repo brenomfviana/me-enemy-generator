@@ -36,7 +36,7 @@ namespace OverlordEnemyGenerator
                 // Perform tournament selection with 3 competitors
                 (Coordinate coordinate, Individual individual) = Tournament(
                     3,       // Number of competitors
-                    pop,     // Population reference
+                    pop,     // Population
                     cs,      // List of valid coordinates
                     ref rand // Random number generator
                 );
@@ -70,7 +70,7 @@ namespace OverlordEnemyGenerator
             for (int i = 0; i < amount; i++)
             {
                 // Get a random coordinate
-                (int x, int y) rc = Util.RandomFromList(acds, ref rand);
+                (int x, int y) rc = Util.RandomElementFromList(acds, ref rand);
                 // Get the corresponding competitor
                 competitors[i] = pop.map[rc.x, rc.y];
                 coordinates[i] = rc;
@@ -123,7 +123,7 @@ namespace OverlordEnemyGenerator
             }
             if (chance > Util.RandomPercent(ref rand))
             {
-                individual.enemy.movementType = Util.RandomFromArray(
+                individual.enemy.movementType = Util.RandomElementFromArray(
                     ss.rMovementType, ref rand
                 );
             }
@@ -148,13 +148,13 @@ namespace OverlordEnemyGenerator
             // Apply mutation on weapon attributes
             if (chance > Util.RandomPercent(ref rand))
             {
-                individual.weapon.weaponType = Util.RandomFromArray(
+                individual.weapon.weaponType = Util.RandomElementFromArray(
                     ss.rWeaponType, ref rand
                 );
             }
             if (chance > Util.RandomPercent(ref rand))
             {
-                individual.weapon.projectileType = Util.RandomFromArray(
+                individual.weapon.projectileType = Util.RandomElementFromArray(
                     ss.rProjectileType, ref rand
                 );
             }
@@ -258,7 +258,7 @@ namespace OverlordEnemyGenerator
             return id;
         }
 
-        /// Return the BLX alpha for the given values.
+        /// Return the BLX alpha for the input values.
         static (int, int) BLXAlphaInt(
             float v1,
             float v2,
@@ -273,7 +273,7 @@ namespace OverlordEnemyGenerator
             return (a, b);
         }
 
-        /// Return the BLX alpha for the given values.
+        /// Return the BLX alpha for the input values.
         static (float, float) BLXAlphaFloat(
             float v1,
             float v2,

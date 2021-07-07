@@ -60,9 +60,7 @@ namespace OverlordEnemyGenerator
             int d = SearchSpace.GetDifficultyIndex(individual.difficulty);
             int w = (int) individual.weapon.weaponType;
             // Place individual in the MAP-Elites population if...
-            if (
-                // The new individual's difficulty is valid
-                d != -1 &&
+            if (d != -1 && // The new individual's difficulty is valid, and...
                 // The new individual deserves to survive
                 (map[d, w] is null || individual.fitness < map[d, w].fitness)
             ) {

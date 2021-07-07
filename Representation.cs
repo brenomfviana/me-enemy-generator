@@ -34,6 +34,83 @@ namespace OverlordEnemyGenerator
             this.weapon = weapon;
         }
 
+        /// Calculate the difficulty of the input individual.
+        public void CalculateDifficulty()
+        {
+            // Get enemy and weapon components
+            Enemy e = this.enemy;
+            Weapon w = this.weapon;
+            // Calculate the individual fitness
+            float fH = e.health;
+            float fA = e.activeTime;
+            float fR = 1 / e.restTime;
+            float fM = e.movementSpeed * Multiplier(e.movementType);
+            float fD = e.strength * Multiplier(w.weaponType);
+            float fP = e.attackSpeed + w.projectileSpeed;
+            fP *= Multiplier(w.projectileType);
+            // Sum all difficulty factors
+            this.difficulty = fH + fA + fR + fM + fD + fP;
+        }
+
+        /// Return the multiplier factor for the input type of movement,
+        /// behavior, weapon, or projectile.
+        static float Multiplier<T>(
+            T value
+        ) {
+            // If the value is a MovementType
+            if (value is MovementType)
+            {
+                switch (value)
+                {
+                    case MovementType.None:
+                        return 0f;
+                    case MovementType.Random:
+                        return 1.04f;
+                    case MovementType.Random1D:
+                        return 1f;
+                    case MovementType.Flee:
+                        return 1.1f;
+                    case MovementType.Flee1D:
+                        return 1.08f;
+                    case MovementType.Follow:
+                        return 1.15f;
+                    case MovementType.Follow1D:
+                        return 1.12f;
+                }
+            }
+            // If the value is a WeaponType
+            else if (value is WeaponType)
+            {
+                switch (value)
+                {
+                    case WeaponType.None:
+                        return 1f;
+                    case WeaponType.Sword:
+                        return 1.5f;
+                    case WeaponType.Shotgun:
+                        return 1f;           // Change it later
+                    case WeaponType.Cannon:
+                        return 1f;           // Change it later
+                    case WeaponType.Shield:
+                        return 1.6f;
+                }
+            }
+            // If the value is a ProjectileType
+            else if (value is ProjectileType)
+            {
+                switch (value)
+                {
+                    case ProjectileType.None:
+                        return 1f;
+                    case ProjectileType.Bullet:
+                        return 0.3f;            // Change it later?
+                    case ProjectileType.Bomb:
+                        return 0.3f;            // Change it later?
+                }
+            }
+            return 0f;
+        }
+
         /// Return a clone of the individual.
         ///
         /// We create a new individual by passing `enemy` and `weapon` in the
@@ -77,15 +154,15 @@ namespace OverlordEnemyGenerator
                 Util.RandomInt(ss.rHealth, ref rand),
                 Util.RandomInt(ss.rStrength, ref rand),
                 Util.RandomFloat(ss.rAttackSpeed, ref rand),
-                Util.RandomFromArray(ss.rMovementType, ref rand),
+                Util.RandomElementFromArray(ss.rMovementType, ref rand),
                 Util.RandomFloat(ss.rMovementSpeed, ref rand),
                 Util.RandomFloat(ss.rActiveTime, ref rand),
                 Util.RandomFloat(ss.rRestTime, ref rand)
             );
             // Create a random weapon
             Weapon w = new Weapon(
-                Util.RandomFromArray(ss.rWeaponType, ref rand),
-                Util.RandomFromArray(ss.rProjectileType, ref rand),
+                Util.RandomElementFromArray(ss.rWeaponType, ref rand),
+                Util.RandomElementFromArray(ss.rProjectileType, ref rand),
                 Util.RandomFloat(ss.rProjectileSpeed, ref rand)
             );
             // Combine the enemy and the weapon to create a new individual

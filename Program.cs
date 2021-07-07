@@ -5,6 +5,7 @@ namespace OverlordEnemyGenerator
     class Program
     {
         private const int ERROR_BAD_ARGUMENTS = 0xA0;
+        private const int NUMBER_OF_PARAMETERS = 4;
 
         /// This program gets four arguments.
         ///
@@ -15,7 +16,8 @@ namespace OverlordEnemyGenerator
         static void Main(string[] args)
         {
             // Check if the number of parameters are valid
-            if (args.Length != 4) {
+            if (args.Length != NUMBER_OF_PARAMETERS)
+            {
                 Console.WriteLine("ERROR: Invalid number of parameters!");
                 System.Environment.Exit(ERROR_BAD_ARGUMENTS);
             }
@@ -23,13 +25,11 @@ namespace OverlordEnemyGenerator
             // Initialize the struct data to hold the generation process data
             Data data = new Data();
 
-            // Get random seed
+            // Get the evolutionary parameteres: random seed, number of
+            // generations, initial population size, and offspring size
             data.seed = int.Parse(args[0]);
-            // Get number of generations
             data.generations = int.Parse(args[1]);
-            // Get initial population size
             data.initialPopSize = int.Parse(args[2]);
-            // Get offspring size
             data.offspringSize = int.Parse(args[3]);
 
             // Define the chances of each recombination operator

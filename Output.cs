@@ -19,13 +19,10 @@ namespace OverlordEnemyGenerator
             // Convert list to formmated JSON string
             var options = new JsonSerializerOptions(){ WriteIndented = true };
             string json = JsonSerializer.Serialize(data, options);
-            // Calculate the JSON filename
+            // Prepare the JSON filename
             string filename = "";
-            // Number of generations
             filename += "" + data.generations + '-';
-            // Initial population size
             filename += "" + data.initialPopSize + '-';
-            // Offspring size
             filename += "" + data.offspringSize + '-';
             // Create folder `filename` if it does not exist
             folder = "results/" + filename;
