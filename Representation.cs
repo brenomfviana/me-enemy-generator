@@ -250,6 +250,14 @@ namespace OverlordEnemyGenerator
         Flee1D,   // The enemy flees from the player horizontally or vertically.
     }
 
+    // This enum defines the behavior types of enemies.
+    public enum BehaviorType
+    {
+        Indifferent, // The enemy does nothing.
+        LoneWolf,    // The enemy prefers to be alone.
+        Swarm,       // The enemy prefers to be in a group of enemies.
+    }
+
     /// This enum defines the types of weapons an enemy may have.
     [Serializable()]
     public enum WeaponType
@@ -259,6 +267,7 @@ namespace OverlordEnemyGenerator
         Shotgun, // The enemy shots projectiles towards the player (Range).
         Cannon,  // The enemy shots bombs towards the player (Range).
         Shield,  // The enemy uses shields to defend themselves (Defense).
+        Cure,    // The enemy uses magic to cure enemies (Defense).
     }
 
     // This enum defines the projectile types of weapons.
@@ -267,6 +276,7 @@ namespace OverlordEnemyGenerator
     {
         None,   // The weapon is not a projectile weapon.
         Bullet, // The weapon shots bullets.
+        Arrows, // The weapon shots arrows.
         Bomb,   // The weapon shots bombs.
     }
 }
