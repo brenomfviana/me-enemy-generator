@@ -15,8 +15,6 @@ namespace OverlordEnemyGenerator
         [JsonInclude]
         public int initialPopSize { get; set; }
         [JsonInclude]
-        public int offspringSize { get; set; }
-        [JsonInclude]
         public double duration { get; set; }
         [JsonInclude]
         public List<Individual> initial { get; set; }

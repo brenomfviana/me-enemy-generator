@@ -13,7 +13,7 @@ namespace OverlordEnemyGenerator
     /// This particular population is mapped into enemy's weapons and its
     /// difficulty factor. Each Elite (or matrix cell) corresponds to a
     /// combination of different types of weapons and difficulty factors.
-    public struct Population
+    public class Population
     {
         // The MAP-Elites dimension. The dimension is defined by the number of
         // difficulty factors multiplied by the number of weapon Types.

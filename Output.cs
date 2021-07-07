@@ -23,7 +23,6 @@ namespace OverlordEnemyGenerator
             string filename = "";
             filename += "" + data.generations + '-';
             filename += "" + data.initialPopSize + '-';
-            filename += "" + data.offspringSize + '-';
             // Create folder `filename` if it does not exist
             folder = "results/" + filename;
             if (!Directory.Exists(folder))

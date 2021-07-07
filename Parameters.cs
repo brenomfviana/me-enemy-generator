@@ -1,40 +1,36 @@
 namespace OverlordEnemyGenerator
 {
-    /// This struct defines the parameters of the evolutionary enemy generator.
+    /// This struct holds the parameters of the evolutionary enemy generator.
     public struct Parameters
     {
-        // The seed that initializes the random generator.
+        /// The seed that initializes the random generator.
         public int seed { get; }
-        // The maximun number of generations.
+        /// The maximun number of generations.
         public int generations { get; }
-        // The initial population size.
+        /// The initial population size.
         public int initial { get; }
-        // The offspring size.
-        public int offspring { get; }
-        // The chance of mutation.
+        /// The mutation chance.
         public int mutation { get; }
-        // The chance of crossover.
+        /// The crossover chance.
         public int crossover { get; }
-        // The search space.
+        /// The search space.
         public SearchSpace space { get; }
 
         /// Parameters constructor.
         public Parameters(
-            int seed,
-            int generations,
-            int initial,
-            int offspring,
-            int mutation,
-            int crossover,
-            SearchSpace space
+            int _seed,
+            int _generations,
+            int _initial,
+            int _mutation,
+            int _crossover,
+            SearchSpace _space
         ) {
-            this.seed = seed;
-            this.generations = generations;
-            this.initial = initial;
-            this.offspring = offspring;
-            this.mutation = mutation;
-            this.crossover = crossover;
-            this.space = space;
+            seed = _seed;
+            generations = _generations;
+            initial = _initial;
+            mutation = _mutation;
+            crossover = _crossover;
+            space = _space;
         }
     }
 }

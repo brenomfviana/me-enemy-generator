@@ -4,37 +4,26 @@ namespace OverlordEnemyGenerator
 {
     class Program
     {
-        private const int ERROR_BAD_ARGUMENTS = 0xA0;
-        private const int NUMBER_OF_PARAMETERS = 4;
+        /// The expected number of parameters (arguments).
+        private const int NUMBER_OF_PARAMETERS = 5;
 
-        /// This program gets four arguments.
-        ///
-        /// `0` - Random seed.
-        /// `1` - Number of generations.
-        /// `2` - Initial population size.
-        /// `3` - Offspring size.
+        /// Error code for bad arguments.
+        private const int ERROR_BAD_ARGUMENTS = 0xA0;
+
+        /// This enemy generator receives five arguments:
+        /// 0 - Random seed.
+        /// 1 - Number of generations.
+        /// 2 - Initial population size.
+        /// 3 - Mutation chance.
+        /// 4 - Crossover chance.
         static void Main(string[] args)
         {
-            // Check if the number of parameters are valid
+            // Check if the expected number of parameters were given
             if (args.Length != NUMBER_OF_PARAMETERS)
             {
                 Console.WriteLine("ERROR: Invalid number of parameters!");
                 System.Environment.Exit(ERROR_BAD_ARGUMENTS);
             }
-
-            // Initialize the struct data to hold the generation process data
-            Data data = new Data();
-
-            // Get the evolutionary parameteres: random seed, number of
-            // generations, initial population size, and offspring size
-            data.seed = int.Parse(args[0]);
-            data.generations = int.Parse(args[1]);
-            data.initialPopSize = int.Parse(args[2]);
-            data.offspringSize = int.Parse(args[3]);
-
-            // Define the chances of each recombination operator
-            int mutation = 20;
-            int crossover = 80;
 
             // Define the search space
             SearchSpace space = new SearchSpace(
@@ -50,31 +39,25 @@ namespace OverlordEnemyGenerator
                 (1f, 4f)                          // Projectile Speed
             );
 
-            // Define evolutionary parameters
-            Parameters p = new Parameters(
-                data.seed,           // Random seed
-                data.generations,    // Number of generations
-                data.initialPopSize, // Initial population size
-                data.offspringSize,  // Offspring size
-                mutation,            // Mutation chance
-                crossover,           // Crossover chance
-                space                // The problem search space
+            // Define the evolutionary parameters
+            Parameters prs = new Parameters(
+                int.Parse(args[0]), // Random seed
+                int.Parse(args[1]), // Number of generations
+                int.Parse(args[2]), // Initial population size
+                int.Parse(args[3]), // Mutation chance
+                int.Parse(args[4]), // Crossover chance
+                space               // Problem search space
             );
 
-            // Get starting time
-            DateTime start = DateTime.Now;
+            // Prepare the evolutionary process
+            EnemyGenerator generator = new EnemyGenerator(prs);
 
             // Generate a set of enemies
-            Evolution.Evolve(p, ref data);
+            generator.Evolve();
+            generator.GetSolution().Debug();
 
-            // Get ending time
-            DateTime end = DateTime.Now;
-
-            // Get the duration time
-            data.duration = (end - start).TotalSeconds;
-
-            // Write the collected data
-            Output.WriteData(data);
+            // // Write the collected data
+            // Output.WriteData(generator.GetData());
         }
     }
 }
