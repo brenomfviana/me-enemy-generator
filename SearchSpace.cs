@@ -50,6 +50,12 @@ namespace OverlordEnemyGenerator
             return (MovementType[]) Enum.GetValues(typeof(MovementType));
         }
 
+        /// Return the list of all behavior types.
+        public static BehaviorType[] AllBehaviorTypes()
+        {
+            return (BehaviorType[]) Enum.GetValues(typeof(BehaviorType));
+        }
+
         /// Return the list of all weapon types.
         public static WeaponType[] AllWeaponTypes()
         {
@@ -66,7 +72,7 @@ namespace OverlordEnemyGenerator
         public static (float, float)[] AllDifficulties()
         {
             return new (float, float)[] {
-                (5, 10), (10, 15), (15, 20), (20, 25), (25, 29)
+                (0, 4), (4, 8), (8, 12), (12, 16), (16, 20)
             };
         }
 
