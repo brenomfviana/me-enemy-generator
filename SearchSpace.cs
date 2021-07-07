@@ -11,6 +11,7 @@ namespace OverlordEnemyGenerator
         public (int, int) rHealth { get; }
         public (int, int) rStrength { get; }
         public (float, float) rAttackSpeed { get; }
+        public BehaviorType[] rBehaviorType { get; }
         public MovementType[] rMovementType { get; }
         public (float, float) rMovementSpeed { get; }
         public (float, float) rActiveTime { get; }
@@ -21,27 +22,29 @@ namespace OverlordEnemyGenerator
 
         /// Search space constructor.
         public SearchSpace(
-            (int, int) rHealth,
-            (int, int) rStrength,
-            (float, float) rAttackSpeed,
-            MovementType[] rMovementType,
-            (float, float) rMovementSpeed,
-            (float, float) rActiveTime,
-            (float, float) rRestTime,
-            WeaponType[] rWeaponType,
-            ProjectileType[] rProjectileType,
-            (float, float) rProjectileSpeed
+            (int, int) _rHealth,
+            (int, int) _rStrength,
+            (float, float) _rAttackSpeed,
+            BehaviorType[] _rBehaviorType,
+            MovementType[] _rMovementType,
+            (float, float) _rMovementSpeed,
+            (float, float) _rActiveTime,
+            (float, float) _rRestTime,
+            WeaponType[] _rWeaponType,
+            ProjectileType[] _rProjectileType,
+            (float, float) _rProjectileSpeed
         ) {
-            this.rHealth = rHealth;
-            this.rStrength = rStrength;
-            this.rAttackSpeed = rAttackSpeed;
-            this.rMovementType = rMovementType;
-            this.rMovementSpeed = rMovementSpeed;
-            this.rActiveTime = rActiveTime;
-            this.rRestTime = rRestTime;
-            this.rWeaponType = rWeaponType;
-            this.rProjectileType = rProjectileType;
-            this.rProjectileSpeed = rProjectileSpeed;
+            rHealth = _rHealth;
+            rStrength = _rStrength;
+            rAttackSpeed = _rAttackSpeed;
+            rBehaviorType = _rBehaviorType;
+            rMovementType = _rMovementType;
+            rMovementSpeed = _rMovementSpeed;
+            rActiveTime = _rActiveTime;
+            rRestTime = _rRestTime;
+            rWeaponType = _rWeaponType;
+            rProjectileType = _rProjectileType;
+            rProjectileSpeed = _rProjectileSpeed;
         }
 
         /// Return the list of all movement types.

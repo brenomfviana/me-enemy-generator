@@ -30,6 +30,7 @@ namespace OverlordEnemyGenerator
                 (1, 5),                           // Health
                 (1, 4),                           // Strength
                 (0.75f, 4f),                      // Attack Speed
+                SearchSpace.AllBehaviorTypes(),   // Behavior Types
                 SearchSpace.AllMovementTypes(),   // Movement Types
                 (0.8f, 3.2f),                     // Movement Speed
                 (1.5f, 10f),                      // Active Time
@@ -54,10 +55,9 @@ namespace OverlordEnemyGenerator
 
             // Generate a set of enemies
             generator.Evolve();
-            generator.GetSolution().Debug();
 
-            // // Write the collected data
-            // Output.WriteData(generator.GetData());
+            // Write the collected data
+            Output.WriteData(generator.GetData());
         }
     }
 }

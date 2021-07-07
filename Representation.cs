@@ -27,19 +27,19 @@ namespace OverlordEnemyGenerator
 
         /// Individual contructor.
         public Individual(
-            Enemy enemy,
-            Weapon weapon
+            Enemy _enemy,
+            Weapon _weapon
         ) {
-            this.enemy = enemy;
-            this.weapon = weapon;
+            enemy = _enemy;
+            weapon = _weapon;
         }
 
         /// Calculate the difficulty of the input individual.
         public void CalculateDifficulty()
         {
             // Get enemy and weapon components
-            Enemy e = this.enemy;
-            Weapon w = this.weapon;
+            Enemy e = enemy;
+            Weapon w = weapon;
             // Calculate the individual fitness
             float fH = e.health;
             float fA = e.activeTime;
@@ -49,7 +49,7 @@ namespace OverlordEnemyGenerator
             float fP = e.attackSpeed + w.projectileSpeed;
             fP *= Multiplier(w.projectileType);
             // Sum all difficulty factors
-            this.difficulty = fH + fA + fR + fM + fD + fP;
+            difficulty = fH + fA + fR + fM + fD + fP;
         }
 
         /// Return the multiplier factor for the input type of movement,
@@ -118,29 +118,30 @@ namespace OverlordEnemyGenerator
         /// value instead of doing a deep copy.
         public Individual Clone()
         {
-            Individual individual = new Individual(this.enemy, this.weapon);
-            individual.difficulty = this.difficulty;
-            individual.fitness = this.fitness;
-            individual.generation = this.generation;
+            Individual individual = new Individual(enemy, weapon);
+            individual.difficulty = difficulty;
+            individual.fitness = fitness;
+            individual.generation = generation;
             return individual;
         }
 
         /// Print the individual attributes.
         public void Debug()
         {
-            Console.WriteLine("   " + this.generation);
-            Console.WriteLine("   " + this.fitness);
-            Console.WriteLine("   " + this.difficulty);
-            Console.WriteLine("   " + this.enemy.health);
-            Console.WriteLine("   " + this.enemy.strength);
-            Console.WriteLine("   " + this.enemy.attackSpeed);
-            Console.WriteLine("   " + this.enemy.movementType);
-            Console.WriteLine("   " + this.enemy.movementSpeed);
-            Console.WriteLine("   " + this.enemy.activeTime);
-            Console.WriteLine("   " + this.enemy.restTime);
-            Console.WriteLine("   " + this.weapon.weaponType);
-            Console.WriteLine("   " + this.weapon.projectileType);
-            Console.WriteLine("   " + this.weapon.projectileSpeed);
+            Console.WriteLine("   " + generation);
+            Console.WriteLine("   " + fitness);
+            Console.WriteLine("   " + difficulty);
+            Console.WriteLine("   " + enemy.health);
+            Console.WriteLine("   " + enemy.strength);
+            Console.WriteLine("   " + enemy.attackSpeed);
+            Console.WriteLine("   " + enemy.behaviorType);
+            Console.WriteLine("   " + enemy.movementType);
+            Console.WriteLine("   " + enemy.movementSpeed);
+            Console.WriteLine("   " + enemy.activeTime);
+            Console.WriteLine("   " + enemy.restTime);
+            Console.WriteLine("   " + weapon.weaponType);
+            Console.WriteLine("   " + weapon.projectileType);
+            Console.WriteLine("   " + weapon.projectileSpeed);
             Console.WriteLine();
         }
 
@@ -154,6 +155,7 @@ namespace OverlordEnemyGenerator
                 Util.RandomInt(ss.rHealth, ref rand),
                 Util.RandomInt(ss.rStrength, ref rand),
                 Util.RandomFloat(ss.rAttackSpeed, ref rand),
+                Util.RandomElementFromArray(ss.rBehaviorType, ref rand),
                 Util.RandomElementFromArray(ss.rMovementType, ref rand),
                 Util.RandomFloat(ss.rMovementSpeed, ref rand),
                 Util.RandomFloat(ss.rActiveTime, ref rand),
@@ -186,6 +188,8 @@ namespace OverlordEnemyGenerator
         [JsonInclude]
         public float attackSpeed;
         [JsonInclude]
+        public BehaviorType behaviorType;
+        [JsonInclude]
         public MovementType movementType;
         [JsonInclude]
         public float movementSpeed;
@@ -196,21 +200,23 @@ namespace OverlordEnemyGenerator
 
         /// Enemy contructor.
         public Enemy(
-            int health,
-            int strength,
-            float attackSpeed,
-            MovementType movementType,
-            float movementSpeed,
-            float activeTime,
-            float restTime
+            int _health,
+            int _strength,
+            float _attackSpeed,
+            BehaviorType _behaviorType,
+            MovementType _movementType,
+            float _movementSpeed,
+            float _activeTime,
+            float _restTime
         ) {
-            this.health = health;
-            this.strength = strength;
-            this.attackSpeed = attackSpeed;
-            this.movementType = movementType;
-            this.movementSpeed = movementSpeed;
-            this.activeTime = activeTime;
-            this.restTime = restTime;
+            health = _health;
+            strength = _strength;
+            attackSpeed = _attackSpeed;
+            behaviorType = _behaviorType;
+            movementType = _movementType;
+            movementSpeed = _movementSpeed;
+            activeTime = _activeTime;
+            restTime = _restTime;
         }
     }
 
@@ -227,13 +233,13 @@ namespace OverlordEnemyGenerator
 
         // Weapon constructor.
         public Weapon(
-            WeaponType weaponType,
-            ProjectileType projectileType,
-            float projectileSpeed
+            WeaponType _weaponType,
+            ProjectileType _projectileType,
+            float _projectileSpeed
         ) {
-            this.weaponType = weaponType;
-            this.projectileType = projectileType;
-            this.projectileSpeed = projectileSpeed;
+            weaponType = _weaponType;
+            projectileType = _projectileType;
+            projectileSpeed = _projectileSpeed;
         }
     }
 

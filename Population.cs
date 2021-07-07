@@ -23,11 +23,11 @@ namespace OverlordEnemyGenerator
 
         /// Population constructor.
         public Population(
-            int numberOfDifficultyFactors,
-            int numbefOfWeaponTypes
+            int _numberOfDifficultyFactors,
+            int _numbefOfWeaponTypes
         ) {
-            this.dimension = (numberOfDifficultyFactors, numbefOfWeaponTypes);
-            this.map = new Individual[dimension.difficulty, dimension.weapon];
+            dimension = (_numberOfDifficultyFactors, _numbefOfWeaponTypes);
+            map = new Individual[dimension.difficulty, dimension.weapon];
         }
 
         /// Return the number of Elites of the population.
