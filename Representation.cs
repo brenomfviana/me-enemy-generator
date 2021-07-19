@@ -9,7 +9,7 @@ namespace OverlordEnemyGenerator
     /// difficulty degree, and the generation when it was created.
     ///
     /// Why individuals are represented by a class instead of a struct? When
-    /// using MAP-Elites, some slots may be empty, then the `null` option makes
+    /// using MAP-Elites some slots may be empty, then the `null` option makes
     /// easier to manage the MAP-Elites population.
     [Serializable]
     public class Individual
@@ -247,42 +247,43 @@ namespace OverlordEnemyGenerator
     [Serializable]
     public enum MovementType
     {
-        None,     // The enemy stays still.
-        Random,   // The enemy performs random 2D movements.
-        Follow,   // The enemy follows the player.
-        Flee,     // The enemy flees from the player.
-        Random1D, // The enemy performs random horizontal or vertical movements.
-        Follow1D, // The enemy follows the player horizontally or vertically.
-        Flee1D,   // The enemy flees from the player horizontally or vertically.
+        None,     // Enemy stays still.
+        Random,   // Enemy performs random 2D movements.
+        Follow,   // Enemy follows the player.
+        Flee,     // Enemy flees from the player.
+        Random1D, // Enemy performs random horizontal or vertical movements.
+        Follow1D, // Enemy follows the player horizontally or vertically.
+        Flee1D,   // Enemy flees from the player horizontally or vertically.
     }
 
     // This enum defines the behavior types of enemies.
     public enum BehaviorType
     {
-        Indifferent, // The enemy does nothing.
-        LoneWolf,    // The enemy prefers to be alone.
-        Swarm,       // The enemy prefers to be in a group of enemies.
+        Indifferent, // Enemy does nothing.
+        LoneWolf,    // Enemy prefers to be alone.
+        Swarm,       // Enemy prefers to be in a group of enemies.
+        Pincer,      // Enemies attack the player on both sides.
     }
 
     /// This enum defines the types of weapons an enemy may have.
     [Serializable()]
     public enum WeaponType
     {
-        None,    // The enemy attacks the player with barehands (Melee).
-        Sword,   // The enemy uses a short sword to damage the player (Melee).
-        Shotgun, // The enemy shots projectiles towards the player (Range).
-        Cannon,  // The enemy shots bombs towards the player (Range).
-        Shield,  // The enemy uses shields to defend themselves (Defense).
-        Cure,    // The enemy uses magic to cure enemies (Defense).
+        None,    // Enemy attacks the player with barehands (Melee).
+        Sword,   // Enemy uses a short sword to damage the player (Melee).
+        Shotgun, // Enemy shots projectiles towards the player (Range).
+        Cannon,  // Enemy shots bombs towards the player (Range).
+        Shield,  // Enemy uses shields to defend themselves (Defense).
+        Cure,    // Enemy uses magic to cure enemies (Defense).
     }
 
     // This enum defines the projectile types of weapons.
     [Serializable]
     public enum ProjectileType
     {
-        None,   // The weapon is not a projectile weapon.
-        Bullet, // The weapon shots bullets.
-        Arrows, // The weapon shots arrows.
-        Bomb,   // The weapon shots bombs.
+        None,   // Weapon is not a projectile weapon.
+        Bullet, // Weapon shots bullets.
+        Arrow,  // Weapon shots arrows.
+        Bomb,   // Weapon shots bombs.
     }
 }
