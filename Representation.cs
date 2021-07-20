@@ -35,21 +35,32 @@ namespace OverlordEnemyGenerator
         }
 
         /// Calculate the difficulty of the input individual.
-        public void CalculateDifficulty()
+        public void CalculateDifficulty(SearchSpace ss)
         {
             // Get enemy and weapon components
             Enemy e = enemy;
             Weapon w = weapon;
-            // Calculate the individual fitness
+
+            // Calculate the base difficulty
             float fH = e.health;
-            float fA = e.activeTime;
-            float fR = 1 / e.restTime;
-            float fM = e.movementSpeed * Multiplier(e.movementType);
-            float fD = e.strength * Multiplier(w.weaponType);
-            float fP = e.attackSpeed + w.projectileSpeed;
+            float fA = e.attackSpeed;
+            float fM = e.movementSpeed;
+            fM *= Multiplier(e.movementType);
+            fM *= Multiplier(e.behaviorType);
+            float fD = e.strength;
+            fD *= Multiplier(w.weaponType);
+            float fP =  w.projectileSpeed;
             fP *= Multiplier(w.projectileType);
-            // Sum all difficulty factors
-            difficulty = fH + fA + fR + fM + fD + fP;
+            // Sum all factors
+            float baseDifficulty = fH + fA + fM + fD + fP;
+
+            // Calculate the difficulty intensity factors
+            float fAT = e.activeTime / ss.rActiveTime.Item2;
+            float fRT = 1 / (e.restTime / ss.rRestTime.Item2);
+            float intensity = fAT * fRT;
+
+            // Calculate the final difficulty
+            difficulty = baseDifficulty * intensity;
         }
 
         /// Return the multiplier factor for the input type of movement,

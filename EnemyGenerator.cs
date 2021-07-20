@@ -67,13 +67,13 @@ namespace OverlordEnemyGenerator
             while (pop.Count() < prs.initial)
             {
                 // Create a new random individual
-                Individual individual = Individual.GetRandom(prs.space, ref rand);
+                Individual ind = Individual.GetRandom(prs.space, ref rand);
                 // Calculate the individual's difficulty
-                individual.CalculateDifficulty();
+                ind.CalculateDifficulty(prs.space);
                 // Calculate the individual fitness
-                Fitness.Calculate(ref individual);
+                Fitness.Calculate(ref ind);
                 // Place the individual in the MAP-Elites
-                pop.PlaceIndividual(individual);
+                pop.PlaceIndividual(ind);
             }
 
             // Get the initial population
@@ -102,7 +102,7 @@ namespace OverlordEnemyGenerator
                     for (int i = 0; i < children.Length; i++)
                     {
                         // Calculate the individual's difficulty
-                        children[i].CalculateDifficulty();
+                        children[i].CalculateDifficulty(prs.space);
                         // Calculate the new individual fitness
                         Fitness.Calculate(ref children[i]);
                         // Add the new individual in the offspring
@@ -117,7 +117,7 @@ namespace OverlordEnemyGenerator
                         parent, prs.space, prs.mutation, ref rand
                     );
                     // Calculate the individual's difficulty
-                    individual.CalculateDifficulty();
+                    individual.CalculateDifficulty(prs.space);
                     // Calculate the new individual fitness
                     Fitness.Calculate(ref individual);
                     // Add the new individual in the offspring
