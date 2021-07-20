@@ -15,10 +15,11 @@ namespace OverlordEnemyGenerator
     /// combination of different types of weapons and difficulty factors.
     public class Population
     {
-        // The MAP-Elites dimension. The dimension is defined by the number of
-        // difficulty factors multiplied by the number of weapon Types.
+        /// The MAP-Elites dimension. The dimension is defined by the number of
+        /// difficulty factors multiplied by the number of weapon Types.
         public (int difficulty, int weapon) dimension { get; }
-        // The MAP-Elites map (a matrix of individuals).
+
+        /// The MAP-Elites map (a matrix of individuals).
         public Individual[,] map { get; }
 
         /// Population constructor.

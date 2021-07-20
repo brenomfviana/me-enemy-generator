@@ -37,10 +37,9 @@ namespace OverlordEnemyGenerator
         /// Calculate the difficulty of the input individual.
         public void CalculateDifficulty(SearchSpace ss)
         {
-            // Get enemy and weapon components
+            // Get enemy and weapon genes from the individual
             Enemy e = enemy;
             Weapon w = weapon;
-
             // Calculate the base difficulty
             float fH = e.health;
             float fA = e.attackSpeed;
@@ -51,14 +50,11 @@ namespace OverlordEnemyGenerator
             fD *= Multiplier(w.weaponType);
             float fP =  w.projectileSpeed;
             fP *= Multiplier(w.projectileType);
-            // Sum all factors
             float baseDifficulty = fH + fA + fM + fD + fP;
-
             // Calculate the difficulty intensity factors
             float fAT = e.activeTime / ss.rActiveTime.Item2;
             float fRT = 1 / (e.restTime / ss.rRestTime.Item2);
             float intensity = fAT * fRT;
-
             // Calculate the final difficulty
             difficulty = baseDifficulty * intensity;
         }
@@ -68,58 +64,74 @@ namespace OverlordEnemyGenerator
         static float Multiplier<T>(
             T value
         ) {
-            // If the value is a MovementType
+            if (value is BehaviorType)
+            {
+                switch(value)
+                {
+                    case BehaviorType.Indifferent:
+                        return 1.00f;
+                    case BehaviorType.LoneWolf:
+                        return 0.90f;
+                    case BehaviorType.Swarm:
+                        return 1.10f;
+                    case BehaviorType.Pincer:
+                        return 1.30f;
+                }
+            }
+
             if (value is MovementType)
             {
                 switch (value)
                 {
                     case MovementType.None:
-                        return 0f;
+                        return 0.00f;
                     case MovementType.Random:
-                        return 1.04f;
-                    case MovementType.Random1D:
-                        return 1f;
+                        return 1.05f;
                     case MovementType.Flee:
-                        return 1.1f;
-                    case MovementType.Flee1D:
-                        return 1.08f;
+                        return 1.10f;
                     case MovementType.Follow:
                         return 1.15f;
+                    case MovementType.Random1D:
+                        return 1.00f;
+                    case MovementType.Flee1D:
+                        return 1.08f;
                     case MovementType.Follow1D:
                         return 1.12f;
                 }
             }
-            // If the value is a WeaponType
+
             else if (value is WeaponType)
             {
                 switch (value)
                 {
                     case WeaponType.None:
-                        return 1f;
+                        return 1.00f;
                     case WeaponType.Sword:
-                        return 1.5f;
+                        return 1.50f;
                     case WeaponType.Shotgun:
-                        return 1f;           // Change it later
-                    case WeaponType.Cannon:
-                        return 1f;           // Change it later
+                        return 1.25f;
+                    case WeaponType.Bomb:
+                        return 1.35f;
                     case WeaponType.Shield:
-                        return 1.6f;
+                        return 1.60f;
+                    case WeaponType.Cure:
+                        return 1.70f;
                 }
             }
-            // If the value is a ProjectileType
+
             else if (value is ProjectileType)
             {
                 switch (value)
                 {
                     case ProjectileType.None:
-                        return 1f;
+                        return 1.00f;
+                    case ProjectileType.Arrow:
+                        return 1.10f;
                     case ProjectileType.Bullet:
-                        return 0.3f;            // Change it later?
-                    case ProjectileType.Bomb:
-                        return 0.3f;            // Change it later?
+                        return 1.20f;
                 }
             }
-            return 0f;
+            return -100f;
         }
 
         /// Return a clone of the individual.
@@ -254,6 +266,15 @@ namespace OverlordEnemyGenerator
         }
     }
 
+    // This enum defines the behavior types of enemies.
+    public enum BehaviorType
+    {
+        Indifferent, // Enemy does nothing.
+        LoneWolf,    // Enemy prefers to be alone.
+        Swarm,       // Enemy prefers to be in a group of enemies.
+        Pincer,      // Enemies attack the player on both sides.
+    }
+
     // This enum defines the movement types of enemies.
     [Serializable]
     public enum MovementType
@@ -267,15 +288,6 @@ namespace OverlordEnemyGenerator
         Flee1D,   // Enemy flees from the player horizontally or vertically.
     }
 
-    // This enum defines the behavior types of enemies.
-    public enum BehaviorType
-    {
-        Indifferent, // Enemy does nothing.
-        LoneWolf,    // Enemy prefers to be alone.
-        Swarm,       // Enemy prefers to be in a group of enemies.
-        Pincer,      // Enemies attack the player on both sides.
-    }
-
     /// This enum defines the types of weapons an enemy may have.
     [Serializable()]
     public enum WeaponType
@@ -283,7 +295,7 @@ namespace OverlordEnemyGenerator
         None,    // Enemy attacks the player with barehands (Melee).
         Sword,   // Enemy uses a short sword to damage the player (Melee).
         Shotgun, // Enemy shots projectiles towards the player (Range).
-        Cannon,  // Enemy shots bombs towards the player (Range).
+        Bomb,    // Enemy shots bombs towards the player (Range).
         Shield,  // Enemy uses shields to defend themselves (Defense).
         Cure,    // Enemy uses magic to cure enemies (Defense).
     }
@@ -293,8 +305,7 @@ namespace OverlordEnemyGenerator
     public enum ProjectileType
     {
         None,   // Weapon is not a projectile weapon.
-        Bullet, // Weapon shots bullets.
         Arrow,  // Weapon shots arrows.
-        Bomb,   // Weapon shots bombs.
+        Bullet, // Weapon shots bullets.
     }
 }
