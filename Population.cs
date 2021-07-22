@@ -18,7 +18,6 @@ namespace OverlordEnemyGenerator
         /// The MAP-Elites dimension. The dimension is defined by the number of
         /// difficulty factors multiplied by the number of weapon Types.
         public (int difficulty, int weapon) dimension { get; }
-
         /// The MAP-Elites map (a matrix of individuals).
         public Individual[,] map { get; }
 

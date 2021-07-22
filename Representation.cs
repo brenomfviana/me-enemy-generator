@@ -100,7 +100,7 @@ namespace OverlordEnemyGenerator
                 }
             }
 
-            else if (value is WeaponType)
+            if (value is WeaponType)
             {
                 switch (value)
                 {
@@ -119,7 +119,7 @@ namespace OverlordEnemyGenerator
                 }
             }
 
-            else if (value is ProjectileType)
+            if (value is ProjectileType)
             {
                 switch (value)
                 {
