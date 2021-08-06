@@ -14,7 +14,7 @@ namespace OverlordEnemyGenerator
             string folder = @"results";
             if (!Directory.Exists(folder))
             {
-                System.IO.Directory.CreateDirectory(folder);
+                Directory.CreateDirectory(folder);
             }
             // Convert list to formmated JSON string
             var options = new JsonSerializerOptions(){ WriteIndented = true };
@@ -27,7 +27,7 @@ namespace OverlordEnemyGenerator
             folder = "results/" + filename;
             if (!Directory.Exists(folder))
             {
-                System.IO.Directory.CreateDirectory(folder);
+                Directory.CreateDirectory(folder);
             }
             // Calculate the number of files in the folder
             int count = Directory.GetFiles(folder, "*.json").Length;
