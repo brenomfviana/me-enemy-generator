@@ -5,8 +5,8 @@ namespace OverlordEnemyGenerator
 {
     /// This class represents an individual.
     ///
-    /// Individuals are composed of an enemy, a weapon, its fitness value, its
-    /// difficulty degree, and the generation when it was created.
+    /// Individuals are composed of an enemy, a weapon, their fitness value, 
+    /// their difficulty degree, and the generation when they were created.
     ///
     /// Why individuals are represented by a class instead of a struct? When
     /// using MAP-Elites some slots may be empty, then the `null` option makes
@@ -48,7 +48,7 @@ namespace OverlordEnemyGenerator
             fM *= Multiplier(e.behaviorType);
             float fD = e.strength;
             fD *= Multiplier(w.weaponType);
-            float fP =  w.projectileSpeed;
+            float fP = w.projectileSpeed;
             fP *= Multiplier(w.projectileType);
             float baseDifficulty = fH + fA + fM + fD + fP;
             // Calculate the difficulty intensity factors

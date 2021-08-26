@@ -22,7 +22,7 @@ namespace OverlordEnemyGenerator
             // Prepare the JSON filename
             string filename = "";
             filename += "" + data.generations + '-';
-            filename += "" + data.initialPopSize + '-';
+            filename += "" + data.initialPopSize;
             // Create folder `filename` if it does not exist
             folder = "results/" + filename;
             if (!Directory.Exists(folder))

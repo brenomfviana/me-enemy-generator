@@ -27,7 +27,8 @@ namespace OverlordEnemyGenerator
             // Ensure the population size is enough
             Debug.Assert(
                 cs.Count - amount > 3,
-                "There are very few individuals in the population."
+                "There are no enough individuals in the input population to " +
+                "perform this operation."
             );
             // Select `amount` individuals
             Individual[] individuals = new Individual[amount];

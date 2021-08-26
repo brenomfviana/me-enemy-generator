@@ -18,7 +18,7 @@ namespace OverlordEnemyGenerator
         /// 4 - Crossover chance.
         static void Main(string[] args)
         {
-            // Check if the expected number of parameters were given
+            // Check if the expected number of parameters were inputted
             if (args.Length != NUMBER_OF_PARAMETERS)
             {
                 Console.WriteLine("ERROR: Invalid number of parameters!");
