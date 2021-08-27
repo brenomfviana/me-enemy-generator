@@ -161,12 +161,6 @@ namespace OverlordEnemyGenerator
             }
             if (chance > Util.RandomPercent(ref rand))
             {
-                individual.weapon.projectileType = Util.RandomElementFromArray(
-                    ss.rProjectileType, ref rand
-                );
-            }
-            if (chance > Util.RandomPercent(ref rand))
-            {
                 individual.weapon.projectileSpeed = Util.RandomFloat(
                     ss.rProjectileSpeed, ref rand
                 );

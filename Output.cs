@@ -32,7 +32,7 @@ namespace OverlordEnemyGenerator
             // Calculate the number of files in the folder
             int count = Directory.GetFiles(folder, "*.json").Length;
             // Update filename
-            filename += count + ".json";
+            filename += "-" + count + ".json";
             // Write JSON file
             File.WriteAllText(folder + "/" + filename, json);
         }

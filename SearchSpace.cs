@@ -17,7 +17,6 @@ namespace OverlordEnemyGenerator
         public (float, float) rActiveTime { get; }
         public (float, float) rRestTime { get; }
         public WeaponType[] rWeaponType { get; }
-        public ProjectileType[] rProjectileType { get; }
         public (float, float) rProjectileSpeed { get; }
 
         /// Search space constructor.
@@ -31,7 +30,6 @@ namespace OverlordEnemyGenerator
             (float, float) _rActiveTime,
             (float, float) _rRestTime,
             WeaponType[] _rWeaponType,
-            ProjectileType[] _rProjectileType,
             (float, float) _rProjectileSpeed
         ) {
             rHealth = _rHealth;
@@ -43,7 +41,6 @@ namespace OverlordEnemyGenerator
             rActiveTime = _rActiveTime;
             rRestTime = _rRestTime;
             rWeaponType = _rWeaponType;
-            rProjectileType = _rProjectileType;
             rProjectileSpeed = _rProjectileSpeed;
         }
 
@@ -63,12 +60,6 @@ namespace OverlordEnemyGenerator
         public static WeaponType[] AllWeaponTypes()
         {
             return (WeaponType[]) Enum.GetValues(typeof(WeaponType));
-        }
-
-        /// Return the list of all projectile types.
-        public static ProjectileType[] AllProjectileTypes()
-        {
-            return (ProjectileType[]) Enum.GetValues(typeof(ProjectileType));
         }
 
         /// Return the list of all difficulty ranges.

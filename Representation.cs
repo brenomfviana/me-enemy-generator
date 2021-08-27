@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace OverlordEnemyGenerator
@@ -40,21 +41,50 @@ namespace OverlordEnemyGenerator
             // Get enemy and weapon genes from the individual
             Enemy e = enemy;
             Weapon w = weapon;
-            // Calculate the base difficulty
-            float fH = e.health;
-            float fA = e.attackSpeed;
+
+            // List of range weapons
+            List<WeaponType> rangeWeapons = new List<WeaponType>() {
+                WeaponType.Bow,
+                WeaponType.BombThrower,
+            };
+            // List of bad movements (i.e., the movements that do not present 
+            // a clear risk to the player)
+            List<MovementType> badMovements = new List<MovementType>() {
+                MovementType.Random,
+                MovementType.Random1D,
+                MovementType.Flee,
+                MovementType.Flee1D,
+            };
+
+            // Calculate health factor
+            float fH = e.health * 10;
+
+            // Calculate movement factor
             float fM = e.movementSpeed;
             fM *= Multiplier(e.movementType);
             fM *= Multiplier(e.behaviorType);
-            float fD = e.strength;
-            fD *= Multiplier(w.weaponType);
-            float fP = w.projectileSpeed;
-            fP *= Multiplier(w.projectileType);
-            float baseDifficulty = fH + fA + fM + fD + fP;
+
+            // Calculate strength factor
+            float fS = e.strength;
+            fS *= e.attackSpeed;
+            fS *= Multiplier(w.weaponType);
+            // If the enemy stays still, it is only a risk to the player if it
+            // throws projectiles towards the player
+            fS *= (e.movementType == MovementType.None &&
+                !rangeWeapons.Contains(w.weaponType)) ? 0 : 1;
+            // If the enemy has a bad movement, it is less risky to the player
+            // if it did not throw projectiles towards the player
+            fS *= (badMovements.Contains(e.movementType) &&
+                !rangeWeapons.Contains(w.weaponType)) ? 0.5f : 1;
+
+            // Calculate the base difficulty
+            float baseDifficulty = fH + fM + fS;
+
             // Calculate the difficulty intensity factors
             float fAT = e.activeTime / ss.rActiveTime.Item2;
             float fRT = 1 / (e.restTime / ss.rRestTime.Item2);
             float intensity = fAT * fRT;
+
             // Calculate the final difficulty
             difficulty = baseDifficulty * intensity;
         }
@@ -69,11 +99,11 @@ namespace OverlordEnemyGenerator
                 switch(value)
                 {
                     case BehaviorType.Indifferent:
-                        return 1.00f;
+                        return 0.85f;
                     case BehaviorType.LoneWolf:
-                        return 0.90f;
+                        return 1.00f;
                     case BehaviorType.Swarm:
-                        return 1.10f;
+                        return 1.15f;
                     case BehaviorType.Pincer:
                         return 1.30f;
                 }
@@ -86,17 +116,17 @@ namespace OverlordEnemyGenerator
                     case MovementType.None:
                         return 0.00f;
                     case MovementType.Random:
-                        return 1.05f;
+                        return 1.00f;
                     case MovementType.Flee:
                         return 1.10f;
                     case MovementType.Follow:
-                        return 1.15f;
+                        return 1.20f;
                     case MovementType.Random1D:
-                        return 1.00f;
+                        return 0.90f;
                     case MovementType.Flee1D:
-                        return 1.08f;
+                        return 1.00f;
                     case MovementType.Follow1D:
-                        return 1.12f;
+                        return 1.10f;
                 }
             }
 
@@ -108,10 +138,10 @@ namespace OverlordEnemyGenerator
                         return 1.00f;
                     case WeaponType.Sword:
                         return 1.50f;
-                    case WeaponType.Shotgun:
-                        return 1.25f;
-                    case WeaponType.Bomb:
+                    case WeaponType.Bow:
                         return 1.35f;
+                    case WeaponType.BombThrower:
+                        return 1.25f;
                     case WeaponType.Shield:
                         return 1.60f;
                     case WeaponType.Cure:
@@ -119,18 +149,6 @@ namespace OverlordEnemyGenerator
                 }
             }
 
-            if (value is ProjectileType)
-            {
-                switch (value)
-                {
-                    case ProjectileType.None:
-                        return 1.00f;
-                    case ProjectileType.Arrow:
-                        return 1.10f;
-                    case ProjectileType.Bullet:
-                        return 1.20f;
-                }
-            }
             return -100f;
         }
 
@@ -151,20 +169,19 @@ namespace OverlordEnemyGenerator
         /// Print the individual attributes.
         public void Debug()
         {
-            Console.WriteLine("   " + generation);
-            Console.WriteLine("   " + fitness);
-            Console.WriteLine("   " + difficulty);
-            Console.WriteLine("   " + enemy.health);
-            Console.WriteLine("   " + enemy.strength);
-            Console.WriteLine("   " + enemy.attackSpeed);
-            Console.WriteLine("   " + enemy.behaviorType);
-            Console.WriteLine("   " + enemy.movementType);
-            Console.WriteLine("   " + enemy.movementSpeed);
-            Console.WriteLine("   " + enemy.activeTime);
-            Console.WriteLine("   " + enemy.restTime);
-            Console.WriteLine("   " + weapon.weaponType);
-            Console.WriteLine("   " + weapon.projectileType);
-            Console.WriteLine("   " + weapon.projectileSpeed);
+            Console.WriteLine("  G=" + generation);
+            Console.WriteLine("  F=" + fitness);
+            Console.WriteLine("  D=" + difficulty);
+            Console.WriteLine("  He=" + enemy.health);
+            Console.WriteLine("  St=" + enemy.strength);
+            Console.WriteLine("  AS=" + enemy.attackSpeed);
+            Console.WriteLine("  Be=" + enemy.behaviorType);
+            Console.WriteLine("  MT=" + enemy.movementType);
+            Console.WriteLine("  MS=" + enemy.movementSpeed);
+            Console.WriteLine("  AT=" + enemy.activeTime);
+            Console.WriteLine("  RT=" + enemy.restTime);
+            Console.WriteLine("  WT=" + weapon.weaponType);
+            Console.WriteLine("  PS=" + weapon.projectileSpeed);
             Console.WriteLine();
         }
 
@@ -187,7 +204,6 @@ namespace OverlordEnemyGenerator
             // Create a random weapon
             Weapon w = new Weapon(
                 Util.RandomElementFromArray(ss.rWeaponType, ref rand),
-                Util.RandomElementFromArray(ss.rProjectileType, ref rand),
                 Util.RandomFloat(ss.rProjectileSpeed, ref rand)
             );
             // Combine the enemy and the weapon to create a new individual
@@ -250,18 +266,14 @@ namespace OverlordEnemyGenerator
         [JsonInclude]
         public WeaponType weaponType;
         [JsonInclude]
-        public ProjectileType projectileType;
-        [JsonInclude]
         public float projectileSpeed;
 
         // Weapon constructor.
         public Weapon(
             WeaponType _weaponType,
-            ProjectileType _projectileType,
             float _projectileSpeed
         ) {
             weaponType = _weaponType;
-            projectileType = _projectileType;
             projectileSpeed = _projectileSpeed;
         }
     }
@@ -292,20 +304,11 @@ namespace OverlordEnemyGenerator
     [Serializable()]
     public enum WeaponType
     {
-        None,    // Enemy attacks the player with barehands (Melee).
-        Sword,   // Enemy uses a short sword to damage the player (Melee).
-        Shotgun, // Enemy shots projectiles towards the player (Range).
-        Bomb,    // Enemy shots bombs towards the player (Range).
-        Shield,  // Enemy uses shields to defend themselves (Defense).
-        Cure,    // Enemy uses magic to cure enemies (Defense).
-    }
-
-    // This enum defines the projectile types of weapons.
-    [Serializable]
-    public enum ProjectileType
-    {
-        None,   // Weapon is not a projectile weapon.
-        Arrow,  // Weapon shots arrows.
-        Bullet, // Weapon shots bullets.
+        None,        // Enemy attacks the player with barehands (Melee).
+        Sword,       // Enemy uses a short sword to damage the player (Melee).
+        Bow,         // Enemy shots projectiles towards the player (Range).
+        BombThrower, // Enemy shots bombs towards the player (Range).
+        Shield,      // Enemy uses shields to defend themselves (Defense).
+        Cure,        // Enemy uses magic to cure enemies (Defense).
     }
 }

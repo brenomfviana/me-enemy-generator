@@ -120,19 +120,19 @@ namespace OverlordEnemyGenerator
                     else
                     {
                         Individual i = map[d, w];
-                        Console.WriteLine("   " + i.generation);
-                        Console.WriteLine("   " + i.fitness);
-                        Console.WriteLine("   " + i.difficulty);
-                        Console.WriteLine("   " + i.enemy.health);
-                        Console.WriteLine("   " + i.enemy.strength);
-                        Console.WriteLine("   " + i.enemy.attackSpeed);
-                        Console.WriteLine("   " + i.enemy.movementType);
-                        Console.WriteLine("   " + i.enemy.movementSpeed);
-                        Console.WriteLine("   " + i.enemy.activeTime);
-                        Console.WriteLine("   " + i.enemy.restTime);
-                        Console.WriteLine("   " + i.weapon.weaponType);
-                        Console.WriteLine("   " + i.weapon.projectileType);
-                        Console.WriteLine("   " + i.weapon.projectileSpeed);
+                        Console.WriteLine("  G=" + i.generation);
+                        Console.WriteLine("  F=" + i.fitness);
+                        Console.WriteLine("  D=" + i.difficulty);
+                        Console.WriteLine("  He=" + i.enemy.health);
+                        Console.WriteLine("  St=" + i.enemy.strength);
+                        Console.WriteLine("  AS=" + i.enemy.attackSpeed);
+                        Console.WriteLine("  Be=" + i.enemy.behaviorType);
+                        Console.WriteLine("  MT=" + i.enemy.movementType);
+                        Console.WriteLine("  MS=" + i.enemy.movementSpeed);
+                        Console.WriteLine("  AT=" + i.enemy.activeTime);
+                        Console.WriteLine("  RT=" + i.enemy.restTime);
+                        Console.WriteLine("  WT=" + i.weapon.weaponType);
+                        Console.WriteLine("  PS=" + i.weapon.projectileSpeed);
                     }
                     Console.WriteLine();
                 }

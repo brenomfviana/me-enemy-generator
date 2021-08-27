@@ -18,12 +18,12 @@ namespace OverlordEnemyGenerator
         /// 4 - Crossover chance.
         static void Main(string[] args)
         {
-            // Check if the expected number of parameters were inputted
-            if (args.Length != NUMBER_OF_PARAMETERS)
-            {
-                Console.WriteLine("ERROR: Invalid number of parameters!");
-                System.Environment.Exit(ERROR_BAD_ARGUMENTS);
-            }
+            // // Check if the expected number of parameters were inputted
+            // if (args.Length != NUMBER_OF_PARAMETERS)
+            // {
+            //     Console.WriteLine("ERROR: Invalid number of parameters!");
+            //     System.Environment.Exit(ERROR_BAD_ARGUMENTS);
+            // }
 
             // Define the search space
             SearchSpace space = new SearchSpace(
@@ -36,28 +36,55 @@ namespace OverlordEnemyGenerator
                 (1.5f, 10f),                      // Active Time
                 (0.3f, 1.5f),                     // Rest Time
                 SearchSpace.AllWeaponTypes(),     // Weapon Types
-                SearchSpace.AllProjectileTypes(), // Projectile Types
                 (1f, 4f)                          // Projectile Speed
             );
+            foreach (var b in SearchSpace.AllBehaviorTypes())
+            {
+                foreach (var m in SearchSpace.AllMovementTypes())
+                {
+                    foreach (var w in SearchSpace.AllWeaponTypes())
+                    {
+                        Individual i = new Individual(
+                            new Enemy(
+                                1,
+                                1,
+                                0.75f,
+                                b,
+                                m,
+                                0.8f,
+                                1.5f,
+                                0.3f
+                            ),
+                            new Weapon(
+                                w,
+                                1
+                            )
+                        );
+                        i.CalculateDifficulty(space);
+                        Console.WriteLine("Difficulty = " + i.difficulty);
+                        i.Debug();
+                    }
+                }
+            }
 
-            // Define the evolutionary parameters
-            Parameters prs = new Parameters(
-                int.Parse(args[0]), // Random seed
-                int.Parse(args[1]), // Number of generations
-                int.Parse(args[2]), // Initial population size
-                int.Parse(args[3]), // Mutation chance
-                int.Parse(args[4]), // Crossover chance
-                space               // Problem search space
-            );
+            // // Define the evolutionary parameters
+            // Parameters prs = new Parameters(
+            //     int.Parse(args[0]), // Random seed
+            //     int.Parse(args[1]), // Number of generations
+            //     int.Parse(args[2]), // Initial population size
+            //     int.Parse(args[3]), // Mutation chance
+            //     int.Parse(args[4]), // Crossover chance
+            //     space               // Problem search space
+            // );
 
-            // Prepare the evolutionary process
-            EnemyGenerator generator = new EnemyGenerator(prs);
+            // // Prepare the evolutionary process
+            // EnemyGenerator generator = new EnemyGenerator(prs);
 
-            // Generate a set of enemies
-            generator.Evolve();
+            // // Generate a set of enemies
+            // generator.Evolve();
 
-            // Write the collected data
-            Output.WriteData(generator.GetData());
+            // // Write the collected data
+            // Output.WriteData(generator.GetData());
         }
     }
 }
