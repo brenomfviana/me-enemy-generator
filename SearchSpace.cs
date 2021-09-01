@@ -66,7 +66,7 @@ namespace OverlordEnemyGenerator
         public static (float, float)[] AllDifficulties()
         {
             return new (float, float)[] {
-                (0, 4), (4, 8), (8, 12), (12, 16), (16, 20)
+                (8, 12), (12, 16), (16, 20), (20, 24), (24, 28)
             };
         }
 
