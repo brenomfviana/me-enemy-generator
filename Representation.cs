@@ -54,10 +54,6 @@ namespace OverlordEnemyGenerator
                 WeaponType.Sword,
                 WeaponType.Shield,
             };
-            // List of area weapons
-            List<WeaponType> areaWeapons = new List<WeaponType>() {
-                WeaponType.CureSpell
-            };
             // List of healer movements
             // The healer ideally searches for other enemies and avoids the
             // player, besides these movements in melee enemies do not present
