@@ -124,12 +124,6 @@ namespace OverlordEnemyGenerator
             }
             if (chance > Util.RandomPercent(ref rand))
             {
-                individual.enemy.behaviorType = Util.RandomElementFromArray(
-                    ss.rBehaviorType, ref rand
-                );
-            }
-            if (chance > Util.RandomPercent(ref rand))
-            {
                 individual.enemy.movementType = Util.RandomElementFromArray(
                     ss.rMovementType, ref rand
                 );

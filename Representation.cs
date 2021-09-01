@@ -136,42 +136,6 @@ namespace OverlordEnemyGenerator
         static float Multiplier<T>(
             T value
         ) {
-            if (value is BehaviorType)
-            {
-                switch(value)
-                {
-                    case BehaviorType.Indifferent:
-                        return 0.85f;
-                    case BehaviorType.LoneWolf:
-                        return 1.00f;
-                    case BehaviorType.Swarm:
-                        return 1.15f;
-                    case BehaviorType.Pincer:
-                        return 1.30f;
-                }
-            }
-
-            if (value is MovementType)
-            {
-                switch (value)
-                {
-                    case MovementType.None:
-                        return 0.75f;
-                    case MovementType.Random:
-                        return 1.00f;
-                    case MovementType.Flee:
-                        return 1.10f;
-                    case MovementType.Follow:
-                        return 1.35f;
-                    case MovementType.Random1D:
-                        return 0.90f;
-                    case MovementType.Flee1D:
-                        return 1.00f;
-                    case MovementType.Follow1D:
-                        return 1.15f;
-                }
-            }
-
             if (value is WeaponType)
             {
                 switch (value)
@@ -190,7 +154,6 @@ namespace OverlordEnemyGenerator
                         return 1.35f;
                 }
             }
-
             return -100f;
         }
 
@@ -217,7 +180,6 @@ namespace OverlordEnemyGenerator
             Console.WriteLine("  He=" + enemy.health);
             Console.WriteLine("  St=" + enemy.strength);
             Console.WriteLine("  AS=" + enemy.attackSpeed);
-            Console.WriteLine("  Be=" + enemy.behaviorType);
             Console.WriteLine("  MT=" + enemy.movementType);
             Console.WriteLine("  MS=" + enemy.movementSpeed);
             Console.WriteLine("  AT=" + enemy.activeTime);
@@ -237,7 +199,6 @@ namespace OverlordEnemyGenerator
                 Util.RandomInt(ss.rHealth, ref rand),
                 Util.RandomInt(ss.rStrength, ref rand),
                 Util.RandomFloat(ss.rAttackSpeed, ref rand),
-                Util.RandomElementFromArray(ss.rBehaviorType, ref rand),
                 Util.RandomElementFromArray(ss.rMovementType, ref rand),
                 Util.RandomFloat(ss.rMovementSpeed, ref rand),
                 Util.RandomFloat(ss.rActiveTime, ref rand),
@@ -269,8 +230,6 @@ namespace OverlordEnemyGenerator
         [JsonInclude]
         public float attackSpeed;
         [JsonInclude]
-        public BehaviorType behaviorType;
-        [JsonInclude]
         public MovementType movementType;
         [JsonInclude]
         public float movementSpeed;
@@ -284,7 +243,6 @@ namespace OverlordEnemyGenerator
             int _health,
             int _strength,
             float _attackSpeed,
-            BehaviorType _behaviorType,
             MovementType _movementType,
             float _movementSpeed,
             float _activeTime,
@@ -293,7 +251,6 @@ namespace OverlordEnemyGenerator
             health = _health;
             strength = _strength;
             attackSpeed = _attackSpeed;
-            behaviorType = _behaviorType;
             movementType = _movementType;
             movementSpeed = _movementSpeed;
             activeTime = _activeTime;
@@ -318,15 +275,6 @@ namespace OverlordEnemyGenerator
             weaponType = _weaponType;
             projectileSpeed = _projectileSpeed;
         }
-    }
-
-    // This enum defines the behavior types of enemies.
-    public enum BehaviorType
-    {
-        Indifferent, // Enemy does nothing.
-        LoneWolf,    // Enemy prefers to be alone.
-        Swarm,       // Enemy prefers to be in a group of enemies.
-        Pincer,      // Enemies attack the player on both sides.
     }
 
     // This enum defines the movement types of enemies.

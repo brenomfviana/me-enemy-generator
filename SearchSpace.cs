@@ -11,7 +11,6 @@ namespace OverlordEnemyGenerator
         public (int, int) rHealth { get; }
         public (int, int) rStrength { get; }
         public (float, float) rAttackSpeed { get; }
-        public BehaviorType[] rBehaviorType { get; }
         public MovementType[] rMovementType { get; }
         public (float, float) rMovementSpeed { get; }
         public (float, float) rActiveTime { get; }
@@ -24,7 +23,6 @@ namespace OverlordEnemyGenerator
             (int, int) _rHealth,
             (int, int) _rStrength,
             (float, float) _rAttackSpeed,
-            BehaviorType[] _rBehaviorType,
             MovementType[] _rMovementType,
             (float, float) _rMovementSpeed,
             (float, float) _rActiveTime,
@@ -35,7 +33,6 @@ namespace OverlordEnemyGenerator
             rHealth = _rHealth;
             rStrength = _rStrength;
             rAttackSpeed = _rAttackSpeed;
-            rBehaviorType = _rBehaviorType;
             rMovementType = _rMovementType;
             rMovementSpeed = _rMovementSpeed;
             rActiveTime = _rActiveTime;
@@ -48,12 +45,6 @@ namespace OverlordEnemyGenerator
         public static MovementType[] AllMovementTypes()
         {
             return (MovementType[]) Enum.GetValues(typeof(MovementType));
-        }
-
-        /// Return the list of all behavior types.
-        public static BehaviorType[] AllBehaviorTypes()
-        {
-            return (BehaviorType[]) Enum.GetValues(typeof(BehaviorType));
         }
 
         /// Return the list of all weapon types.

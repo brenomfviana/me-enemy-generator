@@ -126,7 +126,6 @@ namespace OverlordEnemyGenerator
                         Console.WriteLine("  He=" + i.enemy.health);
                         Console.WriteLine("  St=" + i.enemy.strength);
                         Console.WriteLine("  AS=" + i.enemy.attackSpeed);
-                        Console.WriteLine("  Be=" + i.enemy.behaviorType);
                         Console.WriteLine("  MT=" + i.enemy.movementType);
                         Console.WriteLine("  MS=" + i.enemy.movementSpeed);
                         Console.WriteLine("  AT=" + i.enemy.activeTime);
