@@ -9,22 +9,22 @@ import matplotlib.pyplot as plt
 
 CHART_FOLDER = 'charts'
 
-# Check if the folder exists and create it if it does not exist
+# Check if the folder for charts exists and create it if it does not exist
 if not os.path.isdir(CHART_FOLDER):
   os.mkdir(CHART_FOLDER)
 
+
 # List of indexes
-movements = [
-  'None', 'Random', 'Follow', 'Flee', 'Random1D', 'Follow1D', 'Flee1D'
-]
+difficulty = ['8, 12', '12, 16', '16, 20', '20, 24', '24, 28']
 # List of columns
-weapons = ['None', 'Sword', 'Shotgun', 'Cannon', 'Shield']
+weapons = ['Barehand', 'Sword', 'Bow', 'Bomb Thrower', 'Shield', 'Cure Spell']
+
 
 def to_map(array, attribute):
-  shape = (len(movements), (len(weapons)))
+  shape = (len(difficulty), (len(weapons)))
   map = np.zeros(shape)
   i = 0
-  for b in range(len(movements)):
+  for b in range(len(difficulty)):
     for w in range(len(weapons)):
       if array[i] is None:
         map[b, w] = np.nan
@@ -35,19 +35,21 @@ def to_map(array, attribute):
 
 
 def plot_heatmap(map, folder, filename, pop, max):
-  df = DataFrame(map, index=movements, columns=weapons)
+  df = DataFrame(map, index=difficulty, columns=weapons)
   color = sb.color_palette('viridis_r', as_cmap=True)
-  sb.heatmap(df, vmin=-1, vmax=max, annot=True, cmap=color)
-  figname = folder + '/' + filename + '-' + pop + '.png'
+  ax = sb.heatmap(df, vmin=-1, vmax=max, annot=True, cmap=color)
+  ax.invert_yaxis()
+  figname = folder + os.path.sep + filename + '-' + pop + '.png'
   plt.savefig(figname)
   plt.close()
+
 
 def plot(data, filename, folder):
   # Parse file
   obj = json.loads(data)
 
   filename = filename.replace('.json', '')
-  folder = folder +  '/' + filename
+  folder = folder +  os.path.sep + filename
   if not os.path.isdir(folder):
     os.mkdir(folder)
 
@@ -97,7 +99,7 @@ def plot(data, filename, folder):
   json_object = json.dumps(measure, indent = 4)
 
   # Write JSON file
-  filename = folder + '/' + filename + '-measure.json'
+  filename = folder + os.path.sep + filename + '-measure.json'
 
   # Writing to sample.json
   with open(filename, "w") as outfile:
@@ -105,11 +107,9 @@ def plot(data, filename, folder):
 
 
 # Calculate the filename
-folder = 'results/'
-param_folder = sys.argv[2] + '-'  # Number of generations
-param_folder += sys.argv[3] + '-' # Initial population size
-param_folder += sys.argv[4] + '-' # Offspring size
-param_folder += sys.argv[5]       # Desired fitness
+folder = 'results' + os.path.sep
+param_folder = sys.argv[2] + '-' # Number of generations
+param_folder += sys.argv[3]      # Initial population size
 
 
 # Read all files form this folder
@@ -120,7 +120,7 @@ for p in Path(folder + param_folder).glob('*.json'):
     files.append(f.read())
     filenames.append(p.name)
 
-folder = CHART_FOLDER + '/' + param_folder
+folder = CHART_FOLDER + os.path.sep + param_folder
 if not os.path.isdir(folder):
   os.mkdir(folder)
 

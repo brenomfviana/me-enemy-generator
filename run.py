@@ -1,5 +1,5 @@
 import os
-import sys
+import platform
 import random
 import numpy as np
 
@@ -15,14 +15,16 @@ executions = range(1)
 
 # --- Define the set of parameters
 
-# Number of generations
-generations = [100]
+# Numbers of generations
+generations = [200]
 
-# Initial population size
-populations = [18]
+# Initial population sizes
+populations = [20]
 
-mutations = [20]
+# Mutation rates
+mutations = [30]
 
+# Crossover rates
 crossovers = [80]
 
 
@@ -39,14 +41,20 @@ def run(g, p, m, c):
   print(parameters)
   # Run algoritm for the current set of parameters
   os.system(executable + parameters)
-  # # Plot the charts for the current set of parameters
-  # os.system('python plot.py ' + parameters)
+  # Plot the charts for the current set of parameters
+  os.system('python plot.py ' + parameters)
 
 # Compile the code
 os.system('dotnet publish')
 
 # Executable location
-executable = './bin/Debug/net5.0/publish/OverlordEnemyGenerator '
+if platform.system() == 'Linux':
+  executable = './bin/Debug/net5.0/publish/OverlordEnemyGenerator '
+elif platform.system() == 'Windows':
+  executable = 'start bin\\Debug\\net5.0\\publish\\OverlordEnemyGenerator '
+else:
+  print('This script is not able to run in this OS.')
+  exit()
 
 # Variables for progress
 total = len(generations) * len(populations) * len(mutations) * len(crossovers) * len(executions)
