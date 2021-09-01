@@ -36,20 +36,33 @@ namespace OverlordEnemyGenerator
         }
 
         /// Calculate the difficulty of the input individual.
-        public void CalculateDifficulty(SearchSpace ss)
+        /// IMPORTANT: This difficulty function was designed for our prototype.
+        public void CalculateDifficulty()
         {
             // Get enemy and weapon genes from the individual
             Enemy e = enemy;
             Weapon w = weapon;
 
-            // List of range weapons
-            List<WeaponType> rangeWeapons = new List<WeaponType>() {
+            // List of ranged weapons
+            List<WeaponType> rangedWeapons = new List<WeaponType>() {
                 WeaponType.Bow,
                 WeaponType.BombThrower,
             };
-            // List of bad movements (i.e., the movements that do not present 
-            // a clear risk to the player)
-            List<MovementType> badMovements = new List<MovementType>() {
+            // List of melee weapons
+            List<WeaponType> meleeWeapons = new List<WeaponType>() {
+                WeaponType.None,
+                WeaponType.Sword,
+                WeaponType.Shield,
+            };
+            // List of area weapons
+            List<WeaponType> areaWeapons = new List<WeaponType>() {
+                WeaponType.CureSpell
+            };
+            // List of healer movements
+            // The healer ideally searches for other enemies and avoids the
+            // player, besides these movements in melee enemies do not present
+            // a clear risk to the player
+            List<MovementType> healerMovements = new List<MovementType>() {
                 MovementType.Random,
                 MovementType.Random1D,
                 MovementType.Flee,
@@ -57,36 +70,65 @@ namespace OverlordEnemyGenerator
             };
 
             // Calculate health factor
-            float fH = e.health * 10;
-
-            // Calculate movement factor
-            float fM = e.movementSpeed;
-            fM *= Multiplier(e.movementType);
-            fM *= Multiplier(e.behaviorType);
+            float fH = e.health * 2f;
+            Console.WriteLine(" fH=" + fH);
 
             // Calculate strength factor
             float fS = e.strength;
-            fS *= e.attackSpeed;
             fS *= Multiplier(w.weaponType);
-            // If the enemy stays still, it is only a risk to the player if it
-            // throws projectiles towards the player
-            fS *= (e.movementType == MovementType.None &&
-                !rangeWeapons.Contains(w.weaponType)) ? 0 : 1;
-            // If the enemy has a bad movement, it is less risky to the player
-            // if it did not throw projectiles towards the player
-            fS *= (badMovements.Contains(e.movementType) &&
-                !rangeWeapons.Contains(w.weaponType)) ? 0.5f : 1;
+            // Melee enemies attack by touching the player, therefore, the 
+            // movement speed increase their strenght
+            fS *= meleeWeapons.Contains(w.weaponType) ?
+                e.movementSpeed : 1;
+            // Shooter enemies attack by throwing projectiles, then we count
+            // both attack speed (shooting frequency) and projectile speed
+            fS *= rangedWeapons.Contains(w.weaponType) ?
+                (e.attackSpeed * w.projectileSpeed) * 0.5f : 1;
+            // The cooldown of healer enemies follows the attack speed
+            fS *= w.weaponType == WeaponType.CureSpell ?
+                e.attackSpeed : 1;
+            Console.WriteLine(" fS=" + fS);
+
+            // Calculate movement factor
+            float fM = e.movementSpeed;
+            // Both active time and rest time affect the behavior regarding
+            // the enemies' movements, not the enemies' battles
+            fM += e.activeTime / 3f + 1f / e.restTime;
+            Console.WriteLine(" fM=" + fM);
+
+            // Calculate the gameplay factor
+            float fG = 1f;
+            // Enemies with no health are useless
+            fG *= e.health == 0 ? 0 : 1;
+            // Enemies with no strength are useless
+            fG *= e.strength == 0 ? 0 : 1;
+            // Melee enemies are only risky if they follow the player
+            fG *= meleeWeapons.Contains(w.weaponType) ?
+                (e.movementType == MovementType.Follow ? 1 : 0) : 1;
+            // Shooter enemies that stays still are the only that present some
+            // risk to the player since they throw projectiles towards them
+            fG *= rangedWeapons.Contains(w.weaponType) ?
+                (e.movementType == MovementType.None ? 0.5f : 1) : 1;
+            // Shooter enemies that fled are riskier to the player
+            fG *= rangedWeapons.Contains(w.weaponType) ?
+                (e.movementType == MovementType.Flee1D ? 1.25f : 1) : 1;
+            fG *= rangedWeapons.Contains(w.weaponType) ?
+                (e.movementType == MovementType.Flee ? 1.5f : 1) : 1;
+            // Shooter enemies do not perform well when they follow the player
+            // and are faster than the projectiles they shoot
+            fG *= (rangedWeapons.Contains(w.weaponType) &&
+                e.movementType == MovementType.Follow) ?
+                0.5f / e.movementSpeed : 1;
+            // Healer enemies must avoid the player and search for other enemies
+            fG *= (w.weaponType == WeaponType.CureSpell &&
+                healerMovements.Contains(e.movementType)) ? 1.15f : 1;
+            // Healer enemies must move fast to avoid the player
+            fG *= w.weaponType == WeaponType.CureSpell ?
+                e.movementSpeed * 1.15f : 1;
+            Console.WriteLine(" fG=" + fG);
 
             // Calculate the base difficulty
-            float baseDifficulty = fH + fM + fS;
-
-            // Calculate the difficulty intensity factors
-            float fAT = e.activeTime / ss.rActiveTime.Item2;
-            float fRT = 1 / (e.restTime / ss.rRestTime.Item2);
-            float intensity = fAT * fRT;
-
-            // Calculate the final difficulty
-            difficulty = baseDifficulty * intensity;
+            difficulty = (fH + fS + fM) * fG;
         }
 
         /// Return the multiplier factor for the input type of movement,
@@ -114,19 +156,19 @@ namespace OverlordEnemyGenerator
                 switch (value)
                 {
                     case MovementType.None:
-                        return 0.00f;
+                        return 0.75f;
                     case MovementType.Random:
                         return 1.00f;
                     case MovementType.Flee:
                         return 1.10f;
                     case MovementType.Follow:
-                        return 1.20f;
+                        return 1.35f;
                     case MovementType.Random1D:
                         return 0.90f;
                     case MovementType.Flee1D:
                         return 1.00f;
                     case MovementType.Follow1D:
-                        return 1.10f;
+                        return 1.15f;
                 }
             }
 
@@ -137,15 +179,15 @@ namespace OverlordEnemyGenerator
                     case WeaponType.None:
                         return 1.00f;
                     case WeaponType.Sword:
-                        return 1.50f;
+                        return 1.15f;
                     case WeaponType.Bow:
                         return 1.35f;
                     case WeaponType.BombThrower:
                         return 1.25f;
                     case WeaponType.Shield:
-                        return 1.60f;
-                    case WeaponType.Cure:
-                        return 1.70f;
+                        return 1.15f;
+                    case WeaponType.CureSpell:
+                        return 1.35f;
                 }
             }
 
@@ -209,8 +251,8 @@ namespace OverlordEnemyGenerator
             // Combine the enemy and the weapon to create a new individual
             Individual individual = new Individual(e, w);
             individual.generation = -1;
-            individual.difficulty = -1.0f;
-            individual.fitness = -1.0f;
+            individual.difficulty = -1f;
+            individual.fitness = -1f;
             // Return the created individual
             return individual;
         }
@@ -308,7 +350,7 @@ namespace OverlordEnemyGenerator
         Sword,       // Enemy uses a short sword to damage the player (Melee).
         Bow,         // Enemy shots projectiles towards the player (Range).
         BombThrower, // Enemy shots bombs towards the player (Range).
-        Shield,      // Enemy uses shields to defend themselves (Defense).
-        Cure,        // Enemy uses magic to cure enemies (Defense).
+        Shield,      // Enemy uses a shield to defend itself (Defense).
+        CureSpell,   // Enemy uses magic to cure other enemies (Defense).
     }
 }
