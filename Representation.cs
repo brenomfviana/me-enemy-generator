@@ -155,29 +155,4 @@ namespace EnemyGenerator
             projectileSpeed = _projectileSpeed;
         }
     }
-
-    // This enum defines the movement types of enemies.
-    [Serializable]
-    public enum MovementType
-    {
-        None,     // Enemy stays still.
-        Random,   // Enemy performs random 2D movements.
-        Follow,   // Enemy follows the player.
-        Flee,     // Enemy flees from the player.
-        Random1D, // Enemy performs random horizontal or vertical movements.
-        Follow1D, // Enemy follows the player horizontally or vertically.
-        Flee1D,   // Enemy flees from the player horizontally or vertically.
-    }
-
-    /// This enum defines the types of weapons an enemy may have.
-    [Serializable()]
-    public enum WeaponType
-    {
-        None,        // Enemy attacks the player with barehands (Melee).
-        Sword,       // Enemy uses a short sword to damage the player (Melee).
-        Bow,         // Enemy shots projectiles towards the player (Range).
-        BombThrower, // Enemy shots bombs towards the player (Range).
-        Shield,      // Enemy uses a shield to defend itself (Defense).
-        CureSpell,   // Enemy uses magic to cure other enemies (Defense).
-    }
 }

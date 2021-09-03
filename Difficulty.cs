@@ -57,11 +57,11 @@ namespace EnemyGenerator
             fS *= WeaponMultiplier(w.weaponType);
             // Melee enemies attack by touching the player, therefore, the 
             // movement speed increase their strenght
-            fS *= SearchSpace.GetMeleeWeapons().Contains(w.weaponType) ?
+            fS *= SearchSpace.MeleeWeaponList().Contains(w.weaponType) ?
                 e.movementSpeed : 1;
             // Shooter enemies attack by throwing projectiles, then we count
             // both attack speed (shooting frequency) and projectile speed
-            fS *= SearchSpace.GetRangedWeapons().Contains(w.weaponType) ?
+            fS *= SearchSpace.RangedWeaponList().Contains(w.weaponType) ?
                 (e.attackSpeed * w.projectileSpeed) * 0.5f : 1;
             // The cooldown of healer enemies follows the attack speed
             fS *= w.weaponType == WeaponType.CureSpell ?
@@ -83,25 +83,25 @@ namespace EnemyGenerator
             // Enemies with no strength are useless
             fG *= e.strength == 0 ? 0 : 1;
             // Melee enemies are only risky if they follow the player
-            fG *= SearchSpace.GetMeleeWeapons().Contains(w.weaponType) ?
+            fG *= SearchSpace.MeleeWeaponList().Contains(w.weaponType) ?
                 (e.movementType == MovementType.Follow ? 1 : 0) : 1;
             // Shooter enemies that stays still are the only that present some
             // risk to the player since they throw projectiles towards them
-            fG *= SearchSpace.GetRangedWeapons().Contains(w.weaponType) ?
+            fG *= SearchSpace.RangedWeaponList().Contains(w.weaponType) ?
                 (e.movementType == MovementType.None ? 0.5f : 1) : 1;
             // Shooter enemies that fled are riskier to the player
-            fG *= SearchSpace.GetRangedWeapons().Contains(w.weaponType) ?
+            fG *= SearchSpace.RangedWeaponList().Contains(w.weaponType) ?
                 (e.movementType == MovementType.Flee1D ? 1.25f : 1) : 1;
-            fG *= SearchSpace.GetRangedWeapons().Contains(w.weaponType) ?
+            fG *= SearchSpace.RangedWeaponList().Contains(w.weaponType) ?
                 (e.movementType == MovementType.Flee ? 1.5f : 1) : 1;
             // Shooter enemies do not perform well when they follow the player
             // and are faster than the projectiles they shoot
-            fG *= (SearchSpace.GetRangedWeapons().Contains(w.weaponType) &&
+            fG *= (SearchSpace.RangedWeaponList().Contains(w.weaponType) &&
                 e.movementType == MovementType.Follow) ?
                 0.5f / e.movementSpeed : 1;
             // Healer enemies must avoid the player and search for other enemies
             fG *= (w.weaponType == WeaponType.CureSpell &&
-                SearchSpace.GetHealerMovements().Contains(e.movementType))
+                SearchSpace.HealerMovementList().Contains(e.movementType))
                 ? 1.15f : 1;
             // Healer enemies must move fast to avoid the player
             fG *= w.weaponType == WeaponType.CureSpell ?
