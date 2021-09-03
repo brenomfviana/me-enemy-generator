@@ -182,104 +182,127 @@ namespace EnemyGenerator
             Individual parent2,
             ref Random rand
         ) {
-            // Alpha value
-            float alpha = 0.5f;
+            // Calculate a random value for alpha
+            float alpha = Util.RandomFloat((0f, 01), ref rand);
+
             // Alias for the parents' attributes
             Enemy p1e = parent1.enemy;
             Weapon p1w = parent1.weapon;
             Enemy p2e = parent2.enemy;
             Weapon p2w = parent2.weapon;
-            // Initialize the new individuals
-            Individual[] id = new Individual[2];
-            id[0] = new Individual(p1e, p2w);
-            id[1] = new Individual(p2e, p1w);
-            // Apply BLX alpha on enemy attributes
-            (id[0].enemy.health, id[1].enemy.health)
-                = BLXAlphaInt(
-                    id[0].enemy.health,
-                    id[1].enemy.health,
+
+            // Initialize the new individuals performing a 1-point crossover
+            Individual[] inds = new Individual[2];
+            inds[0] = new Individual(p1e, p2w);
+            inds[1] = new Individual(p2e, p1w);
+
+            // Apply BLX-alpha on enemy attributes
+            (inds[0].enemy.health, inds[1].enemy.health)
+                = BLXAlpha(
+                    inds[0].enemy.health,
+                    inds[1].enemy.health,
+                    SearchSpace.Instance.rHealth,
                     alpha,
                     ref rand
                 );
-            (id[0].enemy.strength, id[1].enemy.strength)
-                = BLXAlphaInt(
-                    id[0].enemy.strength,
-                    id[1].enemy.strength,
+            (inds[0].enemy.strength, inds[1].enemy.strength)
+                = BLXAlpha(
+                    inds[0].enemy.strength,
+                    inds[1].enemy.strength,
+                    SearchSpace.Instance.rStrength,
                     alpha,
                     ref rand
                 );
-            (id[0].enemy.attackSpeed, id[1].enemy.attackSpeed)
-                = BLXAlphaFloat(
-                    id[0].enemy.attackSpeed,
-                    id[1].enemy.attackSpeed,
+            (inds[0].enemy.attackSpeed, inds[1].enemy.attackSpeed)
+                = BLXAlpha(
+                    inds[0].enemy.attackSpeed,
+                    inds[1].enemy.attackSpeed,
+                    SearchSpace.Instance.rAttackSpeed,
                     alpha,
                     ref rand
                 );
-            (id[0].enemy.movementSpeed, id[1].enemy.movementSpeed)
-                = BLXAlphaFloat(
-                    id[0].enemy.movementSpeed,
-                    id[1].enemy.movementSpeed,
+            (inds[0].enemy.movementSpeed, inds[1].enemy.movementSpeed)
+                = BLXAlpha(
+                    inds[0].enemy.movementSpeed,
+                    inds[1].enemy.movementSpeed,
+                    SearchSpace.Instance.rMovementSpeed,
                     alpha,
                     ref rand
                 );
-            (id[0].enemy.activeTime, id[1].enemy.activeTime)
-                = BLXAlphaFloat(
-                    id[0].enemy.activeTime,
-                    id[1].enemy.activeTime,
+            (inds[0].enemy.activeTime, inds[1].enemy.activeTime)
+                = BLXAlpha(
+                    inds[0].enemy.activeTime,
+                    inds[1].enemy.activeTime,
+                    SearchSpace.Instance.rActiveTime,
                     alpha,
                     ref rand
                 );
-            (id[0].enemy.restTime, id[1].enemy.restTime)
-                = BLXAlphaFloat(
-                    id[0].enemy.restTime,
-                    id[1].enemy.restTime,
+            (inds[0].enemy.restTime, inds[1].enemy.restTime)
+                = BLXAlpha(
+                    inds[0].enemy.restTime,
+                    inds[1].enemy.restTime,
+                    SearchSpace.Instance.rRestTime,
                     alpha,
                     ref rand
                 );
-            // Apply BLX alpha on weapon attributes
+
+            // Apply BLX-alpha on weapon attributes
             // If both weapons are of the same type
             if (p1w.weaponType == p2w.weaponType)
             {
-                (id[0].weapon.projectileSpeed, id[1].weapon.projectileSpeed)
-                    = BLXAlphaFloat(
-                        id[0].weapon.projectileSpeed,
-                        id[1].weapon.projectileSpeed,
+                (inds[0].weapon.projectileSpeed, inds[1].weapon.projectileSpeed)
+                    = BLXAlpha(
+                        inds[0].weapon.projectileSpeed,
+                        inds[1].weapon.projectileSpeed,
+                        SearchSpace.Instance.rProjectileSpeed,
                         alpha,
                         ref rand
                     );
             }
+
             // Return the new individuals
-            return id;
+            return inds;
         }
 
-        /// Return the BLX alpha for the input values.
-        static (int, int) BLXAlphaInt(
-            float v1,
-            float v2,
+        /// Return a tuple of two values calculated by the BLX-alpha.
+        static (T, T) BLXAlpha<T>(
+            T v1,
+            T v2,
+            (T min, T max) bounds,
             float alpha,
             ref Random rand
         ) {
-            float max = Math.Max(v1, v2);
-            float min = Math.Min(v1, v2);
-            float range = (max + alpha) - (min - alpha);
-            int a = (int) (rand.NextDouble() * range + (min - alpha));
-            int b = (int) (rand.NextDouble() * range + (min - alpha));
-            return (a, b);
-        }
+            // Get the type of `float`
+            Type ft = typeof(float);
+            // Convert the given values to float
+            float fv1 = (float) Convert.ChangeType(v1, ft);
+            float fv2 = (float) Convert.ChangeType(v2, ft);
+            float fa = (float) Convert.ChangeType(bounds.min, ft);
+            float fb = (float) Convert.ChangeType(bounds.max, ft);
 
-        /// Return the BLX alpha for the input values.
-        static (float, float) BLXAlphaFloat(
-            float v1,
-            float v2,
-            float alpha,
-            ref Random rand
-        ) {
-            float max = Math.Max(v1, v2);
-            float min = Math.Min(v1, v2);
-            float range = (max + alpha) - (min - alpha);
-            float a = (float) (rand.NextDouble() * range + (min - alpha));
-            float b = (float) (rand.NextDouble() * range + (min - alpha));
-            return (a, b);
+            // Identify the maximum and minimum values
+            float max = MathF.Max(fv1, fv2);
+            float min = MathF.Min(fv1, fv2);
+
+            // Calculate the crossover values
+            float max_alpha = max + alpha;
+            float min_alpha = min - alpha;
+            (float, float) range = (max_alpha, min_alpha);
+            float c1 = Util.RandomFloat(range, ref rand);
+            float c2 = Util.RandomFloat(range, ref rand);
+
+            // If the values extrapolate the attribute's range of values, then
+            // truncate the result to the closest value
+            float a = MathF.Max(c1, fa);
+            float b = MathF.Min(c2, fb);
+
+            // Get the parameters' type
+            Type pt = typeof(T);
+            // Convert the result to type `T`
+            return (
+                (T) Convert.ChangeType(a, pt),
+                (T) Convert.ChangeType(b, pt)
+            );
         }
     }
 }

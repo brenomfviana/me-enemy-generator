@@ -19,7 +19,7 @@ executions = range(1)
 generations = [200]
 
 # Initial population sizes
-populations = [20]
+populations = [25]
 
 # Mutation rates
 mutations = [30]
