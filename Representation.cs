@@ -183,9 +183,10 @@ namespace EnemyGenerator
 
         /// Return a random individual.
         public static Individual GetRandom(
-            SearchSpace ss,
             ref Random rand
         ) {
+            // Get the Search Space of enemies
+            SearchSpace ss = SearchSpace.Instance;
             // Create a random enemy
             Enemy e = new Enemy(
                 Util.RandomInt(ss.rHealth, ref rand),

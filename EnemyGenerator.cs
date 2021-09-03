@@ -67,7 +67,7 @@ namespace EnemyGenerator
             while (pop.Count() < prs.initial)
             {
                 // Create a new random individual
-                Individual ind = Individual.GetRandom(prs.space, ref rand);
+                Individual ind = Individual.GetRandom(ref rand);
                 // Calculate the individual's difficulty
                 ind.CalculateDifficulty();
                 // Calculate the individual fitness
@@ -114,7 +114,7 @@ namespace EnemyGenerator
                     // Select and mutate a parent
                     var parent = Operators.Select(1, pop, ref rand)[0];
                     Individual individual = Operators.Mutate(
-                        parent, prs.space, prs.mutation, ref rand
+                        parent, prs.mutation, ref rand
                     );
                     // Calculate the individual's difficulty
                     individual.CalculateDifficulty();

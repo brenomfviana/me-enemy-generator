@@ -2,11 +2,11 @@ using System;
 
 namespace EnemyGenerator
 {
-    /// This struct defines search space of the enemy's attributes.
+    /// This class defines the search space of each attribute of enemies.
     ///
-    /// The prefix `r` in the attributes' names stands for `range of`, e.g.,
-    /// rHealth means range of health.
-    public struct SearchSpace
+    /// The prefix `r` in the attributes' names of this class stands for `range
+    /// of`, e.g., the rHealth means the range of health.
+    public class SearchSpace
     {
         public (int, int) rHealth { get; }
         public (int, int) rStrength { get; }
@@ -18,8 +18,8 @@ namespace EnemyGenerator
         public WeaponType[] rWeaponType { get; }
         public (float, float) rProjectileSpeed { get; }
 
-        /// Search space constructor.
-        public SearchSpace(
+        /// Search Space constructor.
+        private SearchSpace(
             (int, int) _rHealth,
             (int, int) _rStrength,
             (float, float) _rAttackSpeed,
@@ -39,6 +39,32 @@ namespace EnemyGenerator
             rRestTime = _rRestTime;
             rWeaponType = _rWeaponType;
             rProjectileSpeed = _rProjectileSpeed;
+        }
+
+        /// This variable holds the single instance of the Search Space.
+        private static SearchSpace instance = null;
+
+        /// Return the single instance of the Search Space.
+        public static SearchSpace Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new SearchSpace(
+                        (1, 5),                         // Health
+                        (1, 4),                         // Strength
+                        (0.75f, 4f),                    // Attack Speed
+                        SearchSpace.AllMovementTypes(), // Movement Types
+                        (0.8f, 2.8f),                   // Movement Speed
+                        (1.5f, 10f),                    // Active Time
+                        (0.3f, 1.5f),                   // Rest Time
+                        SearchSpace.AllWeaponTypes(),   // Weapon Types
+                        (1f, 4f)                        // Projectile Speed
+                    );
+                }
+                return instance;
+            }
         }
 
         /// Return the list of all movement types.

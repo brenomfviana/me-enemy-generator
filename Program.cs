@@ -25,27 +25,13 @@ namespace EnemyGenerator
                 System.Environment.Exit(ERROR_BAD_ARGUMENTS);
             }
 
-            // Define the search space
-            SearchSpace space = new SearchSpace(
-                (1, 5),                           // Health
-                (1, 4),                           // Strength
-                (0.75f, 4f),                      // Attack Speed
-                SearchSpace.AllMovementTypes(),   // Movement Types
-                (0.8f, 2.8f),                     // Movement Speed
-                (1.5f, 10f),                      // Active Time
-                (0.3f, 1.5f),                     // Rest Time
-                SearchSpace.AllWeaponTypes(),     // Weapon Types
-                (1f, 4f)                          // Projectile Speed
-            );
-
             // Define the evolutionary parameters
             Parameters prs = new Parameters(
                 int.Parse(args[0]), // Random seed
                 int.Parse(args[1]), // Number of generations
                 int.Parse(args[2]), // Initial population size
                 int.Parse(args[3]), // Mutation chance
-                int.Parse(args[4]), // Crossover chance
-                space               // Problem search space
+                int.Parse(args[4])  // Crossover chance
             );
 
             // Prepare the evolutionary process

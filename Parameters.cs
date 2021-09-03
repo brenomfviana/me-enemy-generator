@@ -13,8 +13,6 @@ namespace EnemyGenerator
         public int mutation { get; }
         /// The crossover chance.
         public int crossover { get; }
-        /// The search space.
-        public SearchSpace space { get; }
 
         /// Parameters constructor.
         public Parameters(
@@ -22,15 +20,13 @@ namespace EnemyGenerator
             int _generations,
             int _initial,
             int _mutation,
-            int _crossover,
-            SearchSpace _space
+            int _crossover
         ) {
             seed = _seed;
             generations = _generations;
             initial = _initial;
             mutation = _mutation;
             crossover = _crossover;
-            space = _space;
         }
     }
 }
