@@ -18,7 +18,7 @@ namespace EnemyGenerator
             Parameters _prs
         ) {
             prs = _prs;
-            // Initialize the data to be collected
+            // Initialize Cthe data to be collected
             data = new Data();
             data.seed = prs.seed;
             data.generations = prs.generations;
@@ -48,7 +48,6 @@ namespace EnemyGenerator
             DateTime end = DateTime.Now;
             // Get the duration time
             data.duration = (end - start).TotalSeconds;
-            solution.Debug();
             // Return the found individuals
             return solution;
         }
@@ -91,11 +90,11 @@ namespace EnemyGenerator
                 if (prs.crossover > Util.RandomPercent(ref rand))
                 {
                     // Select two different parents
-                    Individual[] parents = Operators.Select(
+                    Individual[] parents = Selection.Select(
                         2, pop, ref rand
                     );
                     // Apply crossover and get the resulting children
-                    Individual[] children = Operators.Crossover(
+                    Individual[] children = Crossover.Apply(
                         parents[0],
                         parents[1],
                         ref rand
@@ -114,8 +113,8 @@ namespace EnemyGenerator
                 else
                 {
                     // Select and mutate a parent
-                    var parent = Operators.Select(1, pop, ref rand)[0];
-                    Individual individual = Operators.Mutate(
+                    var parent = Selection.Select(1, pop, ref rand)[0];
+                    Individual individual = Mutation.Apply(
                         parent, prs.mutation, ref rand
                     );
                     // Calculate the individual's difficulty
