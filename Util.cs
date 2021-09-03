@@ -7,8 +7,9 @@ namespace EnemyGenerator
     public static class Util
     {
         /// Return a random integer percentage (i.e., from 0 to 100).
-        public static int RandomPercent(ref Random rand)
-        {
+        public static int RandomPercent(
+            ref Random rand
+        ) {
             return rand.Next(100);
         }
 
