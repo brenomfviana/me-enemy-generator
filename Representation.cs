@@ -67,7 +67,6 @@ namespace OverlordEnemyGenerator
 
             // Calculate health factor
             float fH = e.health * 2f;
-            Console.WriteLine(" fH=" + fH);
 
             // Calculate strength factor
             float fS = e.strength;
@@ -83,14 +82,12 @@ namespace OverlordEnemyGenerator
             // The cooldown of healer enemies follows the attack speed
             fS *= w.weaponType == WeaponType.CureSpell ?
                 e.attackSpeed : 1;
-            Console.WriteLine(" fS=" + fS);
 
             // Calculate movement factor
             float fM = e.movementSpeed;
             // Both active time and rest time affect the behavior regarding
             // the enemies' movements, not the enemies' battles
             fM += e.activeTime / 3f + 1f / e.restTime;
-            Console.WriteLine(" fM=" + fM);
 
             // Calculate the gameplay factor
             float fG = 1f;
@@ -121,7 +118,6 @@ namespace OverlordEnemyGenerator
             // Healer enemies must move fast to avoid the player
             fG *= w.weaponType == WeaponType.CureSpell ?
                 e.movementSpeed * 1.15f : 1;
-            Console.WriteLine(" fG=" + fG);
 
             // Calculate the base difficulty
             difficulty = (fH + fS + fM) * fG;
