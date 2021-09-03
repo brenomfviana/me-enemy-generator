@@ -69,7 +69,7 @@ namespace EnemyGenerator
                 // Create a new random individual
                 Individual ind = Individual.GetRandom(ref rand);
                 // Calculate the individual's difficulty
-                ind.CalculateDifficulty();
+                Difficulty.Calculate(ref ind);
                 // Calculate the individual fitness
                 Fitness.Calculate(ref ind);
                 // Place the individual in the MAP-Elites
@@ -102,7 +102,7 @@ namespace EnemyGenerator
                     for (int i = 0; i < children.Length; i++)
                     {
                         // Calculate the individual's difficulty
-                        children[i].CalculateDifficulty();
+                        Difficulty.Calculate(ref children[i]);
                         // Calculate the new individual fitness
                         Fitness.Calculate(ref children[i]);
                         // Add the new individual in the offspring
@@ -117,7 +117,7 @@ namespace EnemyGenerator
                         parent, prs.mutation, ref rand
                     );
                     // Calculate the individual's difficulty
-                    individual.CalculateDifficulty();
+                    Difficulty.Calculate(ref individual);
                     // Calculate the new individual fitness
                     Fitness.Calculate(ref individual);
                     // Add the new individual in the offspring

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace EnemyGenerator
 {
@@ -67,16 +68,50 @@ namespace EnemyGenerator
             }
         }
 
-        /// Return the list of all movement types.
+        /// Return the array of all movement types.
         public static MovementType[] AllMovementTypes()
         {
             return (MovementType[]) Enum.GetValues(typeof(MovementType));
         }
 
-        /// Return the list of all weapon types.
+        /// Return the list of all movement types.
+        ///
+        /// The healer ideally searches for other enemies and avoids the
+        /// player, besides these movements in melee enemies do not present
+        /// a clear risk to the player.
+        public static List<MovementType> GetHealerMovements()
+        {
+            return new List<MovementType> {
+                MovementType.Random,
+                MovementType.Random1D,
+                MovementType.Flee,
+                MovementType.Flee1D,
+            };
+        }
+
+        /// Return the array of all weapon types.
         public static WeaponType[] AllWeaponTypes()
         {
             return (WeaponType[]) Enum.GetValues(typeof(WeaponType));
+        }
+
+        /// Return the list of ranged weapon types.
+        public static List<WeaponType> GetRangedWeapons()
+        {
+            return new List<WeaponType> {
+                WeaponType.Bow,
+                WeaponType.BombThrower,
+            };
+        }
+
+        /// Return the list of melee weapon types.
+        public static List<WeaponType> GetMeleeWeapons()
+        {
+            return new List<WeaponType> {
+                WeaponType.None,
+                WeaponType.Sword,
+                WeaponType.Shield,
+            };
         }
 
         /// Return the list of all difficulty ranges.
