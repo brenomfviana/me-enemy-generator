@@ -114,24 +114,12 @@ namespace EnemyGenerator
                     // Print empty if the Elite is null
                     if (map[d, w] is null)
                     {
-                        Console.WriteLine("   Empty");
+                        Console.WriteLine("  Empty");
                     }
                     // Print the Elite's attributes
                     else
                     {
-                        Individual i = map[d, w];
-                        Console.WriteLine("  G=" + i.generation);
-                        Console.WriteLine("  F=" + i.fitness);
-                        Console.WriteLine("  D=" + i.difficulty);
-                        Console.WriteLine("  He=" + i.enemy.health);
-                        Console.WriteLine("  St=" + i.enemy.strength);
-                        Console.WriteLine("  AS=" + i.enemy.attackSpeed);
-                        Console.WriteLine("  MT=" + i.enemy.movementType);
-                        Console.WriteLine("  MS=" + i.enemy.movementSpeed);
-                        Console.WriteLine("  AT=" + i.enemy.activeTime);
-                        Console.WriteLine("  RT=" + i.enemy.restTime);
-                        Console.WriteLine("  WT=" + i.weapon.weaponType);
-                        Console.WriteLine("  PS=" + i.weapon.projectileSpeed);
+                        map[d, w].Debug();
                     }
                     Console.WriteLine();
                 }
