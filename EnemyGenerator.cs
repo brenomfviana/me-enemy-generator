@@ -6,7 +6,7 @@ namespace EnemyGenerator
     /// This class holds the evolutionary enemy generation algorithm.
     public class EnemyGenerator
     {
-        /// The generator parameters.
+        /// The evolutionary parameters.
         private Parameters prs;
         /// The found MAP-Elites population.
         private Population solution;
@@ -48,6 +48,7 @@ namespace EnemyGenerator
             DateTime end = DateTime.Now;
             // Get the duration time
             data.duration = (end - start).TotalSeconds;
+            solution.Debug();
             // Return the found individuals
             return solution;
         }
@@ -63,6 +64,7 @@ namespace EnemyGenerator
                 SearchSpace.AllDifficulties().Length,
                 SearchSpace.AllWeaponTypes().Length
             );
+
             // Generate the initial population
             while (pop.Count() < prs.initial)
             {

@@ -5,13 +5,13 @@ namespace EnemyGenerator
 {
     /// This static class holds the enemy difficulty function.
     ///
-    /// Our difficulty function calculates four factors: health, strength,
+    /// This difficulty function calculates four factors: health, strength,
     /// movement, and gameplay. Since one of the factors is the gameplay, this
     /// function depends on the in-game behavior of the enemies. This version
     /// handles only the gameplay of the game prototype mentioned in Program.cs.
     public static class Difficulty
     {
-        /// Calculate the difficulty of the input individual.
+        /// Calculate the difficulty of the inputted individual.
         public static void Calculate(
             ref Individual individual
         ) {
@@ -54,7 +54,7 @@ namespace EnemyGenerator
             Weapon w = individual.weapon;
             // Calculate strength factor
             float fS = e.strength;
-            fS *= Multiplier(w.weaponType);
+            fS *= WeaponMultiplier(w.weaponType);
             // Melee enemies attack by touching the player, therefore, the 
             // movement speed increase their strenght
             fS *= SearchSpace.GetMeleeWeapons().Contains(w.weaponType) ?
@@ -109,28 +109,24 @@ namespace EnemyGenerator
             return fG;
         }
 
-        /// Return the multiplier factor for the input type of movement,
-        /// behavior, weapon, or projectile.
-        private static float Multiplier<T>(
-            T value
+        /// Return the multiplier factor corresponding to the inputted weapon.
+        private static float WeaponMultiplier(
+            WeaponType weapon
         ) {
-            if (value is WeaponType)
+            switch (weapon)
             {
-                switch (value)
-                {
-                    case WeaponType.None:
-                        return 1.00f;
-                    case WeaponType.Sword:
-                        return 1.15f;
-                    case WeaponType.Bow:
-                        return 1.35f;
-                    case WeaponType.BombThrower:
-                        return 1.25f;
-                    case WeaponType.Shield:
-                        return 1.15f;
-                    case WeaponType.CureSpell:
-                        return 1.35f;
-                }
+                case WeaponType.None:
+                    return 1.00f;
+                case WeaponType.Sword:
+                    return 1.15f;
+                case WeaponType.Bow:
+                    return 1.35f;
+                case WeaponType.BombThrower:
+                    return 1.25f;
+                case WeaponType.Shield:
+                    return 1.15f;
+                case WeaponType.CureSpell:
+                    return 1.35f;
             }
             return -100f;
         }
