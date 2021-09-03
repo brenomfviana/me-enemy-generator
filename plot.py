@@ -37,9 +37,10 @@ def to_map(array, attribute):
 def plot_heatmap(map, folder, filename, pop, max):
   df = DataFrame(map, index=difficulty, columns=weapons)
   color = sb.color_palette('viridis_r', as_cmap=True)
-  ax = sb.heatmap(df, vmin=-1, vmax=max, annot=True, cmap=color)
+  ax = sb.heatmap(df, vmin=0, vmax=max, annot=True, cmap=color)
   ax.invert_yaxis()
   figname = folder + os.path.sep + filename + '-' + pop + '.png'
+  plt.subplots_adjust(bottom=0.3)
   plt.savefig(figname)
   plt.close()
 
@@ -58,9 +59,9 @@ def plot(data, filename, folder):
   fit_map_intermediate = to_map(obj['intermediate'], 'fitness')
   fit_map_final = to_map(obj['solution'], 'fitness')
 
-  plot_heatmap(fit_map_initial, folder, filename, 'fitness_initial', 18)
-  plot_heatmap(fit_map_intermediate, folder, filename, 'fitness_intermediate', 18)
-  plot_heatmap(fit_map_final, folder, filename, 'fitness_final', 18)
+  plot_heatmap(fit_map_initial, folder, filename, 'fitness_initial', 2)
+  plot_heatmap(fit_map_intermediate, folder, filename, 'fitness_intermediate', 2)
+  plot_heatmap(fit_map_final, folder, filename, 'fitness_final', 2)
 
   # # Generation heatmap of the populations
   # gen_map_initial = to_map(obj['initial'], 'generation')
