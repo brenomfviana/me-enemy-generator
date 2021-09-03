@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace OverlordEnemyGenerator
+namespace EnemyGenerator
 {
     using Coordinate = System.ValueTuple<int, int>;
 

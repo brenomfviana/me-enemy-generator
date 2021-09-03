@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace OverlordEnemyGenerator
+namespace EnemyGenerator
 {
     /// This class holds the evolutionary enemy generation algorithm.
     public class EnemyGenerator

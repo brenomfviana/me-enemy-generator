@@ -1,4 +1,4 @@
-namespace OverlordEnemyGenerator
+namespace EnemyGenerator
 {
     /// This struct holds the parameters of the evolutionary enemy generator.
     public struct Parameters

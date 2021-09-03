@@ -1,7 +1,7 @@
 using System.IO;
 using System.Text.Json;
 
-namespace OverlordEnemyGenerator
+namespace EnemyGenerator
 {
     /// This class holds functions to write the evolutionary process' outputs.
     public static class Output

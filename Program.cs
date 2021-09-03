@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OverlordEnemyGenerator
+namespace EnemyGenerator
 {
     class Program
     {

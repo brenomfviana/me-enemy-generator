@@ -49,9 +49,9 @@ os.system('dotnet publish')
 
 # Executable location
 if platform.system() == 'Linux':
-  executable = './bin/Debug/net5.0/publish/OverlordEnemyGenerator '
+  executable = './bin/Debug/net5.0/publish/EnemyGenerator '
 elif platform.system() == 'Windows':
-  executable = 'start bin\\Debug\\net5.0\\publish\\OverlordEnemyGenerator '
+  executable = 'start bin\\Debug\\net5.0\\publish\\EnemyGenerator '
 else:
   print('This script is not able to run in this OS.')
   exit()

@@ -2,7 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Collections.Generic;
 
-namespace OverlordEnemyGenerator
+namespace EnemyGenerator
 {
     using Coordinate = System.ValueTuple<int, int>;
 

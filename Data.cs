@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace OverlordEnemyGenerator
+namespace EnemyGenerator
 {
     /// This struct holds the most relevant data of the evolutionary process.
     [Serializable]

@@ -1,6 +1,6 @@
 using System;
 
-namespace OverlordEnemyGenerator
+namespace EnemyGenerator
 {
     /// This struct defines search space of the enemy's attributes.
     ///

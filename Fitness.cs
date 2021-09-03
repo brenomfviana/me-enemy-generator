@@ -1,6 +1,6 @@
 using System;
 
-namespace OverlordEnemyGenerator
+namespace EnemyGenerator
 {
     /// This class holds all the fitness-related functions.
     public class Fitness

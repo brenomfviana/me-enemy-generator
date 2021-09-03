@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace OverlordEnemyGenerator
+namespace EnemyGenerator
 {
     /// This class holds only utility functions.
     public static class Util

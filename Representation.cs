@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace OverlordEnemyGenerator
+namespace EnemyGenerator
 {
     /// This class represents an individual.
     ///
