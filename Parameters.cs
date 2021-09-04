@@ -5,7 +5,7 @@ namespace EnemyGenerator
     {
         /// The seed that initializes the random generator.
         public int seed { get; }
-        /// The maximun number of generations.
+        /// The maximum number of generations.
         public int generations { get; }
         /// The initial population size.
         public int initial { get; }

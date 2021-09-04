@@ -13,7 +13,7 @@ namespace EnemyGenerator
         /// The number of competitors of the Tournament Selection operator.
         private const int COMPETITORS = 3;
 
-        /// The unknown coordinate.
+        /// This constant defines an unknown coordinate axis.
         private const int UNKNOWN = -1;
 
         /// Select individuals from the MAP-Elites population.
@@ -37,7 +37,6 @@ namespace EnemyGenerator
                 "There are no enough individuals in the input population to " +
                 "perform this operation."
             );
-
             // Select `amount` individuals
             Individual[] individuals = new Individual[amount];
             for (int i = 0; i < amount; i++)
@@ -54,7 +53,6 @@ namespace EnemyGenerator
                 // Remove selected individual from available coordinates
                 cs.Remove(coordinate);
             }
-
             // Return all selected individuals
             return individuals;
         }
@@ -76,7 +74,6 @@ namespace EnemyGenerator
             Individual[] competitors = new Individual[amount];
             // Initialize competitors' coordinates
             Coordinate[] coordinates = new Coordinate[amount];
-
             // Select competitors
             for (int i = 0; i < amount; i++)
             {
@@ -88,7 +85,6 @@ namespace EnemyGenerator
                 // Remove competitors from available competitors
                 acds.Remove(rc);
             }
-
             // Find the tournament winner and its coordinate
             Individual winner = null;
             Coordinate coordinate = (UNKNOWN, UNKNOWN);
@@ -100,7 +96,6 @@ namespace EnemyGenerator
                     coordinate = coordinates[i];
                 }
             }
-
             // Return the tournament winner and its coordinate
             return (coordinate, winner);
         }

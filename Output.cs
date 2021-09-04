@@ -5,7 +5,7 @@ using System.Text.Json;
 namespace EnemyGenerator
 {
     /// This class holds functions to write the evolutionary process' outputs.
-    public static class Output
+    public class Output
     {
         /// The JSON extension.
         private static string JSON = ".json";
@@ -19,7 +19,7 @@ namespace EnemyGenerator
         /// Results folder name.
         /// This folder saves the collected data to evaluate the approach.
         private static string DATA_FOLDER_NAME = @"results";
-        /// Enemies folder name
+        /// Enemies folder name.
         /// This folder saves the generated enemies.
         private static string ENEMY_FOLDER_NAME = @"enemies";
         /// Data filename.
@@ -44,7 +44,7 @@ namespace EnemyGenerator
             }
         }
 
-        /// Get the folder name.
+        /// Return the folder name for the inputted parameters.
         private static string GetFolderName(
             Data data
         ) {
@@ -54,8 +54,8 @@ namespace EnemyGenerator
             return foldername;
         }
 
-        /// Return the number of files that are inside the given folder and
-        /// have the given extension.
+        /// Return the number of files that are inside the inputted folder and
+        /// have the inputted extension.
         private static int GetNumberOfFiles(
             string folder,
             string extension
@@ -71,9 +71,9 @@ namespace EnemyGenerator
             Directory.CreateDirectory(DATA_FOLDER_NAME);
             // Convert list to formmated JSON string
             string jsonData = JsonSerializer.Serialize(data, JSON_OPTIONS);
-            // Create the base name for the given parameters
+            // Create the base name for the inputted parameters
             string basename = GetFolderName(data);
-            // Create the result folder for the given parameters
+            // Create the result folder for the inputted parameters
             string folder = DATA_FOLDER_NAME + SEPARATOR + basename;
             Directory.CreateDirectory(folder);
             // Calculate the number of JSON files in the folder
@@ -100,8 +100,7 @@ namespace EnemyGenerator
             {
                 // Convert enemy to formmated JSON string
                 string jsonData = JsonSerializer.Serialize(
-                    individual,
-                    JSON_OPTIONS
+                    individual, JSON_OPTIONS
                 );
                 // Calculate the expected difficulty
                 (float, float) range = SearchSpace.AllDifficulties()[df];
@@ -121,11 +120,9 @@ namespace EnemyGenerator
             Directory.CreateDirectory(ENEMY_FOLDER_NAME);
             // Calculate the number of JSON files in the folder
             int count = Directory.GetDirectories(
-                ENEMY_FOLDER_NAME,
-                "*",
-                SearchOption.TopDirectoryOnly
+                ENEMY_FOLDER_NAME, "*", SearchOption.TopDirectoryOnly
             ).Length;
-            // Create the result folder for the given parameters
+            // Create the result folder for the inputted parameters
             string basename = ENEMY_FOLDER_NAME + SEPARATOR;
             basename += GetFolderName(data) + FILENAME_SEPARATOR + count;
             Directory.CreateDirectory(basename);

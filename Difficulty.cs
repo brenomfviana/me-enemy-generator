@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 namespace EnemyGenerator
 {
-    /// This static class holds the enemy difficulty function.
+    /// This class holds the enemy difficulty function.
     ///
     /// This difficulty function calculates four factors: health, strength,
     /// movement, and gameplay. Since one of the factors is the gameplay, this
     /// function depends on the in-game behavior of the enemies. This version
     /// handles only the gameplay of the game prototype mentioned in Program.cs.
-    public static class Difficulty
+    public class Difficulty
     {
         /// Calculate the difficulty of the inputted individual.
         public static void Calculate(

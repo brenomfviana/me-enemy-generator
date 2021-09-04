@@ -20,7 +20,7 @@ namespace EnemyGenerator
     [Serializable()]
     public enum WeaponType
     {
-        None,        // Enemy attacks the player with barehands (Melee).
+        Barehand,    // Enemy attacks the player with barehands (Melee).
         Sword,       // Enemy uses a short sword to damage the player (Melee).
         Bow,         // Enemy shots projectiles towards the player (Range).
         BombThrower, // Enemy shots bombs towards the player (Range).
@@ -33,6 +33,9 @@ namespace EnemyGenerator
     ///
     /// The prefix `r` in the attributes' names of this class stands for `range
     /// of`, e.g., the rHealth means the range of health.
+    ///
+    /// Why the search space is represented by a class instead of a struct?
+    /// Because the search space must be a singleton.
     public class SearchSpace
     {
         public (int, int) rHealth { get; }

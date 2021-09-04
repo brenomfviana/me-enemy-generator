@@ -15,7 +15,6 @@ namespace EnemyGenerator
         ) {
             // New individual
             Individual individual = parent.Clone();
-
             // Apply mutation on enemy attributes
             if (chance > Util.RandomPercent(ref rand))
             {
@@ -59,7 +58,6 @@ namespace EnemyGenerator
                     SearchSpace.Instance.rRestTime, ref rand
                 );
             }
-
             // Apply mutation on weapon attributes
             if (chance > Util.RandomPercent(ref rand))
             {
@@ -73,7 +71,6 @@ namespace EnemyGenerator
                     SearchSpace.Instance.rProjectileSpeed, ref rand
                 );
             }
-
             // Return the new mutated individual
             return individual;
         }

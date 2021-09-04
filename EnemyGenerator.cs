@@ -6,6 +6,11 @@ namespace EnemyGenerator
     /// This class holds the evolutionary enemy generation algorithm.
     public class EnemyGenerator
     {
+        /// The number of parents to be selected for crossover.
+        private static int CROSSOVER_PARENTS = 2;
+        /// The number of parents to be selected for mutation.
+        private static int MUTATION_PARENT = 1;
+
         /// The evolutionary parameters.
         private Parameters prs;
         /// The found MAP-Elites population.
@@ -58,7 +63,7 @@ namespace EnemyGenerator
             // Initialize the random generator
             Random rand = new Random(prs.seed);
 
-            // Initialize the MAP-Elites matrix
+            // Initialize the MAP-Elites population
             Population pop = new Population(
                 SearchSpace.AllDifficulties().Length,
                 SearchSpace.AllWeaponTypes().Length
@@ -91,7 +96,7 @@ namespace EnemyGenerator
                 {
                     // Select two different parents
                     Individual[] parents = Selection.Select(
-                        2, pop, ref rand
+                        CROSSOVER_PARENTS, pop, ref rand
                     );
                     // Apply crossover and get the resulting children
                     Individual[] children = Crossover.Apply(
@@ -113,7 +118,9 @@ namespace EnemyGenerator
                 else
                 {
                     // Select and mutate a parent
-                    var parent = Selection.Select(1, pop, ref rand)[0];
+                    var parent = Selection.Select(
+                        MUTATION_PARENT, pop, ref rand
+                    )[0];
                     Individual individual = Mutation.Apply(
                         parent, prs.mutation, ref rand
                     );

@@ -41,11 +41,9 @@ namespace EnemyGenerator
                 Console.WriteLine("ERROR: Invalid number of parameters!");
                 System.Environment.Exit(ERROR_BAD_ARGUMENTS);
             }
-
             // If the first argument is the flag save separately
             bool separately = args[0] == SAVE_SEPARATELY;
             int i = separately ? 1 : 0;
-
             // Define the evolutionary parameters
             Parameters prs = new Parameters(
                 int.Parse(args[i++]),            // Random seed
@@ -54,13 +52,10 @@ namespace EnemyGenerator
                 int.Parse(args[i++]),            // Mutation chance
                 int.Parse(args[i])               // Crossover chance
             );
-
             // Prepare the evolutionary process
             EnemyGenerator generator = new EnemyGenerator(prs);
-
             // Start the generative process and generate a set of enemies
             generator.Evolve();
-
             // When the enemy generation process is over, then write the
             // results and the collected data
             Output.WriteData(generator.GetData(), separately);

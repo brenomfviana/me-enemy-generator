@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace EnemyGenerator
 {
     /// This class holds only utility functions.
-    public static class Util
+    public class Util
     {
         /// Return a random integer percentage (i.e., from 0 to 100).
         public static int RandomPercent(
