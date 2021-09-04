@@ -1,6 +1,7 @@
 ### Research ###
 ## Ignore the temporary results folder
 [Rr]esults/
+[Ee]nemies/
 [Cc]harts/
 # Ignore the virtual environment
 auto/
