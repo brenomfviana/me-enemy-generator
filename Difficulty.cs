@@ -78,10 +78,6 @@ namespace EnemyGenerator
             Weapon w = individual.weapon;
             // Calculate the gameplay factor
             float fG = 1f;
-            // Enemies with no health are useless
-            fG *= e.health == 0 ? 0 : 1;
-            // Enemies with no strength are useless
-            fG *= e.strength == 0 ? 0 : 1;
             // Melee enemies are only risky if they follow the player
             fG *= SearchSpace.MeleeWeaponList().Contains(w.weaponType) ?
                 (e.movementType == MovementType.Follow ? 1 : 0) : 1;
