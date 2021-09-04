@@ -111,7 +111,7 @@ namespace EnemyGenerator
         ) {
             switch (weapon)
             {
-                case WeaponType.None:
+                case WeaponType.Barehand:
                     return 1.00f;
                 case WeaponType.Sword:
                     return 1.15f;

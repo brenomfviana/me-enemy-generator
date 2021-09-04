@@ -139,7 +139,7 @@ namespace EnemyGenerator
         public static List<WeaponType> MeleeWeaponList()
         {
             return new List<WeaponType> {
-                WeaponType.None,
+                WeaponType.Barehand,
                 WeaponType.Sword,
                 WeaponType.Shield,
             };
