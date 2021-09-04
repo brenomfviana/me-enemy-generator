@@ -70,6 +70,8 @@ namespace EnemyGenerator
         }
 
         /// Return the gameplay factor.
+        /// The gameplay weights were empirically chosen based on the game
+        /// prototype gameplay.
         public static float CalculateGameplayFactor(
             Individual individual
         ) {

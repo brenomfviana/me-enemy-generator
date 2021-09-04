@@ -8,6 +8,8 @@ namespace EnemyGenerator
     ///
     /// Individuals are composed of an enemy, a weapon, their fitness value, 
     /// their difficulty degree, and the generation when they were created.
+    /// These attributes are the most common variables from enemies in
+    /// different games.
     ///
     /// Why individuals are represented by a class instead of a struct? When
     /// using MAP-Elites some slots may be empty, then the `null` option makes
