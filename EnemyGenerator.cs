@@ -77,7 +77,7 @@ namespace EnemyGenerator
                 pop.PlaceIndividual(ind);
             }
 
-            // Get the initial population
+            // Save the initial population
             data.initial = new List<Individual>(pop.ToList());
 
             // Run the generations
@@ -132,7 +132,7 @@ namespace EnemyGenerator
                     pop.PlaceIndividual(individual);
                 }
 
-                // Get the intermediate population
+                // Save the intermediate population
                 if (g == (int) prs.generations / 2)
                 {
                     data.intermediate = new List<Individual>(pop.ToList());
@@ -142,8 +142,8 @@ namespace EnemyGenerator
             // Get the final population (solution)
             solution = pop;
 
-            // Get the final population (solution)
-            data.solution = new List<Individual>(solution.ToList());
+            // Save the final population
+            data.final = new List<Individual>(solution.ToList());
         }
     }
 }

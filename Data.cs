@@ -21,6 +21,6 @@ namespace EnemyGenerator
         [JsonInclude]
         public List<Individual> intermediate { get; set; }
         [JsonInclude]
-        public List<Individual> solution { get; set; }
+        public List<Individual> final { get; set; }
     }
 }
