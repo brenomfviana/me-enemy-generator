@@ -130,8 +130,8 @@ namespace EnemyGenerator
 
             // If the values extrapolate the attribute's range of values, then
             // truncate the result to the closest value
-            float a = MathF.Max(c1, fa);
-            float b = MathF.Min(c2, fb);
+            float a = MathF.Max(MathF.Min(c1, fb), fa);
+            float b = MathF.Max(MathF.Min(c2, fb), fa);
 
             // Get the parameters' type
             Type pt = typeof(T);
