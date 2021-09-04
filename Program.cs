@@ -52,7 +52,7 @@ namespace EnemyGenerator
                 int.Parse(args[i++]),            // Number of generations
                 int.Parse(args[i++]),            // Initial population size
                 int.Parse(args[i++]),            // Mutation chance
-                int.Parse(args[i++])             // Crossover chance
+                int.Parse(args[i])               // Crossover chance
             );
 
             // Prepare the evolutionary process

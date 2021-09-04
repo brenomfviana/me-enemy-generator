@@ -84,6 +84,35 @@ namespace EnemyGenerator
             File.WriteAllText(folder + SEPARATOR + filename, jsonData);
         }
 
+        /// Save a single enemy.
+        private static void SaveEnemy(
+            Individual individual,
+            string basename
+        ) {
+            // Get the enemy type (weapon type) name
+            string enemyType = individual.weapon.weaponType.ToString();
+            // Create a folder for the enemy type
+            string folder = basename + SEPARATOR + enemyType;
+            Directory.CreateDirectory(folder);
+            // Get the index of the corresponding difficulty range
+            int df = SearchSpace.GetDifficultyIndex(individual.difficulty);
+            if (df != -1)
+            {
+                // Convert enemy to formmated JSON string
+                string jsonData = JsonSerializer.Serialize(
+                    individual,
+                    JSON_OPTIONS
+                );
+                // Calculate the expected difficulty
+                (float, float) range = SearchSpace.AllDifficulties()[df];
+                int d = (int) (range.Item2 + range.Item1) / 2;
+                // Prepare the JSON filename
+                string filename = enemyType + FILENAME_SEPARATOR + d + JSON;
+                // Write JSON file
+                File.WriteAllText(folder + SEPARATOR + filename, jsonData);
+            }
+        }
+
         /// Save each generated enemy in different JSON files.
         private static void SaveDataSeparately(
             Data data
@@ -92,51 +121,34 @@ namespace EnemyGenerator
             Directory.CreateDirectory(ENEMY_FOLDER_NAME);
             // Calculate the number of JSON files in the folder
             int count = Directory.GetDirectories(
-                ENEMY_FOLDER_NAME, "*", SearchOption.TopDirectoryOnly
+                ENEMY_FOLDER_NAME,
+                "*",
+                SearchOption.TopDirectoryOnly
             ).Length;
             // Create the result folder for the given parameters
-            string basename = ENEMY_FOLDER_NAME;
-            basename += SEPARATOR;
+            string basename = ENEMY_FOLDER_NAME + SEPARATOR;
             basename += GetFolderName(data) + FILENAME_SEPARATOR + count;
             Directory.CreateDirectory(basename);
             // Write each enemy in the final solution
-            foreach (Individual i in data.final)
+            foreach (Individual individual in data.final)
             {
                 // Ignore empty Elites
-                if (i == null)
+                if (individual == null)
                 {
                     continue;
                 }
-                // Get the enemy type (weapon type) name
-                string enemyType = i.weapon.weaponType.ToString();
-                // Create a folder for the enemy type
-                string folder = basename + SEPARATOR + enemyType;
-                Directory.CreateDirectory(folder);
-                // Get the index of the corresponding difficulty range
-                int df = SearchSpace.GetDifficultyIndex(i.difficulty);
-                if (df != -1)
-                {
-                    // Convert enemy to formmated JSON string
-                    string jsonData = JsonSerializer.Serialize(i, JSON_OPTIONS);
-                    // Calculate the expected difficulty
-                    (float, float) range = SearchSpace.AllDifficulties()[df];
-                    int d = (int) (range.Item2 + range.Item1) / 2;
-                    // Prepare the JSON filename
-                    string filename = enemyType + FILENAME_SEPARATOR + d + JSON;
-                    // Write JSON file
-                    File.WriteAllText(folder + SEPARATOR + filename, jsonData);
-                }
+                SaveEnemy(individual, basename);
             }
             // Remove the populations
             data.initial = null;
             data.intermediate = null;
             data.final = null;
             // Convert list to formmated JSON string
-            string jsonData_ = JsonSerializer.Serialize(data, JSON_OPTIONS);
+            string jsonData = JsonSerializer.Serialize(data, JSON_OPTIONS);
             // Set the JSON filename with the base name and the number of files
-            string filename_ = basename + SEPARATOR + DATA_FILENAME + JSON;
+            string filename = basename + SEPARATOR + DATA_FILENAME + JSON;
             // Write the found data in JSON format
-            File.WriteAllText(filename_, jsonData_);
+            File.WriteAllText(filename, jsonData);
         }
     }
 }
