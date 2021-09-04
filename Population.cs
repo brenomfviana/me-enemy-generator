@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace EnemyGenerator
 {
+    /// Alias for the coordinate of MAP-Elites matrix.
     using Coordinate = System.ValueTuple<int, int>;
 
     /// This struct represents a MAP-Elites population.
