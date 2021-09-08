@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace EnemyGenerator
 {
     /// This class holds the enemy difficulty function.
