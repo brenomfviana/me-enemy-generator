@@ -29,6 +29,9 @@ mutations = [30]
 # Crossover rates
 crossovers = [80]
 
+# Competitors
+competitors = [3]
+
 
 
 # --- Perform experiment
@@ -47,12 +50,12 @@ else:
 os.system('dotnet publish')
 
 
-def run(g, p, m, c):
+def run(ge, po, mu, cr, co):
   # Generate a random seed
   rs = random.randint(0, np.iinfo(np.int32).max - 1)
   # Build the parameters
   parameters = ""
-  for i in [rs, g, p, m, c]:
+  for i in [rs, ge, po, mu, cr, co]:
     parameters += str(i) + ' '
   # Print parameters
   print('Parameters=[', parameters, ']')
@@ -73,36 +76,40 @@ total = len(generations) * \
   len(populations) * \
   len(mutations) * \
   len(crossovers) * \
+  len(competitors) * \
   len(executions)
 i = 1
 
 # Run the algorithm for all sets of parameters
 print('Running')
-for g in generations:
-  for p in populations:
-    for m in mutations:
-      for c in crossovers:
-        for e in executions:
-          # Run execuble
-          run(g, p, m, c)
-          # Print progress
-          print("%.2f" % ((i / total) * 100))
-          i += 1
+for ge in generations:
+  for po in populations:
+    for mu in mutations:
+      for cr in crossovers:
+        for co in competitors:
+          for e in executions:
+            # Run execuble
+            run(ge, po, mu, cr, co)
+            # Print progress
+            print("%.2f" % ((i / total) * 100))
+            i += 1
 
 
 # Variables to control the experiment progress
 total = len(generations) * \
   len(populations) * \
   len(mutations) * \
-  len(crossovers)
+  len(crossovers) * \
+  len(competitors)
 i = 1
 
 # Plot all the results
 print('Plotting')
-for g in generations:
-  for p in populations:
-    for m in mutations:
-      for c in crossovers:
-        # Print progress
-        print("%.2f" % ((i / total) * 100))
-        plot(g, p)
+for ge in generations:
+  for po in populations:
+    for mu in mutations:
+      for cr in crossovers:
+        for co in competitors:
+          # Print progress
+          print("%.2f" % ((i / total) * 100))
+          plot(ge, po)

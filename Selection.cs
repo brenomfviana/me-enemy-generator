@@ -10,9 +10,6 @@ namespace EnemyGenerator
     /// This class holds the selector operator.
     public class Selection
     {
-        /// The number of competitors of the Tournament Selection operator.
-        private const int COMPETITORS = 3;
-
         /// This constant defines an unknown coordinate axis.
         private const int UNKNOWN = -1;
 
@@ -26,6 +23,7 @@ namespace EnemyGenerator
         /// available for the next selection.
         public static Individual[] Select(
             int amount,
+            int competitors,
             Population pop,
             ref Random rand
         ) {
@@ -33,7 +31,7 @@ namespace EnemyGenerator
             List<Coordinate> cs = pop.GetElitesCoordinates();
             // Ensure the population size is enough
             Debug.Assert(
-                cs.Count - amount > COMPETITORS,
+                cs.Count - amount > competitors,
                 "There are no enough individuals in the input population to " +
                 "perform this operation."
             );
@@ -43,7 +41,7 @@ namespace EnemyGenerator
             {
                 // Perform tournament selection with 3 competitors
                 (Coordinate coordinate, Individual individual) = Tournament(
-                    COMPETITORS, // Number of competitors
+                    competitors, // Number of competitors
                     pop,         // Population
                     cs,          // List of valid coordinates
                     ref rand     // Random number generator

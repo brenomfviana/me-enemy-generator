@@ -13,6 +13,8 @@ namespace EnemyGenerator
         public int mutation { get; }
         /// The crossover chance.
         public int crossover { get; }
+        /// The number of competitors of the tournament selection.
+        public int competitors { get; }
 
         /// Parameters constructor.
         public Parameters(
@@ -20,13 +22,15 @@ namespace EnemyGenerator
             int _generations,
             int _initial,
             int _mutation,
-            int _crossover
+            int _crossover,
+            int _competitors
         ) {
             seed = _seed;
             generations = _generations;
             initial = _initial;
             mutation = _mutation;
             crossover = _crossover;
+            competitors = _competitors;
         }
     }
 }

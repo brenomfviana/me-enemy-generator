@@ -23,7 +23,7 @@ namespace EnemyGenerator
             Parameters _prs
         ) {
             prs = _prs;
-            // Initialize Cthe data to be collected
+            // Initialize the data to be collected
             data = new Data();
             data.seed = prs.seed;
             data.generations = prs.generations;
@@ -96,13 +96,11 @@ namespace EnemyGenerator
                 {
                     // Select two different parents
                     Individual[] parents = Selection.Select(
-                        CROSSOVER_PARENTS, pop, ref rand
+                        CROSSOVER_PARENTS, prs.competitors, pop, ref rand
                     );
                     // Apply crossover and get the resulting children
                     Individual[] children = Crossover.Apply(
-                        parents[0],
-                        parents[1],
-                        ref rand
+                        parents[0], parents[1], ref rand
                     );
                     // Add the new individuals in the offspring list
                     for (int i = 0; i < children.Length; i++)
@@ -119,7 +117,7 @@ namespace EnemyGenerator
                 {
                     // Select and mutate a parent
                     var parent = Selection.Select(
-                        MUTATION_PARENT, pop, ref rand
+                        MUTATION_PARENT, prs.competitors, pop, ref rand
                     )[0];
                     Individual individual = Mutation.Apply(
                         parent, prs.mutation, ref rand
