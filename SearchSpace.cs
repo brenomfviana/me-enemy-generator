@@ -156,14 +156,14 @@ namespace EnemyGenerator
 
         /// Return the index of the difficulty in the list of difficulty ranges.
         public static int GetDifficultyIndex(
-            float difficulty
+            float _difficulty
         ) {
-            int index = -1;
+            int index = Util.UNKNOWN;
             (float, float)[] list = AllDifficulties();
             for (int i = 0; i < list.Length; i++)
             {
                 (float min, float max) d = list[i];
-                if (difficulty >= d.min && difficulty < d.max)
+                if (_difficulty >= d.min && _difficulty < d.max)
                 {
                     index = i;
                 }

@@ -9,66 +9,66 @@ namespace EnemyGenerator
     {
         /// Reproduce a new individual by mutating a parent.
         public static Individual Apply(
-            Individual parent,
-            int chance,
-            ref Random rand
+            Individual _parent,
+            int _chance,
+            ref Random _rand
         ) {
             // New individual
-            Individual individual = parent.Clone();
+            Individual individual = _parent.Clone();
             // Apply mutation on enemy attributes
-            if (chance > Util.RandomPercent(ref rand))
+            if (_chance > Util.RandomPercent(ref _rand))
             {
                 individual.enemy.health = Util.RandomInt(
-                    SearchSpace.Instance.rHealth, ref rand
+                    SearchSpace.Instance.rHealth, ref _rand
                 );
             }
-            if (chance > Util.RandomPercent(ref rand))
+            if (_chance > Util.RandomPercent(ref _rand))
             {
                 individual.enemy.strength = Util.RandomInt(
-                    SearchSpace.Instance.rStrength, ref rand
+                    SearchSpace.Instance.rStrength, ref _rand
                 );
             }
-            if (chance > Util.RandomPercent(ref rand))
+            if (_chance > Util.RandomPercent(ref _rand))
             {
                 individual.enemy.attackSpeed = Util.RandomFloat(
-                    SearchSpace.Instance.rAttackSpeed, ref rand
+                    SearchSpace.Instance.rAttackSpeed, ref _rand
                 );
             }
-            if (chance > Util.RandomPercent(ref rand))
+            if (_chance > Util.RandomPercent(ref _rand))
             {
                 individual.enemy.movementType = Util.RandomElementFromArray(
-                    SearchSpace.Instance.rMovementType, ref rand
+                    SearchSpace.Instance.rMovementType, ref _rand
                 );
             }
-            if (chance > Util.RandomPercent(ref rand))
+            if (_chance > Util.RandomPercent(ref _rand))
             {
                 individual.enemy.movementSpeed = Util.RandomFloat(
-                    SearchSpace.Instance.rMovementSpeed, ref rand
+                    SearchSpace.Instance.rMovementSpeed, ref _rand
                 );
             }
-            if (chance > Util.RandomPercent(ref rand))
+            if (_chance > Util.RandomPercent(ref _rand))
             {
                 individual.enemy.activeTime = Util.RandomFloat(
-                    SearchSpace.Instance.rActiveTime, ref rand
+                    SearchSpace.Instance.rActiveTime, ref _rand
                 );
             }
-            if (chance > Util.RandomPercent(ref rand))
+            if (_chance > Util.RandomPercent(ref _rand))
             {
                 individual.enemy.restTime = Util.RandomFloat(
-                    SearchSpace.Instance.rRestTime, ref rand
+                    SearchSpace.Instance.rRestTime, ref _rand
                 );
             }
             // Apply mutation on weapon attributes
-            if (chance > Util.RandomPercent(ref rand))
+            if (_chance > Util.RandomPercent(ref _rand))
             {
                 individual.weapon.weaponType = Util.RandomElementFromArray(
-                    SearchSpace.Instance.rWeaponType, ref rand
+                    SearchSpace.Instance.rWeaponType, ref _rand
                 );
             }
-            if (chance > Util.RandomPercent(ref rand))
+            if (_chance > Util.RandomPercent(ref _rand))
             {
                 individual.weapon.projectileSpeed = Util.RandomFloat(
-                    SearchSpace.Instance.rProjectileSpeed, ref rand
+                    SearchSpace.Instance.rProjectileSpeed, ref _rand
                 );
             }
             // Return the new mutated individual

@@ -11,32 +11,32 @@ namespace EnemyGenerator
     /// handles only the gameplay of the game prototype mentioned in Program.cs.
     public class Difficulty
     {
-        /// Calculate the difficulty of the inputted individual.
+        /// Calculate the difficulty of the entered individual.
         public static void Calculate(
-            ref Individual individual
+            ref Individual _individual
         ) {
             // Calculate all the difficulty factors
-            float fH = Difficulty.CalculateHealthFactor(individual);
-            float fS = Difficulty.CalculateStrengthFactor(individual);
-            float fM = Difficulty.CalculateMovementFactor(individual);
-            float fG = Difficulty.CalculateGameplayFactor(individual);
+            float fH = Difficulty.CalculateHealthFactor(_individual);
+            float fS = Difficulty.CalculateStrengthFactor(_individual);
+            float fM = Difficulty.CalculateMovementFactor(_individual);
+            float fG = Difficulty.CalculateGameplayFactor(_individual);
             // Calculate the final difficulty
-            individual.difficulty = (fH + fS + fM) * fG;
+            _individual.difficulty = (fH + fS + fM) * fG;
         }
 
         /// Return the health factor.
         private static float CalculateHealthFactor(
-            Individual individual
+            Individual _individual
         ) {
-            return individual.enemy.health * 2f;
+            return _individual.enemy.health * 2f;
         }
 
         /// Return the movement factor.
         private static float CalculateMovementFactor(
-            Individual individual
+            Individual _individual
         ) {
             // Get the enemy genes
-            Enemy e = individual.enemy;
+            Enemy e = _individual.enemy;
             // Calculate movement factor
             float fM = e.movementSpeed;
             // Both active time and rest time affect the behavior regarding
@@ -47,11 +47,11 @@ namespace EnemyGenerator
 
         /// Return the strength factor.
         private static float CalculateStrengthFactor(
-            Individual individual
+            Individual _individual
         ) {
             // Get the enemy and weapon genes
-            Enemy e = individual.enemy;
-            Weapon w = individual.weapon;
+            Enemy e = _individual.enemy;
+            Weapon w = _individual.weapon;
             // Calculate strength factor
             float fS = e.strength;
             fS *= WeaponMultiplier(w.weaponType);
@@ -73,11 +73,11 @@ namespace EnemyGenerator
         /// The gameplay weights were empirically chosen based on the game
         /// prototype gameplay.
         public static float CalculateGameplayFactor(
-            Individual individual
+            Individual _individual
         ) {
             // Get the enemy and weapon genes
-            Enemy e = individual.enemy;
-            Weapon w = individual.weapon;
+            Enemy e = _individual.enemy;
+            Weapon w = _individual.weapon;
             // Calculate the gameplay factor
             float fG = 1f;
             // Melee enemies are only risky if they follow the player
@@ -107,11 +107,11 @@ namespace EnemyGenerator
             return fG;
         }
 
-        /// Return the multiplier factor corresponding to the inputted weapon.
+        /// Return the multiplier factor corresponding to the entered weapon.
         private static float WeaponMultiplier(
-            WeaponType weapon
+            WeaponType _weapon
         ) {
-            switch (weapon)
+            switch (_weapon)
             {
                 case WeaponType.Barehand:
                     return 1.00f;

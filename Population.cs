@@ -55,17 +55,20 @@ namespace EnemyGenerator
         /// there. Otherwise, we compare the both old and new individuals, and
         /// the best individual is placed in the corresponding Elite.
         public void PlaceIndividual(
-            Individual individual
+            Individual _individual
         ) {
             // Calculate the individual slot (Elite)
-            int d = SearchSpace.GetDifficultyIndex(individual.difficulty);
-            int w = (int) individual.weapon.weaponType;
-            // Place individual in the MAP-Elites population if...
-            if (d != -1 && // The new individual's difficulty is valid, and...
-                // The new individual deserves to survive
-                (map[d, w] is null || individual.fitness < map[d, w].fitness)
-            ) {
-                map[d, w] = individual;
+            int d = SearchSpace.GetDifficultyIndex(_individual.difficulty);
+            int w = (int) _individual.weapon.weaponType;
+            // If the new individual's difficulty is known, and...
+            if (d != Util.UNKNOWN) {
+                // If the new individual deserves to survive
+                if (map[d, w] is null ||
+                    _individual.fitness < map[d, w].fitness
+                ) {
+                    // Then, place the individual in the MAP-Elites population
+                    map[d, w] = _individual;
+                }
             }
         }
 

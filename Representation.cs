@@ -71,30 +71,30 @@ namespace EnemyGenerator
 
         /// Return a random individual.
         public static Individual GetRandom(
-            ref Random rand
+            ref Random _rand
         ) {
             // Get the Search Space of enemies
             SearchSpace ss = SearchSpace.Instance;
             // Create a random enemy
             Enemy e = new Enemy(
-                Util.RandomInt(ss.rHealth, ref rand),
-                Util.RandomInt(ss.rStrength, ref rand),
-                Util.RandomFloat(ss.rAttackSpeed, ref rand),
-                Util.RandomElementFromArray(ss.rMovementType, ref rand),
-                Util.RandomFloat(ss.rMovementSpeed, ref rand),
-                Util.RandomFloat(ss.rActiveTime, ref rand),
-                Util.RandomFloat(ss.rRestTime, ref rand)
+                Util.RandomInt(ss.rHealth, ref _rand),
+                Util.RandomInt(ss.rStrength, ref _rand),
+                Util.RandomFloat(ss.rAttackSpeed, ref _rand),
+                Util.RandomElementFromArray(ss.rMovementType, ref _rand),
+                Util.RandomFloat(ss.rMovementSpeed, ref _rand),
+                Util.RandomFloat(ss.rActiveTime, ref _rand),
+                Util.RandomFloat(ss.rRestTime, ref _rand)
             );
             // Create a random weapon
             Weapon w = new Weapon(
-                Util.RandomElementFromArray(ss.rWeaponType, ref rand),
-                Util.RandomFloat(ss.rProjectileSpeed, ref rand)
+                Util.RandomElementFromArray(ss.rWeaponType, ref _rand),
+                Util.RandomFloat(ss.rProjectileSpeed, ref _rand)
             );
             // Combine the enemy and the weapon to create a new individual
             Individual individual = new Individual(e, w);
-            individual.generation = -1;
-            individual.difficulty = -1f;
-            individual.fitness = -1f;
+            individual.generation = Util.UNKNOWN;
+            individual.difficulty = Util.UNKNOWN;
+            individual.fitness = Util.UNKNOWN;
             // Return the created individual
             return individual;
         }

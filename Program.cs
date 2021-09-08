@@ -36,26 +36,26 @@ namespace EnemyGenerator
         private const int ERROR_BAD_ARGUMENTS = 0xA0;
 
         static void Main(
-            string[] args
+            string[] _args
         ) {
             // Check if the expected number of parameters were entered
-            if (args.Length < NUMBER_OF_PARAMETERS)
+            if (_args.Length < NUMBER_OF_PARAMETERS)
             {
                 Console.WriteLine("ERROR: Invalid number of parameters!");
                 System.Environment.Exit(ERROR_BAD_ARGUMENTS);
             }
             // Has the separately save flag been entered?
-            bool separately = args[0] == SAVE_SEPARATELY;
+            bool separately = _args[0] == SAVE_SEPARATELY;
             // If so, then the evolutionary parameters are the next
             int i = separately ? 1 : 0;
             // Define the evolutionary parameters
             Parameters prs = new Parameters(
-                int.Parse(args[i++]), // Random seed
-                int.Parse(args[i++]), // Number of generations
-                int.Parse(args[i++]), // Initial population size
-                int.Parse(args[i++]), // Mutation chance
-                int.Parse(args[i++]), // Crossover chance
-                int.Parse(args[i])    // Number of tournament competitors
+                int.Parse(_args[i++]), // Random seed
+                int.Parse(_args[i++]), // Number of generations
+                int.Parse(_args[i++]), // Initial population size
+                int.Parse(_args[i++]), // Mutation chance
+                int.Parse(_args[i++]), // Crossover chance
+                int.Parse(_args[i])    // Number of tournament competitors
             );
             // Prepare the evolutionary process
             EnemyGenerator generator = new EnemyGenerator(prs);

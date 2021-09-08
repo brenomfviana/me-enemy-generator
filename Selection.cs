@@ -10,9 +10,6 @@ namespace EnemyGenerator
     /// This class holds the selector operator.
     public class Selection
     {
-        /// This constant defines an unknown coordinate axis.
-        private const int UNKNOWN = -1;
-
         /// Select individuals from the MAP-Elites population.
         ///
         /// This function ensures that the same individual will not be selected
@@ -22,29 +19,29 @@ namespace EnemyGenerator
         /// its coordinate from the auxiliary list and remove it then it is not
         /// available for the next selection.
         public static Individual[] Select(
-            int amount,
-            int competitors,
-            Population pop,
-            ref Random rand
+            int _amount,
+            int _competitors,
+            Population _pop,
+            ref Random _rand
         ) {
             // List of Elites' coordinates
-            List<Coordinate> cs = pop.GetElitesCoordinates();
+            List<Coordinate> cs = _pop.GetElitesCoordinates();
             // Ensure the population size is enough
             Debug.Assert(
-                cs.Count - amount > competitors,
+                cs.Count - _amount > _competitors,
                 "There are no enough individuals in the input population to " +
                 "perform this operation."
             );
-            // Select `amount` individuals
-            Individual[] individuals = new Individual[amount];
-            for (int i = 0; i < amount; i++)
+            // Select `_amount` individuals
+            Individual[] individuals = new Individual[_amount];
+            for (int i = 0; i < _amount; i++)
             {
-                // Perform tournament selection with 3 competitors
+                // Perform tournament selection with `_competitors` competitors
                 (Coordinate coordinate, Individual individual) = Tournament(
-                    competitors, // Number of competitors
-                    pop,         // Population
-                    cs,          // List of valid coordinates
-                    ref rand     // Random number generator
+                    _competitors, // Number of competitors
+                    _pop,         // Population
+                    cs,           // List of valid coordinates
+                    ref _rand     // Random number generator
                 );
                 // Select a new individual
                 individuals[i] = individual;
@@ -61,32 +58,32 @@ namespace EnemyGenerator
         /// for the same tournament selection process. To do so, we apply the
         /// same process explained in `Select` function.
         static (Coordinate, Individual) Tournament(
-            int amount,
-            Population pop,
-            List<Coordinate> cs,
-            ref Random rand
+            int _amount,
+            Population _pop,
+            List<Coordinate> _cs,
+            ref Random _rand
         ) {
             // List of available competitors
-            List<Coordinate> acds = new List<Coordinate>(cs);
+            List<Coordinate> acds = new List<Coordinate>(_cs);
             // Initialize the list of competitors
-            Individual[] competitors = new Individual[amount];
+            Individual[] competitors = new Individual[_amount];
             // Initialize competitors' coordinates
-            Coordinate[] coordinates = new Coordinate[amount];
+            Coordinate[] coordinates = new Coordinate[_amount];
             // Select competitors
-            for (int i = 0; i < amount; i++)
+            for (int i = 0; i < _amount; i++)
             {
                 // Get a random coordinate
-                (int x, int y) rc = Util.RandomElementFromList(acds, ref rand);
+                (int x, int y) rc = Util.RandomElementFromList(acds, ref _rand);
                 // Get the corresponding competitor
-                competitors[i] = pop.map[rc.x, rc.y];
+                competitors[i] = _pop.map[rc.x, rc.y];
                 coordinates[i] = rc;
                 // Remove competitors from available competitors
                 acds.Remove(rc);
             }
             // Find the tournament winner and its coordinate
             Individual winner = null;
-            Coordinate coordinate = (UNKNOWN, UNKNOWN);
-            for (int i = 0; i < amount; i++)
+            Coordinate coordinate = (Util.UNKNOWN, Util.UNKNOWN);
+            for (int i = 0; i < _amount; i++)
             {
                 if (winner is null || competitors[i].fitness > winner.fitness)
                 {
