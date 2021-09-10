@@ -25,7 +25,7 @@ namespace EnemyGenerator
         private static float CalculateHealthFactor(
             Individual _individual
         ) {
-            return _individual.enemy.health * 2f;
+            return _individual.enemy.health * 2;
         }
 
         /// Return the movement factor.
@@ -38,7 +38,7 @@ namespace EnemyGenerator
             float fM = e.movementSpeed;
             // Both active time and rest time affect the behavior regarding
             // the enemies' movements, not the enemies' battles
-            fM += e.activeTime / 3f + 1f / e.restTime;
+            fM += e.activeTime / 3 + 1 / e.restTime;
             return fM;
         }
 
@@ -50,19 +50,21 @@ namespace EnemyGenerator
             Enemy e = _individual.enemy;
             Weapon w = _individual.weapon;
             // Calculate strength factor
-            float fS = e.strength;
-            fS *= WeaponMultiplier(w.weaponType);
+            float fS = 1;
             // Melee enemies attack by touching the player, therefore, the 
             // movement speed increase their strenght
             fS *= SearchSpace.MeleeWeaponList().Contains(w.weaponType) ?
-                e.movementSpeed : 1;
+                e.strength * e.movementSpeed : 1;
             // Shooter enemies attack by throwing projectiles, then we count
             // both attack speed (shooting frequency) and projectile speed
+            // Besides, the projectiles have the same damage
             fS *= SearchSpace.RangedWeaponList().Contains(w.weaponType) ?
-                (e.attackSpeed * w.projectileSpeed) * 0.5f : 1;
+                (e.attackSpeed * w.projectileSpeed) * 3 : 1;
             // The cooldown of healer enemies follows the attack speed
             fS *= w.weaponType == WeaponType.CureSpell ?
-                e.attackSpeed : 1;
+                e.attackSpeed * 2 : 1;
+            // Each weapon have its own difficult factor
+            fS *= WeaponMultiplier(w.weaponType);
             return fS;
         }
 
@@ -93,11 +95,11 @@ namespace EnemyGenerator
             // and are faster than the projectiles they shoot
             fG *= (SearchSpace.RangedWeaponList().Contains(w.weaponType) &&
                 e.movementType == MovementType.Follow) ?
-                0.5f / e.movementSpeed : 1;
+                0.5f / (e.movementSpeed * 2) : 1;
             // Healer enemies must avoid the player and search for other enemies
-            fG *= (w.weaponType == WeaponType.CureSpell &&
-                SearchSpace.HealerMovementList().Contains(e.movementType))
-                ? 1.15f : 1;
+            fG *= (w.weaponType == WeaponType.CureSpell ?             
+                (SearchSpace.HealerMovementList().Contains(e.movementType)
+                ? 1 : 0) : 1);
             // Healer enemies must move fast to avoid the player
             fG *= w.weaponType == WeaponType.CureSpell ?
                 e.movementSpeed * 1.15f : 1;
