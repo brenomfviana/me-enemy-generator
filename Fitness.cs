@@ -34,7 +34,7 @@ namespace EnemyGenerator
         ) {
             // Ensure that both enemies are not null.
             Debug.Assert(
-                _i1 != null && _i2 != null, Util.CANNOT_COMPARE_INDIVIDUALS
+                _i1 != null || _i2 != null, Util.CANNOT_COMPARE_INDIVIDUALS
             );
             // If `_i1` is null, then `_i2` is the best individual
             if (_i1 == null)
