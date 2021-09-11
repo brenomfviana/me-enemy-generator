@@ -7,9 +7,9 @@ namespace EnemyGenerator
     public class EnemyGenerator
     {
         /// The number of parents to be selected for crossover.
-        private static int CROSSOVER_PARENTS = 2;
+        private readonly static int CROSSOVER_PARENTS = 2;
         /// The number of parents to be selected for mutation.
-        private static int MUTATION_PARENT = 1;
+        private readonly static int MUTATION_PARENT = 1;
 
         /// The evolutionary parameters.
         private Parameters prs;

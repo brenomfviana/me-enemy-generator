@@ -7,28 +7,28 @@ namespace EnemyGenerator
     public class Output
     {
         /// The JSON extension.
-        private static string JSON = ".json";
+        private readonly static string JSON = ".json";
         /// The operational system directory separator char.
-        private static char SEPARATOR = Path.DirectorySeparatorChar;
+        private readonly static char SEPARATOR = Path.DirectorySeparatorChar;
         /// The filename separator char.
-        private static char FILENAME_SEPARATOR = '-';
+        private readonly static char FILENAME_SEPARATOR = '-';
         /// This constant defines that all files will be searched.
-        private static string SEARCH_FOR = "*";
+        private readonly static string SEARCH_FOR = "*";
         /// This constant must be used to initialize empty strings or convert
         /// values of other types during concatenation.
-        private static string EMPTY_STR = "";
+        private readonly static string EMPTY_STR = "";
         /// Define the JSON options.
-        private static JsonSerializerOptions JSON_OPTIONS =
+        private readonly static JsonSerializerOptions JSON_OPTIONS =
             new JsonSerializerOptions(){ WriteIndented = true };
         /// Results folder name.
         /// This folder saves the collected data to evaluate the approach.
-        private static string DATA_FOLDER_NAME = @"results";
+        private readonly static string DATA_FOLDER_NAME = @"results";
         /// Enemies folder name.
         /// This folder saves the generated enemies.
-        private static string ENEMY_FOLDER_NAME = @"enemies";
+        private readonly static string ENEMY_FOLDER_NAME = @"enemies";
         /// Data filename.
         /// Created only when the enemies are saved separately.
-        private static string DATA_FILENAME = @"data";
+        private readonly static string DATA_FILENAME = @"data";
 
         /// Write the collected data from the evolutionary process.
         public static void WriteData(
@@ -98,9 +98,9 @@ namespace EnemyGenerator
             string _basename
         ) {
             // Get the enemy type (weapon type) name
-            string enemyType = _individual.weapon.weaponType.ToString();
+            string type = _individual.weapon.weaponType.ToString();
             // Create a folder for the enemy type
-            string folder = _basename + SEPARATOR + enemyType;
+            string folder = _basename + SEPARATOR + type;
             Directory.CreateDirectory(folder);
             // Get the index of the corresponding difficulty range
             int df = SearchSpace.GetDifficultyIndex(_individual.difficulty);
@@ -114,7 +114,7 @@ namespace EnemyGenerator
                 (float, float) range = SearchSpace.AllDifficulties()[df];
                 int d = (int) (range.Item2 + range.Item1) / 2;
                 // Prepare the JSON filename
-                string filename = enemyType + FILENAME_SEPARATOR + d + JSON;
+                string filename = type + FILENAME_SEPARATOR + d + JSON;
                 // Write JSON file
                 File.WriteAllText(folder + SEPARATOR + filename, jsonData);
             }

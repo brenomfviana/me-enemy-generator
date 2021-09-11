@@ -35,19 +35,19 @@ namespace EnemyGenerator
     class Program
     {
         /// The minimum number of parameters (arguments) of the enemy generator.
-        private static int ENE_GEN_MIN_NUM_PARAMS = 6;
+        private readonly static int ENE_GEN_MIN_NUM_PARAMS = 6;
         /// The minimum number of parameters (arguments) of the enemy generator.
-        private static int ENE_GEN_MAX_NUM_PARAMS = 7;
+        private readonly static int ENE_GEN_MAX_NUM_PARAMS = 7;
         /// The number of parameters (arguments) of the difficulty calculator.
-        private static int DIF_CALC_NUM_PARAMS = 2;
+        private readonly static int DIF_CALC_NUM_PARAMS = 2;
 
         /// Flag of saving all enemies separately.
-        private static string SAVE_SEPARATELY = "-s";
+        private readonly static string SAVE_SEPARATELY = "-s";
         /// Flag of difficulty calculation.
-        private static string DIFFICULTY_CALCULATION = "-d";
+        private readonly static string DIFFICULTY_CALCULATION = "-d";
 
         /// Error code for bad arguments.
-        private static int ERROR_BAD_ARGUMENTS = 0xA0;
+        private readonly static int ERROR_BAD_ARGUMENTS = 0xA0;
 
         /// Run the enemy generator.
         public static void Generator(
