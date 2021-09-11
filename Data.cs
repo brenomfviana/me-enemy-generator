@@ -9,11 +9,7 @@ namespace EnemyGenerator
     public struct Data
     {
         [JsonInclude]
-        public int seed { get; set; }
-        [JsonInclude]
-        public int generations { get; set; }
-        [JsonInclude]
-        public int initialPopSize { get; set; }
+        public Parameters parameters { get; set; }
         [JsonInclude]
         public double duration { get; set; }
         [JsonInclude]

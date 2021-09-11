@@ -16,7 +16,7 @@ namespace EnemyGenerator
         private static string SEARCH_FOR = "*";
         /// This constant must be used to initialize empty strings or convert
         /// values of other types during concatenation.
-        private static string EMPTY_STRING = "";
+        private static string EMPTY_STR = "";
         /// Define the JSON options.
         private static JsonSerializerOptions JSON_OPTIONS =
             new JsonSerializerOptions(){ WriteIndented = true };
@@ -52,9 +52,13 @@ namespace EnemyGenerator
         private static string GetFolderName(
             Data _data
         ) {
-            string foldername = EMPTY_STRING;
-            foldername += EMPTY_STRING + _data.generations + FILENAME_SEPARATOR;
-            foldername += EMPTY_STRING + _data.initialPopSize;
+            Parameters prs = _data.parameters;
+            string foldername = EMPTY_STR;
+            foldername += EMPTY_STR + prs.generations + FILENAME_SEPARATOR;
+            foldername += EMPTY_STR + prs.population + FILENAME_SEPARATOR;
+            foldername += EMPTY_STR + prs.mutation + FILENAME_SEPARATOR;
+            foldername += EMPTY_STR + prs.crossover + FILENAME_SEPARATOR;
+            foldername += EMPTY_STR + prs.competitors;
             return foldername;
         }
 

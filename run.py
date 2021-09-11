@@ -63,10 +63,10 @@ def run(ge, po, mu, cr, co):
   os.system(executable + parameters)
 
 
-def plot(g, p):
+def plot(ge, po, mu, cr, co):
   # Plot the charts for the current set of parameters
   parameters = ''
-  for i in [g, p]:
+  for i in [ge, po, mu, cr, co]:
     parameters += str(i) + ' '
   os.system('python plot.py ' + parameters)
 
@@ -112,4 +112,4 @@ for ge in generations:
         for co in competitors:
           # Print progress
           print("%.2f" % ((i / total) * 100))
-          plot(ge, po)
+          plot(ge, po, mu, cr, co)

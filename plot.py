@@ -49,8 +49,9 @@ def plot_charts(data, filename, folder):
   # Create the folder for the given parameters
   filename = filename.replace('.json', '')
   folder = folder +  os.path.sep + filename
-  if not os.path.isdir(folder):
-    os.mkdir(folder)
+  if os.path.isdir(folder):
+    return
+  os.mkdir(folder)
 
   # Fitness heatmap of the populations
   attribute = 'fitness'
@@ -107,8 +108,11 @@ if not os.path.isdir(CHART_FOLDER):
 
 # Calculate the filename
 folder = 'results' + os.path.sep
-param_folder = sys.argv[1] + '-' # Number of generations
-param_folder += sys.argv[2]      # Initial population size
+param_folder = sys.argv[1] + '-'  # Number of generations
+param_folder += sys.argv[2] + '-' # Initial population size
+param_folder += sys.argv[3] + '-' # Mutation chance
+param_folder += sys.argv[4] + '-' # Crossover chance
+param_folder += sys.argv[5]       # Number of competitors
 
 
 # Read all the JSON files for the given parameters

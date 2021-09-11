@@ -25,9 +25,7 @@ namespace EnemyGenerator
             prs = _prs;
             // Initialize the data to be collected
             data = new Data();
-            data.seed = prs.seed;
-            data.generations = prs.generations;
-            data.initialPopSize = prs.initial;
+            data.parameters = prs;
         }
 
         /// Return the collected data from the evolutionary process.
@@ -70,7 +68,7 @@ namespace EnemyGenerator
             );
 
             // Generate the initial population
-            while (pop.Count() < prs.initial)
+            while (pop.Count() < prs.population)
             {
                 // Create a new random individual
                 Individual ind = Individual.GetRandom(ref rand);
