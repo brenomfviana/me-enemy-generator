@@ -17,7 +17,7 @@ namespace EnemyGenerator
     public class Population
     {
         /// The MAP-Elites dimension. The dimension is defined by the number of
-        /// difficulty factors multiplied by the number of weapon Types.
+        /// difficulty factors multiplied by the number of weapon types.
         public (int difficulty, int weapon) dimension { get; }
         /// The MAP-Elites map (a matrix of individuals).
         public Individual[,] map { get; }
@@ -63,9 +63,8 @@ namespace EnemyGenerator
             // If the new individual's difficulty is known, and...
             if (d != Util.UNKNOWN) {
                 // If the new individual deserves to survive
-                if (map[d, w] is null ||
-                    _individual.fitness < map[d, w].fitness
-                ) {
+                if (Fitness.IsBest(_individual, map[d, w]))
+                {
                     // Then, place the individual in the MAP-Elites population
                     map[d, w] = _individual;
                 }

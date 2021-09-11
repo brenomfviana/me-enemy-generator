@@ -12,9 +12,9 @@ namespace EnemyGenerator
         private static char SEPARATOR = Path.DirectorySeparatorChar;
         /// The filename separator char.
         private static char FILENAME_SEPARATOR = '-';
-        /// This string defines that all files will be searched.
+        /// This constant defines that all files will be searched.
         private static string SEARCH_FOR = "*";
-        /// This string must be used to initialize empty strings or convert
+        /// This constant must be used to initialize empty strings or convert
         /// values of other types during concatenation.
         private static string EMPTY_STRING = "";
         /// Define the JSON options.

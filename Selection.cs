@@ -28,9 +28,7 @@ namespace EnemyGenerator
             List<Coordinate> cs = _pop.GetElitesCoordinates();
             // Ensure the population size is enough
             Debug.Assert(
-                cs.Count - _amount > _competitors,
-                "There are no enough individuals in the input population to " +
-                "perform this operation."
+                cs.Count - _amount > _competitors, Util.NOT_ENOUGH_COMPETITORS
             );
             // Select `_amount` individuals
             Individual[] individuals = new Individual[_amount];

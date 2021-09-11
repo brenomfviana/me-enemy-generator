@@ -69,8 +69,9 @@ namespace EnemyGenerator
         }
 
         /// Return the gameplay factor.
-        /// The gameplay weights were empirically chosen based on the game
-        /// prototype gameplay.
+        ///
+        /// The gameplay weights were empirically chosen based on the gameplay
+        /// of the game prototype mentioned in Program.cs
         public static float CalculateGameplayFactor(
             Individual _individual
         ) {
@@ -82,11 +83,11 @@ namespace EnemyGenerator
             // Melee enemies are only risky if they follow the player
             fG *= SearchSpace.MeleeWeaponList().Contains(w.weaponType) ?
                 (e.movementType == MovementType.Follow ? 1 : 0) : 1;
-            // Shooter enemies that stays still are the only that present some
-            // risk to the player since they throw projectiles towards them
+            // Shooter enemies that stay still are the only ones that present
+            // some risk to the player since they throw projectiles towards them
             fG *= SearchSpace.RangedWeaponList().Contains(w.weaponType) ?
                 (e.movementType == MovementType.None ? 0.5f : 1) : 1;
-            // Shooter enemies that fled are riskier to the player
+            // Shooter enemies that flee are riskier to the player
             fG *= SearchSpace.RangedWeaponList().Contains(w.weaponType) ?
                 (e.movementType == MovementType.Flee1D ? 1.25f : 1) : 1;
             fG *= SearchSpace.RangedWeaponList().Contains(w.weaponType) ?
@@ -107,6 +108,9 @@ namespace EnemyGenerator
         }
 
         /// Return the multiplier factor corresponding to the entered weapon.
+        ///
+        /// The weapon weights were empirically chosen based on the gameplay of
+        /// the game prototype mentioned in Program.cs
         private static float WeaponMultiplier(
             WeaponType _weapon
         ) {
