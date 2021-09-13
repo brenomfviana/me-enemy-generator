@@ -1,11 +1,12 @@
 ### Research ###
-## Ignore the temporary results folder
+## Ignore the temporary results folders
 [Rr]esults/
 [Ee]nemies/
 [Cc]harts/
-# Ignore the virtual environment
-auto/
 
+
+### VS Code ###
+.vscode/
 
 
 # Created by https://www.toptal.com/developers/gitignore/api/csharp
