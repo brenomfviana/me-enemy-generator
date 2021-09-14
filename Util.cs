@@ -7,16 +7,16 @@ namespace EnemyGenerator
     public class Util
     {
         /// This constant defines unknown references.
-        public readonly static int UNKNOWN = -1;
+        public static readonly int UNKNOWN = -1;
         /// This constant defines the error message of not enough competitors.
-        public readonly static string NOT_ENOUGH_COMPETITORS = "There are " +
-            "not enough individuals in the input population to perform this " + 
+        public static readonly string NOT_ENOUGH_COMPETITORS = "There are " +
+            "not enough individuals in the input population to perform this " +
             "operation.";
         /// This constant defines the error message of not enough competitors.
-        public readonly static string CANNOT_COMPARE_INDIVIDUALS = "There is " +
+        public static readonly string CANNOT_COMPARE_INDIVIDUALS = "There is " +
             "no way of comparing two null individuals.";
 
-        /// Return a random integer percentage (i.e., from 0 to 100).
+        /// Return a random integer percentage (from 0 to 99, 100 numbers).
         public static int RandomPercent(
             ref Random _rand
         ) {

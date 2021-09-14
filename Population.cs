@@ -14,7 +14,7 @@ namespace EnemyGenerator
     /// This particular population is mapped into enemy's weapons and its
     /// difficulty factor. Each Elite (or matrix cell) corresponds to a
     /// combination of different types of weapons and difficulty factors.
-    public class Population
+    public struct Population
     {
         /// The MAP-Elites dimension. The dimension is defined by the number of
         /// difficulty factors multiplied by the number of weapon types.
@@ -48,6 +48,23 @@ namespace EnemyGenerator
             return count;
         }
 
+        /// Return a list corresponding to the Elites coordinates.
+        public List<Coordinate> GetElitesCoordinates()
+        {
+            List<Coordinate> coordinates = new List<Coordinate>();
+            for (int d = 0; d < dimension.difficulty; d++)
+            {
+                for (int w = 0; w < dimension.weapon; w++)
+                {
+                    if (!(map[d, w] is null))
+                    {
+                        coordinates.Add((d, w));
+                    }
+                }
+            }
+            return coordinates;
+        }
+
         /// Add an individual in the MAP-Elites population.
         ///
         /// First, we identify which Elite the individual is classified in.
@@ -71,24 +88,7 @@ namespace EnemyGenerator
             }
         }
 
-        /// Return a list corresponding to the Elites coordinates.
-        public List<Coordinate> GetElitesCoordinates()
-        {
-            List<Coordinate> coordinates = new List<Coordinate>();
-            for (int d = 0; d < dimension.difficulty; d++)
-            {
-                for (int w = 0; w < dimension.weapon; w++)
-                {
-                    if (!(map[d, w] is null))
-                    {
-                        coordinates.Add((d, w));
-                    }
-                }
-            }
-            return coordinates;
-        }
-
-        /// Return a list with the individuals.
+        /// Return a list with the population individuals.
         public List<Individual> ToList()
         {
             List<Individual> list = new List<Individual>();
@@ -102,19 +102,19 @@ namespace EnemyGenerator
             return list;
         }
 
-        /// Print the individuals of the MAP-Elites population.
+        /// Print all the individuals of the MAP-Elites population.
         public void Debug()
         {
             for (int d = 0; d < dimension.difficulty; d++)
             {
                 for (int w = 0; w < dimension.weapon; w++)
                 {
-                    // Print the Elite's features
+                    // Print the Elite's coordinate
                     string log = "Elite ";
                     log += SearchSpace.AllDifficulties()[d] + "-";
                     log += ((WeaponType) w);
                     Console.WriteLine(log);
-                    // Print empty if the Elite is null
+                    // Print "Empty" if the Elite is null
                     if (map[d, w] is null)
                     {
                         Console.WriteLine("  Empty");

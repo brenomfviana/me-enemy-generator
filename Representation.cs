@@ -5,7 +5,7 @@ namespace EnemyGenerator
 {
     /// This class represents an individual.
     ///
-    /// Individuals are composed of an enemy, a weapon, their fitness value, 
+    /// Individuals are composed of an enemy, a weapon, their fitness value,
     /// their difficulty degree, and the generation when they were created.
     /// These attributes are the most common variables from enemies in
     /// different games.
@@ -91,8 +91,9 @@ namespace EnemyGenerator
             );
             // Combine the enemy and the weapon to create a new individual
             Individual individual = new Individual(e, w);
-            individual.generation = Util.UNKNOWN;
+            // Initialize default values for difficulty, generation and fitness
             individual.difficulty = Util.UNKNOWN;
+            individual.generation = Util.UNKNOWN;
             individual.fitness = Util.UNKNOWN;
             // Return the created individual
             return individual;

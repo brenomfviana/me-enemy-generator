@@ -24,11 +24,12 @@ namespace EnemyGenerator
             Population _pop,
             ref Random _rand
         ) {
-            // List of Elites' coordinates
-            List<Coordinate> cs = _pop.GetElitesCoordinates();
-            // Ensure the population size is enough
+            // Get the list of Elites' coordinates (the available competitors)
+            List<Coordinate> avco = _pop.GetElitesCoordinates();
+            // Ensure the population size is enough for the tournament
             Debug.Assert(
-                cs.Count - _amount > _competitors, Util.NOT_ENOUGH_COMPETITORS
+                avco.Count - _amount > _competitors,
+                Util.NOT_ENOUGH_COMPETITORS
             );
             // Select `_amount` individuals
             Individual[] individuals = new Individual[_amount];
@@ -38,13 +39,13 @@ namespace EnemyGenerator
                 (Coordinate coordinate, Individual individual) = Tournament(
                     _competitors, // Number of competitors
                     _pop,         // Population
-                    cs,           // List of valid coordinates
+                    avco,         // List of available competitors
                     ref _rand     // Random number generator
                 );
                 // Select a new individual
                 individuals[i] = individual;
-                // Remove selected individual from available coordinates
-                cs.Remove(coordinate);
+                // Remove selected individual from available competitors
+                avco.Remove(coordinate);
             }
             // Return all selected individuals
             return individuals;
@@ -56,32 +57,33 @@ namespace EnemyGenerator
         /// for the same tournament selection process. To do so, we apply the
         /// same process explained in `Select` function.
         static (Coordinate, Individual) Tournament(
-            int _amount,
+            int _competitors,
             Population _pop,
-            List<Coordinate> _cs,
+            List<Coordinate> _avco,
             ref Random _rand
         ) {
             // List of available competitors
-            List<Coordinate> acds = new List<Coordinate>(_cs);
+            List<Coordinate> avco = new List<Coordinate>(_avco);
             // Initialize the list of competitors
-            Individual[] competitors = new Individual[_amount];
+            Individual[] competitors = new Individual[_competitors];
             // Initialize competitors' coordinates
-            Coordinate[] coordinates = new Coordinate[_amount];
+            Coordinate[] coordinates = new Coordinate[_competitors];
             // Select competitors
-            for (int i = 0; i < _amount; i++)
+            for (int i = 0; i < _competitors; i++)
             {
-                // Get a random coordinate
-                (int x, int y) rc = Util.RandomElementFromList(acds, ref _rand);
-                // Get the corresponding competitor
+                // Get a random available coordinate
+                (int x, int y) rc = Util.RandomElementFromList(avco, ref _rand);
+                // Get the competitor corresponding to the chosen coordinate and
+                // add the individual to the chosen competitors list
                 competitors[i] = _pop.map[rc.x, rc.y];
                 coordinates[i] = rc;
-                // Remove competitors from available competitors
-                acds.Remove(rc);
+                // Remove the competitor from available competitors
+                avco.Remove(rc);
             }
-            // Find the tournament winner and its coordinate
+            // Find the tournament winner and its coordinate in the population
             Individual winner = null;
             Coordinate coordinate = (Util.UNKNOWN, Util.UNKNOWN);
-            for (int i = 0; i < _amount; i++)
+            for (int i = 0; i < _competitors; i++)
             {
                 if (winner is null || competitors[i].fitness > winner.fitness)
                 {

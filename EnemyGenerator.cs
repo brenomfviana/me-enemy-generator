@@ -7,15 +7,15 @@ namespace EnemyGenerator
     public class EnemyGenerator
     {
         /// The number of parents to be selected for crossover.
-        private readonly static int CROSSOVER_PARENTS = 2;
+        private static readonly int CROSSOVER_PARENTS = 2;
         /// The number of parents to be selected for mutation.
-        private readonly static int MUTATION_PARENT = 1;
+        private static readonly int MUTATION_PARENT = 1;
 
         /// The evolutionary parameters.
         private Parameters prs;
         /// The found MAP-Elites population.
         private Population solution;
-        /// The collected data.
+        /// The evolutionary process' collected data.
         private Data data;
 
         /// Enemy Generator constructor.
@@ -34,7 +34,7 @@ namespace EnemyGenerator
             return data;
         }
 
-        /// Return the resulting MAP-Elites population.
+        /// Return the found MAP-Elites population.
         public Population GetSolution()
         {
             return solution;
@@ -83,7 +83,7 @@ namespace EnemyGenerator
             // Save the initial population
             data.initial = new List<Individual>(pop.ToList());
 
-            // Run the generations
+            // Evolve the population
             for (int g = 0; g < prs.generations; g++)
             {
                 // Initialize the offspring list
@@ -114,7 +114,7 @@ namespace EnemyGenerator
                 else
                 {
                     // Select and mutate a parent
-                    var parent = Selection.Select(
+                    Individual parent = Selection.Select(
                         MUTATION_PARENT, prs.competitors, pop, ref rand
                     )[0];
                     Individual individual = Mutation.Apply(

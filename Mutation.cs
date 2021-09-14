@@ -11,7 +11,7 @@ namespace EnemyGenerator
             int _chance,
             ref Random _rand
         ) {
-            // New individual
+            // Clone parent
             Individual individual = _parent.Clone();
             // Apply mutation on enemy attributes
             if (_chance > Util.RandomPercent(ref _rand))

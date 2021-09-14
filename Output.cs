@@ -7,28 +7,28 @@ namespace EnemyGenerator
     public class Output
     {
         /// The JSON extension.
-        private readonly static string JSON = ".json";
+        private static readonly string JSON = ".json";
         /// The operational system directory separator char.
-        private readonly static char SEPARATOR = Path.DirectorySeparatorChar;
+        private static readonly char SEPARATOR = Path.DirectorySeparatorChar;
         /// The filename separator char.
-        private readonly static char FILENAME_SEPARATOR = '-';
+        private static readonly char FILENAME_SEPARATOR = '-';
         /// This constant defines that all files will be searched.
-        private readonly static string SEARCH_FOR = "*";
+        private static readonly string SEARCH_FOR = "*";
         /// This constant must be used to initialize empty strings or convert
         /// values of other types during concatenation.
-        private readonly static string EMPTY_STR = "";
+        private static readonly string EMPTY_STR = "";
         /// Define the JSON options.
-        private readonly static JsonSerializerOptions JSON_OPTIONS =
+        private static readonly JsonSerializerOptions JSON_OPTIONS =
             new JsonSerializerOptions(){ WriteIndented = true };
         /// Results folder name.
         /// This folder saves the collected data to evaluate the approach.
-        private readonly static string DATA_FOLDER_NAME = @"results";
+        private static readonly string DATA_FOLDER_NAME = @"results";
         /// Enemies folder name.
         /// This folder saves the generated enemies.
-        private readonly static string ENEMY_FOLDER_NAME = @"enemies";
+        private static readonly string ENEMY_FOLDER_NAME = @"enemies";
         /// Data filename.
         /// Created only when the enemies are saved separately.
-        private readonly static string DATA_FILENAME = @"data";
+        private static readonly string DATA_FILENAME = @"data";
 
         /// Write the collected data from the evolutionary process.
         public static void WriteData(
