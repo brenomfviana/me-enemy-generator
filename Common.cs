@@ -3,18 +3,14 @@ using System.Collections.Generic;
 
 namespace EnemyGenerator
 {
-    /// This class holds only utility functions and constants.
-    public class Util
+    /// This class holds the project common functions and constants.
+    public class Common
     {
-        /// This constant defines unknown references.
+        /// Unknown reference.
         public static readonly int UNKNOWN = -1;
-        /// This constant defines the error message of not enough competitors.
-        public static readonly string NOT_ENOUGH_COMPETITORS = "There are " +
-            "not enough individuals in the input population to perform this " +
-            "operation.";
-        /// This constant defines the error message of not enough competitors.
-        public static readonly string CANNOT_COMPARE_INDIVIDUALS = "There is " +
-            "no way of comparing two null individuals.";
+        /// The error message of cannot compare individuals.
+        public static readonly string CANNOT_COMPARE_INDIVIDUALS =
+            "There is no way of comparing two null individuals.";
 
         /// Return a random integer percentage (from 0 to 99, 100 numbers).
         public static int RandomPercent(
@@ -23,7 +19,7 @@ namespace EnemyGenerator
             return _rand.Next(100);
         }
 
-        /// Return a random integer number from the input inclusive range.
+        /// Return a random integer number from the entered inclusive range.
         public static int RandomInt(
             (int min, int max) _range,
             ref Random _rand
@@ -31,7 +27,7 @@ namespace EnemyGenerator
             return _rand.Next(_range.min, _range.max + 1);
         }
 
-        /// Return a random float number from the input inclusive range.
+        /// Return a random float number from the entered inclusive range.
         public static float RandomFloat(
             (float min, float max) _range,
             ref Random _rand
@@ -40,7 +36,7 @@ namespace EnemyGenerator
             return (float) (n * (_range.max - _range.min) + _range.min);
         }
 
-        /// Return a random element from the input array.
+        /// Return a random element from the entered array.
         public static T RandomElementFromArray<T>(
             T[] _range,
             ref Random _rand
@@ -48,7 +44,7 @@ namespace EnemyGenerator
             return _range[_rand.Next(0, _range.Length)];
         }
 
-        /// Return a random element from the input list.
+        /// Return a random element from the entered list.
         public static T RandomElementFromList<T>(
             List<T> _range,
             ref Random _rand

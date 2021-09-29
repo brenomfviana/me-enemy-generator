@@ -11,65 +11,63 @@ namespace EnemyGenerator
             int _chance,
             ref Random _rand
         ) {
-            // Clone parent
             Individual individual = _parent.Clone();
             // Apply mutation on enemy attributes
-            if (_chance > Util.RandomPercent(ref _rand))
+            if (_chance > Common.RandomPercent(ref _rand))
             {
-                individual.enemy.health = Util.RandomInt(
+                individual.enemy.health = Common.RandomInt(
                     SearchSpace.Instance.rHealth, ref _rand
                 );
             }
-            if (_chance > Util.RandomPercent(ref _rand))
+            if (_chance > Common.RandomPercent(ref _rand))
             {
-                individual.enemy.strength = Util.RandomInt(
+                individual.enemy.strength = Common.RandomInt(
                     SearchSpace.Instance.rStrength, ref _rand
                 );
             }
-            if (_chance > Util.RandomPercent(ref _rand))
+            if (_chance > Common.RandomPercent(ref _rand))
             {
-                individual.enemy.attackSpeed = Util.RandomFloat(
+                individual.enemy.attackSpeed = Common.RandomFloat(
                     SearchSpace.Instance.rAttackSpeed, ref _rand
                 );
             }
-            if (_chance > Util.RandomPercent(ref _rand))
+            if (_chance > Common.RandomPercent(ref _rand))
             {
-                individual.enemy.movementType = Util.RandomElementFromArray(
+                individual.enemy.movementType = Common.RandomElementFromArray(
                     SearchSpace.Instance.rMovementType, ref _rand
                 );
             }
-            if (_chance > Util.RandomPercent(ref _rand))
+            if (_chance > Common.RandomPercent(ref _rand))
             {
-                individual.enemy.movementSpeed = Util.RandomFloat(
+                individual.enemy.movementSpeed = Common.RandomFloat(
                     SearchSpace.Instance.rMovementSpeed, ref _rand
                 );
             }
-            if (_chance > Util.RandomPercent(ref _rand))
+            if (_chance > Common.RandomPercent(ref _rand))
             {
-                individual.enemy.activeTime = Util.RandomFloat(
+                individual.enemy.activeTime = Common.RandomFloat(
                     SearchSpace.Instance.rActiveTime, ref _rand
                 );
             }
-            if (_chance > Util.RandomPercent(ref _rand))
+            if (_chance > Common.RandomPercent(ref _rand))
             {
-                individual.enemy.restTime = Util.RandomFloat(
+                individual.enemy.restTime = Common.RandomFloat(
                     SearchSpace.Instance.rRestTime, ref _rand
                 );
             }
             // Apply mutation on weapon attributes
-            if (_chance > Util.RandomPercent(ref _rand))
+            if (_chance > Common.RandomPercent(ref _rand))
             {
-                individual.weapon.weaponType = Util.RandomElementFromArray(
+                individual.weapon.weaponType = Common.RandomElementFromArray(
                     SearchSpace.Instance.rWeaponType, ref _rand
                 );
             }
-            if (_chance > Util.RandomPercent(ref _rand))
+            if (_chance > Common.RandomPercent(ref _rand))
             {
-                individual.weapon.projectileSpeed = Util.RandomFloat(
+                individual.weapon.projectileSpeed = Common.RandomFloat(
                     SearchSpace.Instance.rProjectileSpeed, ref _rand
                 );
             }
-            // Return the new mutated individual
             return individual;
         }
     }

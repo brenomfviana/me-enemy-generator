@@ -29,6 +29,7 @@
 /// Author: Breno M. F. Viana.
 
 using System;
+using System.Diagnostics;
 
 namespace EnemyGenerator
 {
@@ -41,13 +42,20 @@ namespace EnemyGenerator
         /// The number of parameters (arguments) of the difficulty calculator.
         private static readonly int DIF_CALC_NUM_PARAMS = 2;
 
-        /// Flag of saving all enemies separately.
+        /// The flag of saving all enemies separately.
         private static readonly string SAVE_SEPARATELY = "-s";
-        /// Flag of difficulty calculation.
+        /// The flag of difficulty calculation.
         private static readonly string DIFFICULTY_CALCULATION = "-d";
 
-        /// Error code for bad arguments.
+        /// The error code for bad arguments.
         private static readonly int ERROR_BAD_ARGUMENTS = 0xA0;
+        /// The error message of not enough population.
+        public static readonly string TOO_MUCH_COMPETITORS =
+            "The number of competitors is higher than the population size; " +
+            "in this way, tournament selection is impossible.";
+        /// The error message of not enough competitors.
+        public static readonly string TOO_FEW_COMPETITORS =
+            "The number of competitors is not enough for a tournament.";
 
         /// Run the enemy generator.
         public static void Generator(
@@ -65,12 +73,19 @@ namespace EnemyGenerator
                 int.Parse(_args[i++]), // Crossover chance
                 int.Parse(_args[i])    // Number of tournament competitors
             );
-            // Prepare the evolutionary process
+            // Ensure the population size is enough for the tournament
+            Debug.Assert(
+                prs.competitors >= prs.population,
+                TOO_MUCH_COMPETITORS
+            );
+            // Ensure the number of competitors is valid
+            Debug.Assert(
+                prs.competitors > 1,
+                TOO_FEW_COMPETITORS
+            );
+            // Run the generator and save the results and the collected data
             EnemyGenerator generator = new EnemyGenerator(prs);
-            // Start the generative process and generate a set of enemies
             generator.Evolve();
-            // When the enemy generation process is over, then write the
-            // results and the collected data
             Output.WriteData(generator.GetData(), separately);
         }
 

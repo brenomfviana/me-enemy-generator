@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace EnemyGenerator
 {
-    // This enum defines the movement types of enemies.
+    /// This enum defines the movement types of enemies.
     [Serializable]
     public enum MovementType
     {
@@ -79,7 +79,7 @@ namespace EnemyGenerator
         {
             get
             {
-                if (instance == null)
+                if (instance is null)
                 {
                     instance = new SearchSpace(
                         (1, 5),                         // Health
@@ -158,7 +158,7 @@ namespace EnemyGenerator
         public static int GetDifficultyIndex(
             float _difficulty
         ) {
-            int index = Util.UNKNOWN;
+            int index = Common.UNKNOWN;
             (float, float)[] list = AllDifficulties();
             for (int i = 0; i < list.Length; i++)
             {

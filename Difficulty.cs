@@ -28,11 +28,11 @@ namespace EnemyGenerator
             return _individual.enemy.health * 2;
         }
 
-        /// Return the movement factor.
+        /// Calculate and return the movement factor.
         private static float CalculateMovementFactor(
             Individual _individual
         ) {
-            // Get the enemy genes
+            // Create an alias for the enemy gene of the individual
             Enemy e = _individual.enemy;
             // Calculate movement factor
             float fM = e.movementSpeed;
@@ -42,16 +42,16 @@ namespace EnemyGenerator
             return fM;
         }
 
-        /// Return the strength factor.
+        /// Calculate and return the strength factor.
         private static float CalculateStrengthFactor(
             Individual _individual
         ) {
-            // Get the enemy and weapon genes
+            // Create aliases for the genes of the individual
             Enemy e = _individual.enemy;
             Weapon w = _individual.weapon;
             // Calculate strength factor
             float fS = 1;
-            // Melee enemies attack by touching the player, therefore, the 
+            // Melee enemies attack by touching the player, therefore, the
             // movement speed increase their strenght
             fS *= SearchSpace.MeleeWeaponList().Contains(w.weaponType) ?
                 e.strength * e.movementSpeed : 1;
@@ -68,14 +68,14 @@ namespace EnemyGenerator
             return fS;
         }
 
-        /// Return the gameplay factor.
+        /// Calculate and return the gameplay factor.
         ///
         /// The gameplay weights were empirically chosen based on the gameplay
         /// of the game prototype mentioned in Program.cs
         public static float CalculateGameplayFactor(
             Individual _individual
         ) {
-            // Get the enemy and weapon genes
+            // Create aliases for the genes of the individual
             Enemy e = _individual.enemy;
             Weapon w = _individual.weapon;
             // Calculate the gameplay factor
@@ -98,7 +98,7 @@ namespace EnemyGenerator
                 e.movementType == MovementType.Follow) ?
                 0.5f / (e.movementSpeed * 2) : 1;
             // Healer enemies must avoid the player and search for other enemies
-            fG *= (w.weaponType == WeaponType.CureSpell ?             
+            fG *= (w.weaponType == WeaponType.CureSpell ?
                 (SearchSpace.HealerMovementList().Contains(e.movementType)
                 ? 1 : 0) : 1);
             // Healer enemies must move fast to avoid the player

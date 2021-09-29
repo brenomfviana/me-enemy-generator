@@ -8,12 +8,12 @@ namespace EnemyGenerator
 
     /// This struct represents a MAP-Elites population.
     ///
-    /// The MAP-Elites population is an N-dimensional array of individuals,
+    /// The MAP-Elites population is a N-dimensional array of individuals,
     /// where each matrix's ax corresponds to a different feature.
     ///
-    /// This particular population is mapped into enemy's weapons and its
-    /// difficulty factor. Each Elite (or matrix cell) corresponds to a
-    /// combination of different types of weapons and difficulty factors.
+    /// This particular population is mapped into the enemy's difficulty factor
+    /// and its weapons. Thus, each Elite (or matrix cell) corresponds to a
+    /// combination of different types of difficulty factors and weapons.
     public struct Population
     {
         /// The MAP-Elites dimension. The dimension is defined by the number of
@@ -22,12 +22,12 @@ namespace EnemyGenerator
         /// The MAP-Elites map (a matrix of individuals).
         public Individual[,] map { get; }
 
-        /// Population constructor.
+        /// MAP-Elites Population constructor.
         public Population(
-            int _numberOfDifficultyFactors,
-            int _numbefOfWeaponTypes
+            int _difficulty,
+            int _weapons
         ) {
-            dimension = (_numberOfDifficultyFactors, _numbefOfWeaponTypes);
+            dimension = (_difficulty, _weapons);
             map = new Individual[dimension.difficulty, dimension.weapon];
         }
 
@@ -78,7 +78,7 @@ namespace EnemyGenerator
             int d = SearchSpace.GetDifficultyIndex(_individual.difficulty);
             int w = (int) _individual.weapon.weaponType;
             // If the new individual's difficulty is known, and...
-            if (d != Util.UNKNOWN) {
+            if (d != Common.UNKNOWN) {
                 // If the new individual deserves to survive
                 if (Fitness.IsBest(_individual, map[d, w]))
                 {
@@ -109,17 +109,14 @@ namespace EnemyGenerator
             {
                 for (int w = 0; w < dimension.weapon; w++)
                 {
-                    // Print the Elite's coordinate
                     string log = "Elite ";
                     log += SearchSpace.AllDifficulties()[d] + "-";
                     log += ((WeaponType) w);
                     Console.WriteLine(log);
-                    // Print "Empty" if the Elite is null
                     if (map[d, w] is null)
                     {
                         Console.WriteLine("  Empty");
                     }
-                    // Print the Elite's attributes
                     else
                     {
                         map[d, w].Debug();

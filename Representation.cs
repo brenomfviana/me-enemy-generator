@@ -72,30 +72,27 @@ namespace EnemyGenerator
         public static Individual GetRandom(
             ref Random _rand
         ) {
-            // Get the Search Space of enemies
             SearchSpace ss = SearchSpace.Instance;
             // Create a random enemy
             Enemy e = new Enemy(
-                Util.RandomInt(ss.rHealth, ref _rand),
-                Util.RandomInt(ss.rStrength, ref _rand),
-                Util.RandomFloat(ss.rAttackSpeed, ref _rand),
-                Util.RandomElementFromArray(ss.rMovementType, ref _rand),
-                Util.RandomFloat(ss.rMovementSpeed, ref _rand),
-                Util.RandomFloat(ss.rActiveTime, ref _rand),
-                Util.RandomFloat(ss.rRestTime, ref _rand)
+                Common.RandomInt(ss.rHealth, ref _rand),
+                Common.RandomInt(ss.rStrength, ref _rand),
+                Common.RandomFloat(ss.rAttackSpeed, ref _rand),
+                Common.RandomElementFromArray(ss.rMovementType, ref _rand),
+                Common.RandomFloat(ss.rMovementSpeed, ref _rand),
+                Common.RandomFloat(ss.rActiveTime, ref _rand),
+                Common.RandomFloat(ss.rRestTime, ref _rand)
             );
             // Create a random weapon
             Weapon w = new Weapon(
-                Util.RandomElementFromArray(ss.rWeaponType, ref _rand),
-                Util.RandomFloat(ss.rProjectileSpeed, ref _rand)
+                Common.RandomElementFromArray(ss.rWeaponType, ref _rand),
+                Common.RandomFloat(ss.rProjectileSpeed, ref _rand)
             );
-            // Combine the enemy and the weapon to create a new individual
+            // Combine the genes to create a new individual
             Individual individual = new Individual(e, w);
-            // Initialize default values for difficulty, generation and fitness
-            individual.difficulty = Util.UNKNOWN;
-            individual.generation = Util.UNKNOWN;
-            individual.fitness = Util.UNKNOWN;
-            // Return the created individual
+            individual.difficulty = Common.UNKNOWN;
+            individual.generation = Common.UNKNOWN;
+            individual.fitness = Common.UNKNOWN;
             return individual;
         }
     }
@@ -139,7 +136,7 @@ namespace EnemyGenerator
         }
     }
 
-    // This struc represents a weapon.
+    /// This struc represents a weapon.
     [Serializable]
     public struct Weapon
     {
@@ -148,7 +145,7 @@ namespace EnemyGenerator
         [JsonInclude]
         public float projectileSpeed;
 
-        // Weapon constructor.
+        /// Weapon constructor.
         public Weapon(
             WeaponType _weaponType,
             float _projectileSpeed

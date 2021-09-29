@@ -32,8 +32,7 @@ namespace EnemyGenerator
                 (float) jw.GetProperty("projectileSpeed").GetDouble()
             );
             // Build and return the individual
-            Individual individual = new Individual(enemy, weapon);
-            return individual;
+            return new Individual(enemy, weapon);
         }
     }
 }
