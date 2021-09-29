@@ -60,10 +60,10 @@ namespace EnemyGenerator
         /// Run the enemy generator.
         public static void Generator(
             string[] _args,
-            bool separately
+            bool _separately
         ) {
             // If the flag was entered, then the parameters are the next
-            int i = separately ? 1 : 0;
+            int i = _separately ? 1 : 0;
             // Define the evolutionary parameters
             Parameters prs = new Parameters(
                 int.Parse(_args[i++]), // Random seed
@@ -91,9 +91,9 @@ namespace EnemyGenerator
 
         /// Run the difficulty calculator.
         public static void DifficultyCalculator(
-            string path
+            string _path
         ) {
-            Individual individual = Input.ReadJSON(path);
+            Individual individual = Input.ReadJSON(_path);
             Difficulty.Calculate(ref individual);
             Console.WriteLine("Difficulty = " + individual.difficulty);
         }
