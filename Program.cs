@@ -75,7 +75,7 @@ namespace EnemyGenerator
             );
             // Ensure the population size is enough for the tournament
             Debug.Assert(
-                prs.competitors >= prs.population,
+                prs.population >= prs.competitors,
                 TOO_MUCH_COMPETITORS
             );
             // Ensure the number of competitors is valid
@@ -86,7 +86,7 @@ namespace EnemyGenerator
             // Run the generator and save the results and the collected data
             EnemyGenerator generator = new EnemyGenerator(prs);
             generator.Evolve();
-            Output.WriteData(generator.GetData(), separately);
+            Output.WriteData(generator.GetData(), _separately);
         }
 
         /// Run the difficulty calculator.
