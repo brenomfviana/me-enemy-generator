@@ -72,7 +72,7 @@ namespace EnemyGenerator
         private static void SaveData(
             Data _data
         ) {
-            // Create the folder for all results
+            // Create folder to store the results
             Directory.CreateDirectory(RESULTS_FOLDER_NAME);
             // Convert the collected data to a formmated JSON string
             string jsonData = JsonSerializer.Serialize(_data, JSON_OPTIONS);
@@ -88,6 +88,38 @@ namespace EnemyGenerator
             string filename = basename + FILENAME_SEPARATOR + count + JSON;
             // Write the found data in JSON format
             File.WriteAllText(folder + SEPARATOR + filename, jsonData);
+        }
+
+        /// Save each generated enemy in different JSON files.
+        private static void SaveDataSeparately(
+            Data _data
+        ) {
+            // Create the folder to store the enemies
+            Directory.CreateDirectory(ENEMY_FOLDER_NAME);
+            // Calculate the number of directories in the folder
+            // This operation aims to avoid overwrite created folders
+            int count = Directory.GetDirectories(
+                ENEMY_FOLDER_NAME, SEARCH_FOR, SearchOption.TopDirectoryOnly
+            ).Length;
+            // Create the result folder for the entered parameters
+            string basename = ENEMY_FOLDER_NAME + SEPARATOR;
+            basename += GetFolderName(_data) + FILENAME_SEPARATOR + count;
+            Directory.CreateDirectory(basename);
+            // Write each enemy in the final solution
+            foreach (Individual _individual in _data.final)
+            {
+                if (_individual is null) { continue; }
+                SaveEnemy(_individual, basename);
+            }
+            // Remove the populations from the collected data
+            _data.initial = null;
+            _data.intermediate = null;
+            _data.final = null;
+            // Convert the collected data to a formmated JSON string
+            string jsonData = JsonSerializer.Serialize(_data, JSON_OPTIONS);
+            // Write the found data in JSON format
+            string filename = basename + SEPARATOR + DATA_FILENAME + JSON;
+            File.WriteAllText(filename, jsonData);
         }
 
         /// Save a single enemy.
@@ -114,38 +146,6 @@ namespace EnemyGenerator
                 string filename = type + FILENAME_SEPARATOR + d + JSON;
                 File.WriteAllText(folder + SEPARATOR + filename, jsonData);
             }
-        }
-
-        /// Save each generated enemy in different JSON files.
-        private static void SaveDataSeparately(
-            Data _data
-        ) {
-            // Create the folder 'enemies'
-            Directory.CreateDirectory(ENEMY_FOLDER_NAME);
-            // Calculate the number of directories in the folder
-            // This operation aims to avoid overwrite created folders
-            int count = Directory.GetDirectories(
-                ENEMY_FOLDER_NAME, SEARCH_FOR, SearchOption.TopDirectoryOnly
-            ).Length;
-            // Create the result folder for the entered parameters
-            string basename = ENEMY_FOLDER_NAME + SEPARATOR;
-            basename += GetFolderName(_data) + FILENAME_SEPARATOR + count;
-            Directory.CreateDirectory(basename);
-            // Write each enemy in the final solution
-            foreach (Individual _individual in _data.final)
-            {
-                if (_individual is null) { continue; }
-                SaveEnemy(_individual, basename);
-            }
-            // Remove the populations from the collected data
-            _data.initial = null;
-            _data.intermediate = null;
-            _data.final = null;
-            // Convert the collected data to a formmated JSON string
-            string jsonData = JsonSerializer.Serialize(_data, JSON_OPTIONS);
-            // Write the found data in JSON format
-            string filename = basename + SEPARATOR + DATA_FILENAME + JSON;
-            File.WriteAllText(filename, jsonData);
         }
     }
 }

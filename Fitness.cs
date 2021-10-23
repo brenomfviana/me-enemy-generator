@@ -6,6 +6,10 @@ namespace EnemyGenerator
     /// This class holds all the fitness-related functions.
     public class Fitness
     {
+        /// The error message of cannot compare individuals.
+        public static readonly string CANNOT_COMPARE_INDIVIDUALS =
+            "There is no way of comparing two null individuals.";
+
         /// Calculate the fitness value of the entered individual.
         ///
         /// An individual's fitness is defined by the distance of the
@@ -42,7 +46,7 @@ namespace EnemyGenerator
         ) {
             Debug.Assert(
                 _i1 != null || _i2 != null,
-                Common.CANNOT_COMPARE_INDIVIDUALS
+                CANNOT_COMPARE_INDIVIDUALS
             );
             if (_i1 is null) { return false; }
             if (_i2 is null) { return true; }

@@ -93,7 +93,7 @@ namespace EnemyGenerator
         public static void DifficultyCalculator(
             string _path
         ) {
-            Individual individual = Input.ReadJSON(_path);
+            Individual individual = Input.ReadIndividual(_path);
             Difficulty.Calculate(ref individual);
             Console.WriteLine("Difficulty = " + individual.difficulty);
         }

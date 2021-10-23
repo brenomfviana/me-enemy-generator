@@ -7,7 +7,7 @@ namespace EnemyGenerator
     public class Input
     {
         /// Return the individual corresponding to the entered JSON file.
-        public static Individual ReadJSON(
+        public static Individual ReadIndividual(
             string path
         ) {
             // Read and parse JSON file

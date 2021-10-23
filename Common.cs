@@ -8,9 +8,6 @@ namespace EnemyGenerator
     {
         /// Unknown reference.
         public static readonly int UNKNOWN = -1;
-        /// The error message of cannot compare individuals.
-        public static readonly string CANNOT_COMPARE_INDIVIDUALS =
-            "There is no way of comparing two null individuals.";
 
         /// Return a random integer percentage (from 0 to 99, 100 numbers).
         public static int RandomPercent(
