@@ -86,7 +86,7 @@ namespace EnemyGenerator
             // Run the generator and save the results and the collected data
             EnemyGenerator generator = new EnemyGenerator(prs);
             generator.Evolve();
-            Output.WriteData(generator.GetData(), _separately);
+            Output.WriteData(generator.Data, _separately);
         }
 
         /// Run the difficulty calculator.

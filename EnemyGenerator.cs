@@ -18,6 +18,12 @@ namespace EnemyGenerator
         /// The evolutionary process' collected data.
         private Data data;
 
+        /// Return the found MAP-Elites population.
+        public Population Solution { get => solution; }
+
+        /// Return the collected data from the evolutionary process.
+        public Data Data { get => data; }
+
         /// Enemy Generator constructor.
         public EnemyGenerator(
             Parameters _prs
@@ -25,18 +31,6 @@ namespace EnemyGenerator
             prs = _prs;
             data = new Data();
             data.parameters = prs;
-        }
-
-        /// Return the collected data from the evolutionary process.
-        public Data GetData()
-        {
-            return data;
-        }
-
-        /// Return the found MAP-Elites population.
-        public Population GetSolution()
-        {
-            return solution;
         }
 
         /// Generate and return a set of enemies.
@@ -86,7 +80,7 @@ namespace EnemyGenerator
                     Individual[] offspring = Crossover.Apply(
                         parents[0], parents[1], ref rand
                     );
-                    // Apply the mutation operation with a random chance
+                    // Apply the mutation operation
                     if (prs.mutation > Common.RandomPercent(ref rand))
                     {
                         parents[0] = offspring[0];
@@ -98,7 +92,7 @@ namespace EnemyGenerator
                             parents[1], prs.geneMutation, ref rand
                         );
                     }
-                    // Add the new individuals in the offspring list
+                    // Add the new individuals in the intermediate population
                     for (int i = 0; i < offspring.Length; i++)
                     {
                         Difficulty.Calculate(ref offspring[i]);
@@ -107,7 +101,7 @@ namespace EnemyGenerator
                     }
                 }
 
-                // Place the offspring in the MAP-Elites population
+                // Place the intermediate population in the MAP-Elites
                 foreach (Individual individual in intermediate)
                 {
                     individual.generation = g;
