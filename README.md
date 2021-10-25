@@ -21,7 +21,7 @@ To generate enemies, this program receives seven arguments:
 - the number of generations;
 - the initial population size;
 - the mutation chance;
-- the crossover chance, and;
+- the mutation chance of a single gene, and;
 - the number of tournament competitors.
 
 To calculate the difficulty of a single enemy, this program receives two
