@@ -10,6 +10,8 @@ namespace EnemyGenerator
         private static readonly int CROSSOVER_PARENTS = 2;
         /// The number of parents to be selected for mutation.
         private static readonly int MUTATION_PARENT = 1;
+        /// The size of the intermediate population.
+        private static readonly int INTERMEDIATE_POPULATION = 10;
 
         /// The evolutionary parameters.
         private Parameters prs;
@@ -76,46 +78,39 @@ namespace EnemyGenerator
             // Evolve the population
             for (int g = 0; g < prs.generations; g++)
             {
-                // Initialize the offspring list
-                List<Individual> offspring = new List<Individual>();
-
-                // Apply the evolutionary operators
-                if (prs.crossover > Common.RandomPercent(ref rand))
+                List<Individual> intermediate = new List<Individual>();
+                while (intermediate.Count < INTERMEDIATE_POPULATION)
                 {
-                    // Select two different parents
+                    // Apply the crossover operation
                     Individual[] parents = Selection.Select(
                         CROSSOVER_PARENTS, prs.competitors, pop, ref rand
                     );
-                    // Apply crossover and get the resulting children
-                    Individual[] children = Crossover.Apply(
+                    Individual[] offspring = Crossover.Apply(
                         parents[0], parents[1], ref rand
                     );
-                    // Add the new individuals in the offspring list
-                    for (int i = 0; i < children.Length; i++)
+                    // Apply the mutation operation with a random chance
+                    if (prs.mutation > Common.RandomPercent(ref rand))
                     {
-                        Difficulty.Calculate(ref children[i]);
-                        Fitness.Calculate(ref children[i]);
-                        offspring.Add(children[i]);
+                        parents[0] = offspring[0];
+                        offspring[0] = Mutation.Apply(
+                            parents[0], prs.mutation, ref rand
+                        );
+                        parents[1] = offspring[1];
+                        offspring[1] = Mutation.Apply(
+                            parents[1], prs.mutation, ref rand
+                        );
                     }
-                }
-                else
-                {
-                    // Select a parent
-                    Individual parent = Selection.Select(
-                        MUTATION_PARENT, prs.competitors, pop, ref rand
-                    )[0];
-                    // Apply mutation
-                    Individual individual = Mutation.Apply(
-                        parent, prs.mutation, ref rand
-                    );
-                    // Add the new individual in the offspring list
-                    Difficulty.Calculate(ref individual);
-                    Fitness.Calculate(ref individual);
-                    offspring.Add(individual);
+                    // Add the new individuals in the offspring list
+                    for (int i = 0; i < offspring.Length; i++)
+                    {
+                        Difficulty.Calculate(ref offspring[i]);
+                        Fitness.Calculate(ref offspring[i]);
+                        intermediate.Add(offspring[i]);
+                    }
                 }
 
                 // Place the offspring in the MAP-Elites population
-                foreach (Individual individual in offspring)
+                foreach (Individual individual in intermediate)
                 {
                     individual.generation = g;
                     pop.PlaceIndividual(individual);
