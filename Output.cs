@@ -54,7 +54,7 @@ namespace EnemyGenerator
             foldername += EMPTY_STR + prs.generations + FILENAME_SEPARATOR;
             foldername += EMPTY_STR + prs.population + FILENAME_SEPARATOR;
             foldername += EMPTY_STR + prs.mutation + FILENAME_SEPARATOR;
-            foldername += EMPTY_STR + prs.crossover + FILENAME_SEPARATOR;
+            foldername += EMPTY_STR + prs.geneMutation + FILENAME_SEPARATOR;
             foldername += EMPTY_STR + prs.competitors;
             return foldername;
         }

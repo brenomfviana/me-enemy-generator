@@ -17,9 +17,9 @@ namespace EnemyGenerator
         /// The mutation chance.
         [JsonInclude]
         public int mutation { get; }
-        /// The crossover chance.
+        /// The mutation chance of a single gene.
         [JsonInclude]
-        public int crossover { get; }
+        public int geneMutation { get; }
         /// The number of competitors of the tournament selection.
         [JsonInclude]
         public int competitors { get; }
@@ -30,14 +30,14 @@ namespace EnemyGenerator
             int _generations,
             int _population,
             int _mutation,
-            int _crossover,
+            int _geneMutation,
             int _competitors
         ) {
             seed = _seed;
             generations = _generations;
             population = _population;
             mutation = _mutation;
-            crossover = _crossover;
+            geneMutation = _geneMutation;
             competitors = _competitors;
         }
     }

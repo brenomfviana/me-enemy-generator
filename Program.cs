@@ -18,7 +18,7 @@
 /// - the number of generations;
 /// - the initial population size;
 /// - the mutation chance;
-/// - the crossover chance, and;
+/// - the mutation chance of a single gene, and;
 /// - the number of tournament competitors.
 ///
 /// To calculate the difficulty of a single enemy, this program receives two
@@ -70,7 +70,7 @@ namespace EnemyGenerator
                 int.Parse(_args[i++]), // Number of generations
                 int.Parse(_args[i++]), // Initial population size
                 int.Parse(_args[i++]), // Mutation chance
-                int.Parse(_args[i++]), // Crossover chance
+                int.Parse(_args[i++]), // Mutation chance of a single gene
                 int.Parse(_args[i])    // Number of tournament competitors
             );
             // Ensure the population size is enough for the tournament

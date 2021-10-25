@@ -8,8 +8,6 @@ namespace EnemyGenerator
     {
         /// The number of parents to be selected for crossover.
         private static readonly int CROSSOVER_PARENTS = 2;
-        /// The number of parents to be selected for mutation.
-        private static readonly int MUTATION_PARENT = 1;
         /// The size of the intermediate population.
         private static readonly int INTERMEDIATE_POPULATION = 10;
 
@@ -93,11 +91,11 @@ namespace EnemyGenerator
                     {
                         parents[0] = offspring[0];
                         offspring[0] = Mutation.Apply(
-                            parents[0], prs.mutation, ref rand
+                            parents[0], prs.geneMutation, ref rand
                         );
                         parents[1] = offspring[1];
                         offspring[1] = Mutation.Apply(
-                            parents[1], prs.mutation, ref rand
+                            parents[1], prs.geneMutation, ref rand
                         );
                     }
                     // Add the new individuals in the offspring list
