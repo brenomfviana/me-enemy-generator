@@ -15,7 +15,7 @@ print("Seed:", seed)
 # random.seed(0)
 
 # Define the number of executions of each set of parameters
-executions = range(3)
+executions = range(1)
 
 
 
@@ -27,6 +27,9 @@ generations = [200]
 # Initial population sizes
 populations = [25]
 
+# Intermediate population sizes
+intermediates = [20]
+
 # Mutation rates
 mutations = [10]
 
@@ -35,6 +38,9 @@ genemutations = [30]
 
 # Competitors
 competitors = [3]
+
+# Difficulties
+difficulties = [10.5]
 
 
 
@@ -54,12 +60,12 @@ else:
 os.system('dotnet publish')
 
 
-def run(ge, po, mu, gm, co):
+def run(ge, po, ip, mu, gm, co, di):
   # Generate a random seed
   rs = random.randint(0, np.iinfo(np.int32).max - 1)
   # Build the parameters
   parameters = ""
-  for i in [rs, ge, po, mu, gm, co]:
+  for i in [rs, ge, po, ip, mu, gm, co, di]:
     parameters += str(i) + ' '
   # Print parameters
   print('Parameters=[', parameters, ']')
@@ -69,9 +75,11 @@ def run(ge, po, mu, gm, co):
 # Variables to control the experiment progress
 total = len(generations) * \
   len(populations) * \
+  len(intermediates) * \
   len(mutations) * \
   len(genemutations) * \
   len(competitors) * \
+  len(difficulties) * \
   len(executions)
 i = 1
 
@@ -79,42 +87,48 @@ i = 1
 print('Running')
 for ge in generations:
   for po in populations:
-    for mu in mutations:
-      for gm in genemutations:
-        for co in competitors:
-          for e in executions:
-            # Run execuble
-            run(ge, po, mu, gm, co)
-            # Print progress
-            print("%.2f" % ((i / total) * 100))
-            i += 1
+    for ip in intermediates:
+      for mu in mutations:
+        for gm in genemutations:
+          for co in competitors:
+            for di in difficulties:
+              for e in executions:
+                # Run execuble
+                run(ge, po, ip, mu, gm, co, di)
+                # Print progress
+                print("%.2f" % ((i / total) * 100))
+                i += 1
 
 
 # --- Plot charts of the experiment results
 
-def plot(ge, po, mu, gm, co):
+def plot(ge, po, ip, mu, gm, co, di):
   parameters = ''
-  for i in [ge, po, mu, gm, co]:
+  for i in [ge, po, ip, mu, gm, co, di]:
     parameters += str(i) + ' '
   os.system('python plot.py ' + parameters)
 
 # Variables to control the plotting progress
 total = len(generations) * \
   len(populations) * \
+  len(intermediates) * \
   len(mutations) * \
   len(genemutations) * \
-  len(competitors)
+  len(competitors) * \
+  len(difficulties)
 i = 1
 
 # Plot charts for all sets of parameters
 print('Plotting')
 for ge in generations:
   for po in populations:
-    for mu in mutations:
-      for gm in genemutations:
-        for co in competitors:
-          # Plot charts
-          plot(ge, po, mu, gm, co)
-          # Print progress
-          print("%.2f" % ((i / total) * 100))
-          i += 1
+    for ip in intermediates:
+      for mu in mutations:
+        for gm in genemutations:
+          for co in competitors:
+            for di in difficulties:
+              # Plot charts
+              plot(ge, po, ip, mu, gm, co, di)
+              # Print progress
+              print("%.2f" % ((i / total) * 100))
+              i += 1
