@@ -11,35 +11,35 @@ namespace EnemyGenerator
     /// The MAP-Elites population is a N-dimensional array of individuals,
     /// where each matrix's ax corresponds to a different feature.
     ///
-    /// This particular population is mapped into the enemy's difficulty factor
-    /// and its weapons. Thus, each Elite (or matrix cell) corresponds to a
-    /// combination of different types of difficulty factors and weapons.
+    /// This particular population is mapped into the enemy's movement type
+    /// and its weapon. Thus, each Elite (or matrix cell) corresponds to a
+    /// combination of different types of movement types and weapons.
     public struct Population
     {
         /// The MAP-Elites dimension. The dimension is defined by the number of
-        /// difficulty factors multiplied by the number of weapon types.
-        public (int difficulty, int weapon) dimension { get; }
+        /// movement types multiplied by the number of weapon types.
+        public (int movement, int weapon) dimension { get; }
         /// The MAP-Elites map (a matrix of individuals).
         public Individual[,] map { get; }
 
         /// MAP-Elites Population constructor.
         public Population(
-            int _difficulty,
+            int _movement,
             int _weapons
         ) {
-            dimension = (_difficulty, _weapons);
-            map = new Individual[dimension.difficulty, dimension.weapon];
+            dimension = (_movement, _weapons);
+            map = new Individual[dimension.movement, dimension.weapon];
         }
 
         /// Return the number of Elites of the population.
         public int Count()
         {
             int count = 0;
-            for (int d = 0; d < dimension.difficulty; d++)
+            for (int m = 0; m < dimension.movement; m++)
             {
                 for (int w = 0; w < dimension.weapon; w++)
                 {
-                    if (!(map[d, w] is null))
+                    if (!(map[m, w] is null))
                     {
                         count++;
                     }
@@ -52,13 +52,13 @@ namespace EnemyGenerator
         public List<Coordinate> GetElitesCoordinates()
         {
             List<Coordinate> coordinates = new List<Coordinate>();
-            for (int d = 0; d < dimension.difficulty; d++)
+            for (int m = 0; m < dimension.movement; m++)
             {
                 for (int w = 0; w < dimension.weapon; w++)
                 {
-                    if (!(map[d, w] is null))
+                    if (!(map[m, w] is null))
                     {
-                        coordinates.Add((d, w));
+                        coordinates.Add((m, w));
                     }
                 }
             }
@@ -75,16 +75,13 @@ namespace EnemyGenerator
             Individual _individual
         ) {
             // Calculate the individual slot (Elite)
-            int d = SearchSpace.GetDifficultyIndex(_individual.difficulty);
+            int m = (int) _individual.enemy.movementType;
             int w = (int) _individual.weapon.weaponType;
-            // If the new individual's difficulty is known, and...
-            if (d != Common.UNKNOWN) {
-                // If the new individual deserves to survive
-                if (Fitness.IsBest(_individual, map[d, w]))
-                {
-                    // Then, place the individual in the MAP-Elites population
-                    map[d, w] = _individual;
-                }
+            // If the new individual deserves to survive
+            if (Fitness.IsBest(_individual, map[m, w]))
+            {
+                // Then, place the individual in the MAP-Elites population
+                map[m, w] = _individual;
             }
         }
 
@@ -92,11 +89,11 @@ namespace EnemyGenerator
         public List<Individual> ToList()
         {
             List<Individual> list = new List<Individual>();
-            for (int d = 0; d < dimension.difficulty; d++)
+            for (int m = 0; m < dimension.movement; m++)
             {
                 for (int w = 0; w < dimension.weapon; w++)
                 {
-                    list.Add(map[d, w]);
+                    list.Add(map[m, w]);
                 }
             }
             return list;
@@ -105,21 +102,21 @@ namespace EnemyGenerator
         /// Print all the individuals of the MAP-Elites population.
         public void Debug()
         {
-            for (int d = 0; d < dimension.difficulty; d++)
+            for (int m = 0; m < dimension.movement; m++)
             {
                 for (int w = 0; w < dimension.weapon; w++)
                 {
                     string log = "Elite ";
-                    log += SearchSpace.AllDifficulties()[d] + "-";
+                    log += ((MovementType) m) + "-";
                     log += ((WeaponType) w);
                     Console.WriteLine(log);
-                    if (map[d, w] is null)
+                    if (map[m, w] is null)
                     {
                         Console.WriteLine("  Empty");
                     }
                     else
                     {
-                        map[d, w].Debug();
+                        map[m, w].Debug();
                     }
                     Console.WriteLine();
                 }

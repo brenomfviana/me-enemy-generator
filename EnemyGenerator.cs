@@ -8,8 +8,6 @@ namespace EnemyGenerator
     {
         /// The number of parents to be selected for crossover.
         private static readonly int CROSSOVER_PARENTS = 2;
-        /// The size of the intermediate population.
-        private static readonly int INTERMEDIATE_POPULATION = 10;
 
         /// The evolutionary parameters.
         private Parameters prs;
@@ -51,7 +49,7 @@ namespace EnemyGenerator
 
             // Initialize the MAP-Elites population
             Population pop = new Population(
-                SearchSpace.AllDifficulties().Length,
+                SearchSpace.AllMovementTypes().Length,
                 SearchSpace.AllWeaponTypes().Length
             );
 
@@ -60,7 +58,7 @@ namespace EnemyGenerator
             {
                 Individual ind = Individual.GetRandom(ref rand);
                 Difficulty.Calculate(ref ind);
-                Fitness.Calculate(ref ind);
+                Fitness.Calculate(ref ind, prs.difficulty);
                 pop.PlaceIndividual(ind);
             }
 
@@ -71,7 +69,7 @@ namespace EnemyGenerator
             for (int g = 0; g < prs.generations; g++)
             {
                 List<Individual> intermediate = new List<Individual>();
-                while (intermediate.Count < INTERMEDIATE_POPULATION)
+                while (intermediate.Count < prs.intermediate)
                 {
                     // Apply the crossover operation
                     Individual[] parents = Selection.Select(
@@ -96,7 +94,7 @@ namespace EnemyGenerator
                     for (int i = 0; i < offspring.Length; i++)
                     {
                         Difficulty.Calculate(ref offspring[i]);
-                        Fitness.Calculate(ref offspring[i]);
+                        Fitness.Calculate(ref offspring[i], prs.difficulty);
                         intermediate.Add(offspring[i]);
                     }
                 }

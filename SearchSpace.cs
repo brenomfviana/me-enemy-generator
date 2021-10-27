@@ -144,31 +144,5 @@ namespace EnemyGenerator
                 WeaponType.Shield,
             };
         }
-
-
-        /// Return the list of all difficulty ranges.
-        public static (float, float)[] AllDifficulties()
-        {
-            return new (float, float)[] {
-                (8, 12), (12, 16), (16, 20), (20, 24), (24, 28)
-            };
-        }
-
-        /// Return the index of the difficulty in the list of difficulty ranges.
-        public static int GetDifficultyIndex(
-            float _difficulty
-        ) {
-            int index = Common.UNKNOWN;
-            (float, float)[] list = AllDifficulties();
-            for (int i = 0; i < list.Length; i++)
-            {
-                (float min, float max) d = list[i];
-                if (_difficulty >= d.min && _difficulty < d.max)
-                {
-                    index = i;
-                }
-            }
-            return index;
-        }
     }
 }

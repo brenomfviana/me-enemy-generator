@@ -53,9 +53,11 @@ namespace EnemyGenerator
             string foldername = EMPTY_STR;
             foldername += EMPTY_STR + prs.generations + FILENAME_SEPARATOR;
             foldername += EMPTY_STR + prs.population + FILENAME_SEPARATOR;
+            foldername += EMPTY_STR + prs.intermediate + FILENAME_SEPARATOR;
             foldername += EMPTY_STR + prs.mutation + FILENAME_SEPARATOR;
             foldername += EMPTY_STR + prs.geneMutation + FILENAME_SEPARATOR;
-            foldername += EMPTY_STR + prs.competitors;
+            foldername += EMPTY_STR + prs.competitors + FILENAME_SEPARATOR;
+            foldername += EMPTY_STR + prs.difficulty;
             return foldername;
         }
 
@@ -127,25 +129,15 @@ namespace EnemyGenerator
             Individual _individual,
             string _basename
         ) {
-            // Create a folder for the enemy type
-            string type = _individual.weapon.weaponType.ToString();
-            string folder = _basename + SEPARATOR + type;
-            Directory.CreateDirectory(folder);
-            // Check if the enemy has a valid difficulty
-            int df = SearchSpace.GetDifficultyIndex(_individual.difficulty);
-            if (df != Common.UNKNOWN)
-            {
-                // Convert enemy to formmated JSON string
-                string jsonData = JsonSerializer.Serialize(
-                    _individual, JSON_OPTIONS
-                );
-                // Calculate the expected difficulty
-                (float, float) range = SearchSpace.AllDifficulties()[df];
-                int d = (int) (range.Item2 + range.Item1) / 2;
-                // Write the JSON file
-                string filename = type + FILENAME_SEPARATOR + d + JSON;
-                File.WriteAllText(folder + SEPARATOR + filename, jsonData);
-            }
+            // Convert enemy to formmated JSON string
+            string jsonData = JsonSerializer.Serialize(
+                _individual, JSON_OPTIONS
+            );
+            // Write the JSON file
+            string weapon = _individual.weapon.weaponType.ToString();
+            string movement = _individual.enemy.movementType.ToString();
+            string filename = weapon + FILENAME_SEPARATOR + movement + JSON;
+            File.WriteAllText(_basename + SEPARATOR + filename, jsonData);
         }
     }
 }

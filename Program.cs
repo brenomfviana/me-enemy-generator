@@ -17,9 +17,11 @@
 /// - a random seed;
 /// - the number of generations;
 /// - the initial population size;
+/// - the intermediate population size;
 /// - the mutation chance;
-/// - the mutation chance of a single gene, and;
-/// - the number of tournament competitors.
+/// - the mutation chance of a single gene;
+/// - the number of tournament competitors, and;
+/// - the aimed difficulty of enemies.
 ///
 /// To calculate the difficulty of a single enemy, this program receives two
 /// arguments:
@@ -36,9 +38,9 @@ namespace EnemyGenerator
     class Program
     {
         /// The minimum number of parameters (arguments) of the enemy generator.
-        private static readonly int ENE_GEN_MIN_NUM_PARAMS = 6;
+        private static readonly int ENE_GEN_MIN_NUM_PARAMS = 8;
         /// The minimum number of parameters (arguments) of the enemy generator.
-        private static readonly int ENE_GEN_MAX_NUM_PARAMS = 7;
+        private static readonly int ENE_GEN_MAX_NUM_PARAMS = 9;
         /// The number of parameters (arguments) of the difficulty calculator.
         private static readonly int DIF_CALC_NUM_PARAMS = 2;
 
@@ -69,9 +71,11 @@ namespace EnemyGenerator
                 int.Parse(_args[i++]), // Random seed
                 int.Parse(_args[i++]), // Number of generations
                 int.Parse(_args[i++]), // Initial population size
+                int.Parse(_args[i++]), // Intermediate population size
                 int.Parse(_args[i++]), // Mutation chance
                 int.Parse(_args[i++]), // Mutation chance of a single gene
-                int.Parse(_args[i])    // Number of tournament competitors
+                int.Parse(_args[i++]), // Number of tournament competitors
+                float.Parse(_args[i])  // Aimed difficulty of enemies
             );
             // Ensure the population size is enough for the tournament
             Debug.Assert(
