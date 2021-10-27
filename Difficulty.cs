@@ -63,8 +63,6 @@ namespace EnemyGenerator
             // The cooldown of healer enemies follows the attack speed
             fS *= w.weaponType == WeaponType.CureSpell ?
                 e.attackSpeed * 2 : 1;
-            // Each weapon have its own difficult factor
-            fS *= WeaponMultiplier(w.weaponType);
             return fS;
         }
 
@@ -82,16 +80,20 @@ namespace EnemyGenerator
             float fG = 1f;
             // Melee enemies are only risky if they follow the player
             fG *= SearchSpace.MeleeWeaponList().Contains(w.weaponType) ?
-                (e.movementType == MovementType.Follow ? 1 : 0) : 1;
+                (e.movementType == MovementType.Follow ? 1.25f : 1) : 1;
+            fG *= SearchSpace.MeleeWeaponList().Contains(w.weaponType) ?
+                (e.movementType == MovementType.None ||
+                 e.movementType == MovementType.Flee1D ||
+                 e.movementType == MovementType.Flee ? 0.5f : 1) : 1;
+            // Shooter enemies that flee are riskier to the player
+            fG *= SearchSpace.RangedWeaponList().Contains(w.weaponType) ?
+                (e.movementType == MovementType.Flee1D ? 1.15f : 1) : 1;
+            fG *= SearchSpace.RangedWeaponList().Contains(w.weaponType) ?
+                (e.movementType == MovementType.Flee ? 1.25f : 1) : 1;
             // Shooter enemies that stay still are the only ones that present
             // some risk to the player since they throw projectiles towards them
             fG *= SearchSpace.RangedWeaponList().Contains(w.weaponType) ?
                 (e.movementType == MovementType.None ? 0.5f : 1) : 1;
-            // Shooter enemies that flee are riskier to the player
-            fG *= SearchSpace.RangedWeaponList().Contains(w.weaponType) ?
-                (e.movementType == MovementType.Flee1D ? 1.25f : 1) : 1;
-            fG *= SearchSpace.RangedWeaponList().Contains(w.weaponType) ?
-                (e.movementType == MovementType.Flee ? 1.5f : 1) : 1;
             // Shooter enemies do not perform well when they follow the player
             // and are faster than the projectiles they shoot
             fG *= (SearchSpace.RangedWeaponList().Contains(w.weaponType) &&
@@ -100,36 +102,11 @@ namespace EnemyGenerator
             // Healer enemies must avoid the player and search for other enemies
             fG *= (w.weaponType == WeaponType.CureSpell ?
                 (SearchSpace.HealerMovementList().Contains(e.movementType)
-                ? 1 : 0) : 1);
+                ? 1 : 0.5f) : 1);
             // Healer enemies must move fast to avoid the player
             fG *= w.weaponType == WeaponType.CureSpell ?
                 e.movementSpeed * 1.15f : 1;
             return fG;
-        }
-
-        /// Return the multiplier factor corresponding to the entered weapon.
-        ///
-        /// The weapon weights were empirically chosen based on the gameplay of
-        /// the game prototype mentioned in Program.cs
-        private static float WeaponMultiplier(
-            WeaponType _weapon
-        ) {
-            switch (_weapon)
-            {
-                case WeaponType.Barehand:
-                    return 1.00f;
-                case WeaponType.Sword:
-                    return 1.15f;
-                case WeaponType.Bow:
-                    return 1.35f;
-                case WeaponType.BombThrower:
-                    return 1.25f;
-                case WeaponType.Shield:
-                    return 1.15f;
-                case WeaponType.CureSpell:
-                    return 1.35f;
-            }
-            return -100f;
         }
     }
 }
