@@ -15,32 +15,32 @@ print("Seed:", seed)
 # random.seed(0)
 
 # Define the number of executions of each set of parameters
-executions = range(10)
+executions = range(100)
 
 
 
 # --- Define the set of parameters
 
 # Numbers of generations
-generations = [500]
+generations = [1000] # [100, 500, 1000]
 
 # Initial population sizes
-populations = [35]
+populations = [35] # [25, 35, 42]
 
 # Intermediate population sizes
-intermediates = [100]
+intermediates = [50, 100] # [20, 50, 100]
 
 # Mutation rates
-mutations = [20]
+mutations = [20] # [15, 20, 25]
 
 # Mutation rates for genes
-genemutations = [40]
+genemutations = [30] # [20, 30, 40]
 
 # Competitors
-competitors = [3]
+competitors = [2] # [2, 3, 4]
 
 # Difficulties
-difficulties = [26]
+difficulties = [10, 18, 26] # [10, 14, 18, 22, 26]
 
 
 
