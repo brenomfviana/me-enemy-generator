@@ -28,7 +28,7 @@ generations = [1000] # [100, 500, 1000]
 populations = [35] # [25, 35, 42]
 
 # Intermediate population sizes
-intermediates = [50, 100] # [20, 50, 100]
+intermediates = [50] # [20, 50, 100]
 
 # Mutation rates
 mutations = [20] # [15, 20, 25]
