@@ -30,3 +30,8 @@ To calculate the difficulty of a single enemy, this program receives two
 arguments:
 - the difficulty calculation flag (`-d`);
 - the JSON file path of the enemy.
+
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
