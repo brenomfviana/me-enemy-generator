@@ -32,6 +32,11 @@ arguments:
 - the JSON file path of the enemy.
 
 
+## Author
+
+- Breno M. F. Viana
+
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
